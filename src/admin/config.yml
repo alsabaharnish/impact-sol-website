@@ -242,8 +242,8 @@ collections:
     sortable_fields: [sortOrder, name, group, publicationStatus]
     fields:
       - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens, e.g. asha-rahman.'] }
-      - { label: Full name, name: name, widget: string }
-      - { label: Role or title, name: role, widget: string, hint: 'The current role, for example Chief Executive Officer or Strategic Advisor.' }
+      - { label: Full name, name: name, widget: string, pattern: ['^.{2,80}$', 'Use between 2 and 80 characters.'] }
+      - { label: Role or title, name: role, widget: string, pattern: ['^.{2,90}$', 'Use between 2 and 90 characters.'], hint: 'The current role, for example Chief Executive Officer or Strategic Advisor.' }
       - label: Group
         name: group
         widget: select
@@ -254,7 +254,7 @@ collections:
           - { label: Board and governance, value: board }
         default: executive
         hint: 'Controls which tier the person appears under.'
-      - { label: Biography, name: bio, widget: text, hint: 'Factual and approved by the person. No awards, superlatives or numerical outcome claims.' }
+      - { label: Biography, name: bio, widget: text, pattern: ['^[\s\S]{40,700}$', 'Write between 40 and 700 characters.'], hint: 'Factual and approved by the person, 40-700 characters. No awards, superlatives or numerical outcome claims.' }
       - label: Portrait
         name: photo
         widget: object
@@ -263,7 +263,7 @@ collections:
         hint: 'Upload only an image you hold usage rights for, with the person’s consent.'
         fields:
           - { label: Image, name: path, widget: image }
-          - { label: Alternative text, name: alt, widget: string, hint: 'Describe the portrait, for example “Portrait of Asha Rahman”.' }
+          - { label: Alternative text, name: alt, widget: string, required: false, pattern: ['^$|^.{5,240}$', 'Leave empty, or use at least 5 characters.'], hint: 'Required whenever an image is chosen. Describe the portrait, for example “Portrait of Asha Rahman”.' }
       - label: Links
         name: links
         widget: list
@@ -281,7 +281,7 @@ collections:
           - { label: Approved — published, value: approved }
         default: withheld
         hint: 'Approved requires the person’s recorded consent to publish their name, role, biography and portrait.'
-      - { label: Consent reference, name: consentReference, widget: string, required: false, hint: 'Required to publish. A durable ticket, document path or approval record — never the consent text itself.' }
+      - { label: Consent reference, name: consentReference, widget: string, required: false, pattern: ['^$|^[\s\S]{3,500}$', 'Leave empty, or use at least 3 characters.'], hint: 'Required before Publication status can be Approved. A durable ticket, document path or approval record — never the consent text itself.' }
       - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99, hint: 'Order within the group. Must be unique across all people.' }
 
   - name: partners
@@ -298,7 +298,7 @@ collections:
     sortable_fields: [sortOrder, name, relationship]
     fields:
       - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
-      - { label: Organisation name, name: name, widget: string }
+      - { label: Organisation name, name: name, widget: string, pattern: ['^.{2,90}$', 'Use between 2 and 90 characters.'] }
       - label: Relationship
         name: relationship
         widget: select
@@ -307,7 +307,7 @@ collections:
           - { label: Active, value: active }
         default: proposed
         hint: 'Label the relationship accurately. Do not imply endorsement or funding that is not agreed.'
-      - { label: Description, name: description, widget: text, hint: 'What the relationship covers. No outcome, funding or endorsement claims without evidence.' }
+      - { label: Description, name: description, widget: text, pattern: ['^[\s\S]{30,400}$', 'Write between 30 and 400 characters.'], hint: 'What the relationship covers, 30-400 characters. No outcome, funding or endorsement claims without evidence.' }
       - label: Logo
         name: logo
         widget: object
@@ -317,7 +317,7 @@ collections:
           - { label: Image, name: path, widget: image }
           - { label: Alternative text, name: alt, widget: string }
       - { label: Website, name: url, widget: string, required: false }
-      - { label: Permission reference, name: permissionReference, widget: string, hint: 'Required. The written name and logo permission on record for this organisation.' }
+      - { label: Permission reference, name: permissionReference, widget: string, pattern: ['^[\s\S]{3,500}$', 'Use at least 3 characters.'], hint: 'Required. The written name and logo permission on record for this organisation.' }
       - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
 
   - name: legal

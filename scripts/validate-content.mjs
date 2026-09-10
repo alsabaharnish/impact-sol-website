@@ -252,11 +252,13 @@ for (const { file, value: person } of loaded.get('people') ?? []) {
   if (person.publicationStatus === 'approved' && !person.consentReference) {
     errors.push(`${file}: publishing a person requires a recorded consentReference`);
   }
-  if (person.publicationStatus === 'approved' && person.photo && !person.photo.alt) {
-    errors.push(`${file}: an approved portrait requires photo.alt`);
-  }
-  if (person.photo && !String(person.photo.path ?? '').startsWith('/')) {
+
+  // An empty portrait object is how Decap represents "none supplied".
+  if (person.photo?.path && !String(person.photo.path).startsWith('/')) {
     errors.push(`${file}: photo.path must be a site-absolute path`);
+  }
+  if (person.photo?.path && !person.photo.alt) {
+    errors.push(`${file}: a portrait requires photo.alt`);
   }
   if (!['withheld', 'approved'].includes(person.publicationStatus)) {
     errors.push(`${file}: publicationStatus must be "withheld" or "approved"`);
@@ -267,7 +269,7 @@ for (const { file, value: partner } of loaded.get('partners') ?? []) {
   if (!partner.permissionReference) {
     errors.push(`${file}: naming a partner requires a written permissionReference`);
   }
-  if (partner.logo && !partner.logo.alt) {
+  if (partner.logo?.path && !partner.logo.alt) {
     errors.push(`${file}: a partner logo requires logo.alt`);
   }
   if (!['proposed', 'active'].includes(partner.relationship)) {

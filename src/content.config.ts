@@ -10,6 +10,54 @@ const slug = z
 
 const evidence = z.string().min(3).max(500).nullable().optional();
 
+/**
+ * Decap writes an untouched optional object widget as `{}`, or with its
+ * subfields set to null, rather than omitting the key. Those shapes have to
+ * read as "no image supplied" or the build fails the moment an editor adds a
+ * person without a portrait. A *partly* filled image still fails, which is
+ * intended: a path with no alt text is a defect, not a blank.
+ */
+const optionalImage = z.preprocess(
+  (value) => {
+    if (value === undefined) return null;
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+    const filled = Object.values(value as Record<string, unknown>).filter(
+      (entry) => entry !== null && entry !== undefined && entry !== '',
+    );
+    return filled.length === 0 ? null : value;
+  },
+  z
+    .object({
+      path: z.string().startsWith('/'),
+      alt: z.string().min(5).max(240),
+    })
+    .nullable(),
+);
+
+/** A list row the editor added and left blank is dropped, not rejected. */
+const optionalLinks = z.preprocess(
+  (value) =>
+    Array.isArray(value)
+      ? value.filter(
+          (row) =>
+            row &&
+            typeof row === 'object' &&
+            Object.values(row as Record<string, unknown>).some(
+              (entry) => entry !== null && entry !== undefined && entry !== '',
+            ),
+        )
+      : value,
+  z
+    .array(
+      z.object({
+        label: z.string().min(2).max(40),
+        url: z.url(),
+      }),
+    )
+    .max(3)
+    .default([]),
+);
+
 const offerings = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/offerings' }),
   schema: z
@@ -198,22 +246,8 @@ const people = defineCollection({
       role: z.string().min(2).max(90),
       group: z.enum(['executive', 'strategic', 'advisory', 'board']),
       bio: z.string().min(40).max(700),
-      photo: z
-        .object({
-          path: z.string().startsWith('/'),
-          alt: z.string().min(5).max(240),
-        })
-        .nullable()
-        .optional(),
-      links: z
-        .array(
-          z.object({
-            label: z.string().min(2).max(40),
-            url: z.url(),
-          }),
-        )
-        .max(3)
-        .default([]),
+      photo: optionalImage,
+      links: optionalLinks,
       publicationStatus: z.enum(['withheld', 'approved']),
       consentReference: evidence,
       sortOrder: z.number().int().min(1).max(99),
@@ -247,13 +281,7 @@ const partners = defineCollection({
     name: z.string().min(2).max(90),
     relationship: z.enum(['proposed', 'active']),
     description: z.string().min(30).max(400),
-    logo: z
-      .object({
-        path: z.string().startsWith('/'),
-        alt: z.string().min(5).max(240),
-      })
-      .nullable()
-      .optional(),
+    logo: optionalImage,
     url: z.url().nullable().optional(),
     permissionReference: z.string().min(3).max(500),
     sortOrder: z.number().int().min(1).max(99),
