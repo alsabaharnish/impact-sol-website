@@ -1,0 +1,32 @@
+{
+  "slug": "build-impact-products",
+  "title": "Build impact products",
+  "summary": "Explore practical digital products around clearly defined environmental or social problems.",
+  "detail": "The proposed work can combine discovery, interface design, technical prototyping and proportionate testing. Technology is selected only when it offers useful value, with product maturity and limitations stated clearly.",
+  "intendedFor": [
+    "Purpose-led product teams",
+    "Sustainability initiatives",
+    "Potential delivery partners"
+  ],
+  "problem": "A promising idea may need a focused, testable product response before anyone can responsibly commit to scale.",
+  "provides": [
+    "Problem framing and product discovery",
+    "Accessible experience and service design",
+    "Prototype engineering and responsible testing"
+  ],
+  "exclusions": [
+    "A guaranteed launch, adoption level or impact outcome",
+    "Technology chosen solely because it is fashionable",
+    "Unreviewed handling of sensitive or production data"
+  ],
+  "process": "Understand the need, agree the risk and learning questions, build the smallest useful response, then test and decide what follows.",
+  "expectedOutputs": [
+    "A defined problem and intended user group",
+    "A concept or working prototype at an agreed maturity",
+    "A decision record covering evidence, risk and next steps"
+  ],
+  "modelNote": "Proposed only. Team capacity, eligibility, timing, fees and any subsidised component must be agreed before an engagement is offered.",
+  "status": "proposed",
+  "evidenceReference": null,
+  "sortOrder": 1
+}

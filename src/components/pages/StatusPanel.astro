@@ -1,0 +1,89 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  text: string;
+  tone?: 'light' | 'dark';
+}
+
+const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
+---
+
+<aside class:list={['status-panel', `status-panel--${tone}`]} aria-label={label}>
+  <p class="status-panel__label"><span aria-hidden="true"></span>{label}</p>
+  <h2>{title}</h2>
+  <p>{text}</p>
+  <slot />
+</aside>
+
+<style>
+  .status-panel {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-large);
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .status-panel::after {
+    position: absolute;
+    right: -3rem;
+    bottom: -3rem;
+    width: 8rem;
+    height: 8rem;
+    border: 1px solid color-mix(in srgb, var(--color-teal) 24%, transparent);
+    border-radius: 50%;
+    content: '';
+  }
+
+  .status-panel__label {
+    display: flex;
+    margin: 0 0 var(--space-3);
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--color-forest);
+    font-size: 0.76rem;
+    font-weight: 780;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .status-panel__label span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--color-sun);
+  }
+
+  .status-panel h2 {
+    max-width: 18ch;
+    margin: 0;
+    font-size: var(--step-2);
+    letter-spacing: -0.025em;
+  }
+
+  .status-panel > p:last-of-type {
+    position: relative;
+    z-index: 1;
+    margin-top: var(--space-3);
+    color: var(--color-muted);
+  }
+
+  .status-panel--dark {
+    border-color: color-mix(in srgb, var(--color-paper) 18%, transparent);
+    color: var(--color-paper);
+    background: var(--color-forest);
+    box-shadow: none;
+  }
+
+  .status-panel--dark .status-panel__label,
+  .status-panel--dark h2 {
+    color: var(--color-paper);
+  }
+
+  .status-panel--dark > p:last-of-type {
+    color: var(--color-paper-muted);
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import Wordmark from './Wordmark.astro';
+import { siteConfig } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__grid">
+    <div class="site-footer__intro">
+      <a href="/" aria-label="Impact Sol. home"><Wordmark inverse /></a>
+      <p>Practical technology and partnership for responsible enterprise.</p>
+      <p class="status-line"><span aria-hidden="true"></span>{siteConfig.status}</p>
+    </div>
+
+    <nav aria-label="Company">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/what-we-do/">What we do</a></li>
+        <li><a href="/products/">Products</a></li>
+        <li><a href="/impact/">Purpose & approach</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Take part">
+      <h2>Take part</h2>
+      <ul>
+        <li><a href="/get-involved/">Choose your pathway</a></li>
+        <li><a href="/contact/">Contact the team</a></li>
+        <li><a href={`mailto:${siteConfig.contactEmail}`}>Email {siteConfig.contactEmail}</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Policies">
+      <h2>Policies</h2>
+      <ul>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/accessibility/">Accessibility</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="shell site-footer__base">
+    <p>© {new Date().getFullYear()} Impact Sol. Proposed identity; registration details pending confirmation.</p>
+    <p>English launch · Bangla-ready architecture</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: clamp(3.5rem, 7vw, 6.5rem) 0 var(--space-5);
+    color: var(--color-paper);
+    background: var(--color-ink);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: minmax(15rem, 1.7fr) repeat(3, minmax(9rem, 1fr));
+    gap: clamp(2rem, 4vw, 5rem);
+  }
+
+  .site-footer__intro > a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .site-footer__intro > p:not(.status-line) {
+    max-width: 28rem;
+    margin-top: var(--space-4);
+    color: var(--color-paper-muted);
+  }
+
+  .status-line {
+    display: inline-flex;
+    margin-top: var(--space-4);
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--color-mint);
+    font-size: 0.88rem;
+    font-weight: 720;
+  }
+
+  .status-line span {
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-sun);
+    border-radius: 50%;
+  }
+
+  h2 {
+    margin: 0 0 var(--space-3);
+    color: var(--color-paper);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li + li {
+    margin-top: 0.55rem;
+  }
+
+  nav a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--color-paper-muted);
+    text-underline-offset: 0.24rem;
+  }
+
+  nav a:hover {
+    color: var(--color-paper);
+  }
+
+  .site-footer__base {
+    display: flex;
+    margin-top: clamp(3rem, 7vw, 6rem);
+    padding-top: var(--space-4);
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-top: 1px solid color-mix(in srgb, var(--color-paper) 15%, transparent);
+    color: var(--color-paper-muted);
+    font-size: 0.78rem;
+  }
+
+  .site-footer__base p {
+    margin: 0;
+  }
+
+  @media (max-width: 58rem) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer__intro {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .site-footer__base {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,9 @@
+{
+  "slug": "accessibility",
+  "title": "Accessibility statement",
+  "description": "A working statement of the website accessibility goal, known review process and contact route.",
+  "status": "working-draft",
+  "lastReviewed": "2026-09-09",
+  "body": "This is a working draft. The website is designed toward WCAG 2.2 Level AA, including keyboard access, visible focus, semantic structure, labelled forms, clear status messages, sufficient colour contrast, reduced-motion support and reflow on small screens. This wording is a goal, not a certification of conformance. Before launch, representative pages and every form path should be checked with automated tools, keyboard-only use, screen-reader sampling, text zoom and mobile reflow. Any known limitation should be recorded here with a practical alternative and expected review date. People who encounter a barrier may use the published contact route; the owner must confirm the accessible, monitored mailbox and response process before publication.",
+  "approvalReference": null
+}

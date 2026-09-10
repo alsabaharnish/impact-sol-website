@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import FaqList from '../../components/pages/FaqList.astro';
+import StatusPanel from '../../components/pages/StatusPanel.astro';
+import { getFaqs, getProducts } from '../../content/read';
+
+const breadcrumbs = [{ name: 'Products', path: '/products/' }];
+const products = await getProducts();
+const chokro = products.find((product) => product.slug === 'chokro');
+if (!chokro) throw new Error('The Chokro product record is missing.');
+const cmsFaqs = await getFaqs('products');
+const faqs = [
+  {
+    question: 'Are Impact Sol. products available to use now?',
+    answer:
+      'No public availability is claimed on this site. Chokro is described as a working prototype and the product relationship is proposed while ownership and licensing details are confirmed. Any public trial or launch will be labelled separately.',
+  },
+  {
+    question: 'How can I suggest a product need?',
+    answer:
+      'Use the general contact form to describe the problem, who experiences it and what people do today. Please avoid sharing confidential or sensitive personal information at this early stage.',
+  },
+  {
+    question: 'Will every prototype become a product?',
+    answer:
+      'No. A prototype is a way to learn. It may be revised, paused, transferred or retired if the evidence does not support further development or if safeguards cannot be met.',
+  },
+  ...cmsFaqs,
+];
+---
+
+<BaseLayout
+  title="Products"
+  description="Explore Impact Sol.’s proposed product approach and Chokro, a working prototype whose public product basis is still being confirmed."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Products' }]} />
+  <PageHero
+    eyebrow="Products"
+    title="Focused tools for real-world participation."
+    intro="We intend to create digital products around clear needs, test them with the people involved and be honest about their stage."
+  >
+    <div slot="aside">
+      <StatusPanel
+        title="One working prototype"
+        text="Chokro is the only product concept presented here. It is not described as publicly launched, and no usage or outcome claims are being made."
+      />
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="chokro-title">
+    <div class="shell product-feature">
+      <div class="product-feature__visual" aria-hidden="true">
+        <div class="orbit orbit--one"></div>
+        <div class="orbit orbit--two"></div>
+        <img class="product-mark" src="/assets/brand/chokro-app-icon.svg" width="112" height="112" alt="" />
+        <span class="node node--makers">Responsible action</span>
+        <span class="node node--initiatives">Review</span>
+        <span class="node node--community">Local enterprise</span>
+      </div>
+      <div class="product-feature__copy">
+        <div class="status-row"><span>{chokro.stage.replace('-', ' ')}</span><span>{chokro.publicAvailability ? 'Publicly available' : 'Public launch not announced'}</span></div>
+        <p class="eyebrow">Proposed product</p>
+        <h2 id="chokro-title">{chokro.name}</h2>
+        <p class="lead">{chokro.tagline}</p>
+        <p>{chokro.summary}</p>
+        <div class="button-row">
+          <a class="button" href="/products/chokro/">Explore Chokro</a>
+          <a class="text-link" href="/get-involved/#chokro-interest">Register interest <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="standard-title">
+    <div class="shell product-standard">
+      <div>
+        <p class="eyebrow">Our intended product standard</p>
+        <h2 id="standard-title">A stage is a fact, not a marketing detail.</h2>
+        <p>Each future product page should make its maturity, audience, evidence and limitations visible.</p>
+      </div>
+      <dl>
+        <div><dt>Need</dt><dd>The user need is specific and based on discovery, not assumed from a trend.</dd></div>
+        <div><dt>Stage</dt><dd>Concept, prototype, pilot and live service are labelled differently.</dd></div>
+        <div><dt>Safeguards</dt><dd>Accessibility, privacy, security and foreseeable harms are reviewed as the product develops.</dd></div>
+        <div><dt>Evidence</dt><dd>Outputs are not presented as outcomes, and environmental claims require an explicit method.</dd></div>
+        <div><dt>Stewardship</dt><dd>Ownership, maintenance, support and a responsible exit path are understood.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section--bordered">
+    <div class="shell"><FaqList items={faqs} /></div>
+  </section>
+
+  <CtaBand
+    eyebrow="Product interest"
+    title="Help us understand what would make Chokro useful."
+    text="Makers and initiative leads can register interest without committing to a trial or partnership."
+    href="/get-involved/#chokro-interest"
+    label="Register interest"
+    secondaryHref="/products/chokro/"
+    secondaryLabel="Read the prototype brief"
+  />
+</BaseLayout>
+
+<style>
+  .product-feature {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: center;
+  }
+
+  .product-feature__visual {
+    position: relative;
+    min-height: min(34rem, 70vw);
+    overflow: hidden;
+    border-radius: var(--radius-large);
+    background:
+      radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--color-sun) 30%, transparent), transparent 22%),
+      var(--color-forest);
+  }
+
+  .product-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 7rem;
+    height: 7rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-paper);
+    box-shadow: 0 0 0 1rem color-mix(in srgb, var(--color-paper) 12%, transparent);
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+  }
+
+  .orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid color-mix(in srgb, var(--color-paper) 35%, transparent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .orbit--one { width: 18rem; height: 18rem; }
+  .orbit--two { width: 29rem; height: 29rem; }
+
+  .node {
+    position: absolute;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
+    border-radius: 999px;
+    color: var(--color-paper);
+    background: color-mix(in srgb, var(--color-forest) 84%, transparent);
+    font-size: 0.78rem;
+    font-weight: 720;
+  }
+
+  .node--makers { top: 17%; left: 12%; }
+  .node--initiatives { top: 24%; right: 7%; }
+  .node--community { right: 15%; bottom: 13%; }
+
+  .status-row {
+    display: flex;
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .status-row span {
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    color: var(--color-forest);
+    background: var(--color-mint-soft);
+    font-size: 0.75rem;
+    font-weight: 760;
+  }
+
+  .product-feature__copy h2 {
+    margin-top: var(--space-2);
+    font-size: var(--step-5);
+  }
+
+  .product-feature__copy > p:not(.eyebrow) {
+    color: var(--color-muted);
+  }
+
+  .product-standard {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(2rem, 7vw, 7rem);
+  }
+
+  .product-standard dl {
+    margin: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .product-standard dl div {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .product-standard dt {
+    color: var(--color-ink);
+    font-weight: 760;
+  }
+
+  .product-standard dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 50rem) {
+    .product-feature,
+    .product-standard {
+      grid-template-columns: 1fr;
+    }
+
+    .product-feature__visual {
+      min-height: 28rem;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .product-standard dl div {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

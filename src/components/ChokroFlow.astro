@@ -1,0 +1,122 @@
+<figure class="chokro-flow" aria-labelledby="chokro-flow-title chokro-flow-caption">
+  <div class="chokro-flow__head">
+    <img src="/assets/brand/chokro-app-icon.svg" width="72" height="72" alt="" />
+    <div>
+      <p>Working prototype</p>
+      <strong id="chokro-flow-title">One cycle, multiple actions</strong>
+    </div>
+  </div>
+  <ol>
+    <li>
+      <span class="chokro-flow__icon" aria-hidden="true">↗</span>
+      <div><strong>Take an eco-action</strong><small>Follow the relevant evidence path</small></div>
+    </li>
+    <li>
+      <span class="chokro-flow__icon" aria-hidden="true">✓</span>
+      <div><strong>Review responsibly</strong><small>Automated checks where suitable; people for uncertainty</small></div>
+    </li>
+    <li>
+      <span class="chokro-flow__icon" aria-hidden="true">○</span>
+      <div><strong>Connect the value</strong><small>Internal rewards, prototype marketplace, and initiative categories</small></div>
+    </li>
+  </ol>
+  <figcaption id="chokro-flow-caption">
+    Representative product-flow diagram—not a live service screen. Availability is still subject to production-release verification.
+  </figcaption>
+</figure>
+
+<style>
+  .chokro-flow {
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    color: #f7faf8;
+    background:
+      radial-gradient(circle at 88% 4%, rgb(255 255 255 / 10%), transparent 32%),
+      linear-gradient(145deg, #087f5b, #006c4c 62%, #075e68);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .chokro-flow__head {
+    display: flex;
+    padding-bottom: var(--space-5);
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgb(255 255 255 / 18%);
+  }
+
+  .chokro-flow__head img {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 1rem;
+  }
+
+  .chokro-flow__head p {
+    margin: 0 0 0.25rem;
+    color: #d8fff0;
+    font-size: 0.7rem;
+    font-weight: 780;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .chokro-flow__head strong {
+    display: block;
+    font-size: var(--step-1);
+    line-height: 1.15;
+  }
+
+  ol {
+    margin: 0;
+    padding: var(--space-3) 0 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    padding-block: var(--space-4);
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.85rem;
+    border-bottom: 1px solid rgb(255 255 255 / 14%);
+  }
+
+  li:last-child {
+    border-bottom: 0;
+  }
+
+  .chokro-flow__icon {
+    display: grid;
+    width: 2.4rem;
+    height: 2.4rem;
+    place-items: center;
+    color: #006c4c;
+    background: #d8fff0;
+    border-radius: 50%;
+    font-weight: 850;
+  }
+
+  li strong,
+  li small {
+    display: block;
+  }
+
+  li strong {
+    font-size: 0.94rem;
+  }
+
+  li small {
+    margin-top: 0.2rem;
+    color: #d8eee6;
+    font-size: 0.77rem;
+    line-height: 1.45;
+  }
+
+  figcaption {
+    margin-top: var(--space-4);
+    color: #d8eee6;
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+</style>

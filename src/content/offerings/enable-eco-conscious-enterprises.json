@@ -1,0 +1,32 @@
+{
+  "slug": "enable-eco-conscious-enterprises",
+  "title": "Enable eco-conscious enterprises",
+  "summary": "Explore suitable technology, design, learning and digital-operation support for makers and small sellers.",
+  "detail": "The intended pathway starts with how an enterprise actually works and what capacity it has. Any support should fit that reality, respect the maker's agency and avoid implying environmental certification.",
+  "intendedFor": [
+    "Eco-conscious makers",
+    "Small sellers",
+    "Early-stage responsible enterprises"
+  ],
+  "problem": "Small enterprises may face fragmented tools, limited digital capacity and difficult routes to customers without needing an oversized platform.",
+  "provides": [
+    "Digital-operation and user-journey review",
+    "Appropriate design or technology support",
+    "Learning and market-access experiments where approved"
+  ],
+  "exclusions": [
+    "Automatic grants, free services or guaranteed sales",
+    "Independent certification of a seller or product",
+    "Claims that handmade goods are automatically better for the environment"
+  ],
+  "process": "Understand the business and its constraints, identify a priority gap, agree a proportionate support plan, then review practical usefulness.",
+  "expectedOutputs": [
+    "A prioritised operational or growth need",
+    "An agreed tool, workflow or capability response",
+    "Documented learning and handover information"
+  ],
+  "modelNote": "Proposed only. Selection, capacity, commercial or subsidised terms, and environmental-claims standards are not yet published.",
+  "status": "proposed",
+  "evidenceReference": null,
+  "sortOrder": 2
+}

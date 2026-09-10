@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SystemState from '../components/pages/SystemState.astro';
+---
+
+<BaseLayout
+  title="Something went wrong"
+  description="The Impact Sol. website could not complete this request. Try again or use the direct contact route."
+  noindex
+  pageState="500"
+>
+  <SystemState
+    code="500"
+    eyebrow="Unexpected error"
+    title="We could not complete that request."
+    text="The problem may be temporary. Try the page again, return home, or use the direct contact option if your enquiry is time-sensitive."
+    primaryHref="/"
+    primaryLabel="Return home"
+    secondaryHref="/contact/"
+    secondaryLabel="Use another contact route"
+  />
+</BaseLayout>

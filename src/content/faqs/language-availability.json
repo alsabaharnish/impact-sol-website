@@ -1,0 +1,7 @@
+{
+  "slug": "language-availability",
+  "question": "Is the website available in Bangla?",
+  "answer": "The launch version is in English and its content structure is prepared for a future Bangla edition. A language switcher should be added only after complete, reviewed translations and an ongoing update process are available.",
+  "category": "access",
+  "sortOrder": 6
+}

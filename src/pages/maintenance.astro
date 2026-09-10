@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SystemState from '../components/pages/SystemState.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout
+  title="Planned maintenance"
+  description="The Impact Sol. website is temporarily unavailable while maintenance is completed."
+  noindex
+  pageState="maintenance"
+>
+  <SystemState
+    code="…"
+    eyebrow="Planned maintenance"
+    title="We are making a careful update."
+    text="The website is temporarily unavailable. Please try again later. No form should be submitted while this maintenance message is shown."
+    primaryHref="/"
+    primaryLabel="Try the homepage"
+    secondaryHref={`mailto:${siteConfig.contactEmail}`}
+    secondaryLabel="Use the provisional email route"
+  />
+</BaseLayout>

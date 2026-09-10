@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import InquiryForm from '../components/pages/InquiryForm.astro';
+import FaqList from '../components/pages/FaqList.astro';
+import StatusPanel from '../components/pages/StatusPanel.astro';
+import { getFaqs } from '../content/read';
+
+const breadcrumbs = [{ name: 'Get involved', path: '/get-involved/' }];
+const cmsFaqs = await getFaqs('partnerships');
+const faqs = [
+  {
+    question: 'Does sending an enquiry create a partnership or application?',
+    answer:
+      'No. It starts a conversation only. A partnership would require separate due diligence, agreed responsibilities, safeguards and written terms. A maker or initiative enquiry does not guarantee Chokro access or inclusion.',
+  },
+  {
+    question: 'What information should I share?',
+    answer:
+      'Share enough context to understand the need, who is involved and why it may fit. Do not include confidential material, passwords, financial details, health information or other sensitive personal data in this first message.',
+  },
+  {
+    question: 'When will I hear back?',
+    answer:
+      'Messages are reviewed as capacity allows, but no response time is promised while the initiative is being established. The form should show an acknowledgement when the server accepts your enquiry.',
+  },
+  ...cmsFaqs,
+];
+
+const pathways = [
+  {
+    id: 'makers',
+    label: 'Makers and small sellers',
+    title: 'Tell us about your work',
+    text: 'For an eco-conscious maker or small seller with a real product, practice, or early idea and a specific operational or growth challenge.',
+    support: 'A relevant conversation may explore practical technology, digital operations, design, learning, or a responsible route to market. No grant, free service, seller approval, or sales outcome is implied.',
+    expects: 'Share your stage, location, what you make, the primary challenge, and a public link if available.',
+    href: '#maker-enquiry',
+    action: 'Use the maker form',
+  },
+  {
+    id: 'initiatives',
+    label: 'Initiatives and social enterprises',
+    title: 'Discuss a practical project',
+    text: 'For a sustainability initiative or social enterprise with a defined participant need and a possible technology or collaboration question.',
+    support: 'A first review may explore product discovery, a focused prototype, capability support, or collaborative programme framing, subject to capacity and safeguards.',
+    expects: 'Explain the people involved, existing approach, desired change, known risks, stage, and timing.',
+    href: '#partnership-enquiry',
+    action: 'Describe the project',
+  },
+  {
+    id: 'institutions',
+    label: 'NGOs, foundations and public bodies',
+    title: 'Propose an institutional partnership',
+    text: 'For an organisation considering a shared environmental, enterprise, inclusion, research, or public-interest challenge.',
+    support: 'An initial conversation may examine complementary roles, governance, delivery constraints, evidence, and a responsible next step.',
+    expects: 'Provide your mandate, intended participants, desired outcome, geography, timing, and possible role. Due diligence and written terms would follow separately.',
+    href: '#partnership-enquiry',
+    action: 'Propose a partnership',
+  },
+  {
+    id: 'corporates',
+    label: 'Corporate sustainability and CSR teams',
+    title: 'Explore a grounded collaboration',
+    text: 'For a company with a specific sustainability or responsible-enterprise objective—not a request for unsupported ESG claims or logo placement.',
+    support: 'A discussion may explore responsible programme, product, evidence, or ecosystem roles where interests and safeguards genuinely align.',
+    expects: 'State the business context, affected people, resources, intended result, evidence expectations, decision process, and any deadline.',
+    href: '#partnership-enquiry',
+    action: 'Share the context',
+  },
+  {
+    id: 'contributors',
+    label: 'Mentors, advisors and contributors',
+    title: 'Offer relevant perspective',
+    text: 'For someone with useful subject, technical, design, accessibility, evaluation, legal, or community experience who understands the early-stage context.',
+    support: 'There is no standing volunteer programme. A focused conversation may be considered when a real need and responsible role exist.',
+    expects: 'Explain the perspective or skill, the kind of contribution considered, availability, and any conflict of interest.',
+    href: '/contact/',
+    action: 'Send a general enquiry',
+  },
+  {
+    id: 'opportunities',
+    label: 'Candidates',
+    title: 'Respond only to a published opportunity',
+    text: 'No job, internship, consultancy, or volunteer vacancy is currently published on this website.',
+    support: 'Real opportunities will identify the role, eligibility, location, terms, process, accessibility contact, closing date, and data handling before applications open.',
+    expects: 'Please do not send a CV or sensitive recruitment information through the general enquiry form while no opportunity is listed.',
+    href: '/about/#current-stage',
+    action: 'See the current stage',
+  },
+];
+---
+
+<BaseLayout
+  title="Get involved"
+  description="Share a partnership idea or register maker and initiative interest in Chokro, with clear expectations about the initiative’s current stage."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Get involved' }]} />
+  <PageHero
+    eyebrow="Get involved"
+    title="Start with the work in front of you."
+    intro="If you are exploring a relevant challenge, shaping a mission-aligned collaboration or building as a maker, we would like to understand your context."
+  >
+    <div slot="aside">
+      <StatusPanel
+        title="Enquiries, not applications"
+        text="These forms open an initial conversation. They do not create an agreement, selection decision, endorsement or promise of product access."
+      />
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="pathways-title">
+    <div class="shell">
+      <div class="section-heading section-heading--wide">
+        <p class="eyebrow">Choose a pathway</p>
+        <h2 id="pathways-title">Choose the route closest to your role.</h2>
+        <p>Each route starts with a review, not an offer. Messages are acknowledged by the form service and reviewed as capacity allows; no response time is promised at this stage.</p>
+      </div>
+      <div class="pathways">
+        {pathways.map((pathway, index) => (
+          <article id={pathway.id} tabindex="-1">
+            <div class="pathways__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+            <p class="eyebrow">{pathway.label}</p>
+            <h3>{pathway.title}</h3>
+            <p>{pathway.text}</p>
+            <details>
+              <summary>What to expect</summary>
+              <p>{pathway.support}</p>
+              <p><strong>For an initial review:</strong> {pathway.expects}</p>
+              <p><strong>Process:</strong> submit the suitable route, receive an acknowledgement, then wait for a capacity and fit review. Any follow-up, due diligence, scope, price, or agreement happens separately.</p>
+            </details>
+            <a class="text-link" href={pathway.href}>{pathway.action} <span aria-hidden="true">{pathway.href.startsWith('#') ? '↓' : '→'}</span></a>
+          </article>
+        ))}
+        <aside>
+          <p class="eyebrow">Something else?</p>
+          <h3>Send a general enquiry</h3>
+          <a class="text-link" href="/contact/">Go to contact <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="partnership-enquiry" tabindex="-1">
+    <div class="shell">
+      <InquiryForm
+        inquiryType="partnership"
+        title="Propose a partnership"
+        intro="Describe the challenge, intended participants, desired outcome, your organisation’s possible role, stage or timing, and any known budget context. ‘Not yet known’ is a valid budget answer."
+        messageLabel="Participants, desired outcome, timing and context"
+        submitLabel="Send partnership enquiry"
+        includeOrganisation
+        includePhone
+        includeCountry
+        includeWebsite
+      />
+    </div>
+  </section>
+
+  <section class="section" id="maker-enquiry" tabindex="-1">
+    <span id="chokro-interest" class="anchor-target" tabindex="-1"></span>
+    <div class="shell">
+      <InquiryForm
+        inquiryType="maker"
+        title="Register maker or initiative interest"
+        intro="Tell us what you make or organise, your stage and location, the primary challenge, support sought, and whether your interest relates to Chokro."
+        messageLabel="Your work and perspective"
+        submitLabel="Register interest"
+        includeOrganisation
+        includePhone
+        includeCountry
+        includeWebsite
+      />
+    </div>
+  </section>
+
+  <section class="section section--bordered">
+    <div class="shell"><FaqList title="Before you get in touch" items={faqs} /></div>
+  </section>
+
+  <CtaBand
+    eyebrow="General enquiries"
+    title="Not sure which route fits?"
+    text="Use the general contact form for questions, website feedback or another kind of enquiry."
+    href="/contact/"
+    label="Contact Impact Sol."
+    secondaryHref="/products/chokro/"
+    secondaryLabel="Learn about Chokro"
+  />
+</BaseLayout>
+
+<style>
+  .pathways {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+
+  .pathways article,
+  .pathways aside {
+    display: flex;
+    min-height: 20rem;
+    padding: clamp(1.4rem, 4vw, 2.5rem);
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+  }
+
+  .pathways article:first-child {
+    background: color-mix(in srgb, var(--color-mint-soft) 60%, var(--color-surface));
+  }
+
+  .pathways__index {
+    margin-bottom: auto;
+    color: var(--color-teal);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .pathways h3 { max-width: 15ch; margin-top: var(--space-3); }
+  .pathways article > p:not(.eyebrow) { color: var(--color-muted); }
+  .pathways .text-link { margin-top: auto; }
+
+  .pathways details {
+    width: 100%;
+    margin: var(--space-3) 0 var(--space-4);
+    border-block: 1px solid var(--color-line);
+  }
+
+  .pathways summary {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    color: var(--color-forest);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 750;
+  }
+
+  .pathways details p {
+    color: var(--color-muted);
+    font-size: 0.84rem;
+  }
+
+  .anchor-target {
+    display: block;
+    height: 0;
+    scroll-margin-top: 7rem;
+  }
+
+  .pathways aside {
+    grid-column: 1 / -1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-4);
+    align-items: center;
+    color: var(--color-paper);
+    background: var(--color-forest);
+  }
+
+  .pathways aside .eyebrow,
+  .pathways aside h3 { margin: 0; color: inherit; }
+  .pathways aside .text-link { color: var(--color-paper); }
+
+  @media (max-width: 44rem) {
+    .pathways { grid-template-columns: 1fr; }
+    .pathways aside { grid-column: auto; grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,386 @@
+---
+type InquiryType = 'general' | 'partnership' | 'maker';
+
+interface Props {
+  inquiryType: InquiryType;
+  title: string;
+  intro: string;
+  messageLabel?: string;
+  submitLabel?: string;
+  includePhone?: boolean;
+  includeOrganisation?: boolean;
+  includeCountry?: boolean;
+  includeWebsite?: boolean;
+}
+
+const {
+  inquiryType,
+  title,
+  intro,
+  messageLabel = 'How can we help?',
+  submitLabel = 'Send message',
+  includePhone = false,
+  includeOrganisation = false,
+  includeCountry = false,
+  includeWebsite = false,
+} = Astro.props;
+
+const prefix = `inquiry-${inquiryType}`;
+const organisationField = inquiryType === 'maker' ? 'initiativeName' : 'organization';
+const organisationLabel = inquiryType === 'maker' ? 'Business or initiative name' : 'Organisation';
+const detailedRoute = inquiryType === 'partnership' || inquiryType === 'maker';
+---
+
+<section class="inquiry-panel" aria-labelledby={`${prefix}-title`}>
+  <div class="inquiry-panel__intro">
+    <p class="eyebrow">Send an enquiry</p>
+    <h2 id={`${prefix}-title`}>{title}</h2>
+    <p>{intro}</p>
+    <p class="form-note"><span aria-hidden="true">*</span> Required fields</p>
+  </div>
+
+  <form class="inquiry-form" action="/api/inquiries" method="post" data-inquiry-form={inquiryType}>
+    <input type="hidden" name="inquiryType" value={inquiryType} />
+    <input type="hidden" name="sourcePath" value={Astro.url.pathname} />
+
+    <div class="honeypot" aria-hidden="true">
+      <label for={`${prefix}-company-website`}>Leave this field blank</label>
+      <input
+        id={`${prefix}-company-website`}
+        name="companyWebsite"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="form-grid">
+      {inquiryType === 'general' && (
+        <div class="field">
+          <label for={`${prefix}-subject`}>Inquiry category <span aria-hidden="true">*</span></label>
+          <select id={`${prefix}-subject`} name="subject" required aria-describedby={`${prefix}-subject-error`}>
+            <option value="">Choose a category</option>
+            <option value="General question">General question</option>
+            <option value="Website feedback">Website feedback</option>
+            <option value="Accessibility feedback">Accessibility feedback</option>
+            <option value="Media enquiry">Media enquiry</option>
+            <option value="Privacy request">Privacy request</option>
+          </select>
+          <p class="field-error" id={`${prefix}-subject-error`} data-error-for="subject"></p>
+        </div>
+      )}
+
+      <div class="field">
+        <label for={`${prefix}-name`}>Name <span aria-hidden="true">*</span></label>
+        <input
+          id={`${prefix}-name`}
+          name="name"
+          type="text"
+          autocomplete="name"
+          minlength="2"
+          maxlength="100"
+          required
+          aria-describedby={`${prefix}-name-error`}
+        />
+        <p class="field-error" id={`${prefix}-name-error`} data-error-for="name"></p>
+      </div>
+
+      <div class="field">
+        <label for={`${prefix}-email`}>Email <span aria-hidden="true">*</span></label>
+        <input
+          id={`${prefix}-email`}
+          name="email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          maxlength="254"
+          required
+          aria-describedby={`${prefix}-email-error`}
+        />
+        <p class="field-error" id={`${prefix}-email-error`} data-error-for="email"></p>
+      </div>
+
+      {includeOrganisation && (
+        <div class="field">
+          <label for={`${prefix}-organisation`}>{organisationLabel} {detailedRoute ? <span aria-hidden="true">*</span> : <span class="optional">(optional)</span>}</label>
+          <input
+            id={`${prefix}-organisation`}
+            name={organisationField}
+            type="text"
+            autocomplete="organization"
+            maxlength="160"
+            required={detailedRoute}
+            aria-describedby={`${prefix}-${organisationField}-error`}
+          />
+          <p class="field-error" id={`${prefix}-${organisationField}-error`} data-error-for={organisationField}></p>
+        </div>
+      )}
+
+      {includePhone && (
+        <div class="field">
+          <label for={`${prefix}-phone`}>Phone <span class="optional">(optional)</span></label>
+          <input
+            id={`${prefix}-phone`}
+            name="phone"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            maxlength="32"
+            aria-describedby={`${prefix}-phone-error`}
+          />
+          <p class="field-error" id={`${prefix}-phone-error`} data-error-for="phone"></p>
+        </div>
+      )}
+
+      {includeCountry && (
+        <div class="field">
+          <label for={`${prefix}-country`}>Country or region {detailedRoute ? <span aria-hidden="true">*</span> : <span class="optional">(optional)</span>}</label>
+          <input
+            id={`${prefix}-country`}
+            name="country"
+            type="text"
+            autocomplete="country-name"
+            maxlength="80"
+            required={detailedRoute}
+            aria-describedby={`${prefix}-country-error`}
+          />
+          <p class="field-error" id={`${prefix}-country-error`} data-error-for="country"></p>
+        </div>
+      )}
+
+      {includeWebsite && (
+        <div class="field">
+          <label for={`${prefix}-website-url`}>Website or public profile <span class="optional">(optional)</span></label>
+          <input
+            id={`${prefix}-website-url`}
+            name="websiteUrl"
+            type="url"
+            inputmode="url"
+            autocomplete="url"
+            placeholder="https://"
+            maxlength="300"
+            aria-describedby={`${prefix}-website-url-error`}
+          />
+          <p class="field-error" id={`${prefix}-website-url-error`} data-error-for="websiteUrl"></p>
+        </div>
+      )}
+
+      {inquiryType === 'partnership' && (
+        <>
+          <div class="field">
+            <label for={`${prefix}-role`}>Your role or organisation type <span aria-hidden="true">*</span></label>
+            <input id={`${prefix}-role`} name="role" type="text" maxlength="100" required />
+          </div>
+          <div class="field">
+            <label for={`${prefix}-interest`}>Proposed collaboration <span aria-hidden="true">*</span></label>
+            <input id={`${prefix}-interest`} name="partnershipInterest" type="text" maxlength="300" required />
+          </div>
+        </>
+      )}
+
+      {inquiryType === 'maker' && (
+        <>
+          <div class="field">
+            <label for={`${prefix}-role`}>Type of work <span aria-hidden="true">*</span></label>
+            <input id={`${prefix}-role`} name="role" type="text" maxlength="100" required />
+          </div>
+          <div class="field">
+            <label for={`${prefix}-stage`}>Current stage <span aria-hidden="true">*</span></label>
+            <select id={`${prefix}-stage`} name="initiativeStage" required>
+              <option value="">Choose a stage</option>
+              <option value="idea">Idea</option>
+              <option value="testing">Testing</option>
+              <option value="active">Active</option>
+              <option value="scaling">Growing or scaling</option>
+              <option value="other">Another stage</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for={`${prefix}-support`}>Primary challenge or support sought <span aria-hidden="true">*</span></label>
+            <textarea id={`${prefix}-support`} name="supportNeeded" rows="3" maxlength="500" required></textarea>
+          </div>
+        </>
+      )}
+    </div>
+
+    <div class="field">
+      <label for={`${prefix}-message`}>{messageLabel} <span aria-hidden="true">*</span></label>
+      <textarea
+        id={`${prefix}-message`}
+        name="message"
+        rows="7"
+        minlength="20"
+        maxlength="3000"
+        required
+        aria-describedby={`${prefix}-message-hint ${prefix}-message-error`}
+    ></textarea>
+      <p class="field-hint" id={`${prefix}-message-hint`}>Please include enough context for us to understand your enquiry. Do not include sensitive personal information.</p>
+      <p class="field-error" id={`${prefix}-message-error`} data-error-for="message"></p>
+    </div>
+
+    <p class="privacy-note">
+      We use the information you submit to receive, route and respond to your enquiry. Read the <a href="/privacy/">draft privacy notice</a> for details. Please do not include sensitive personal information.
+    </p>
+    <input type="hidden" name="privacyNoticeVersion" value="2026-09-09-draft" />
+
+    <div class="form-actions">
+      <button class="button" type="submit" data-submit-label={submitLabel}>{submitLabel}</button>
+      <p class="form-status" role="status" aria-live="polite" aria-atomic="true" data-form-status></p>
+    </div>
+
+    <noscript>
+      <p class="form-note">JavaScript is not required to submit this form. Your browser will take you to the server response after submission.</p>
+    </noscript>
+  </form>
+</section>
+
+<style>
+  .inquiry-panel {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.62fr) minmax(0, 1.38fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .inquiry-panel__intro {
+    position: sticky;
+    top: 7rem;
+  }
+
+  .inquiry-panel__intro h2 {
+    margin-top: var(--space-3);
+  }
+
+  .inquiry-form {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .field label {
+    color: var(--color-ink);
+    font-weight: 720;
+  }
+
+  .optional,
+  .field-hint,
+  .form-note,
+  .form-status {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    font-weight: 450;
+  }
+
+  .field input:not([type='checkbox']),
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--color-line-strong, var(--color-line));
+    border-radius: var(--radius-small, 0.5rem);
+    color: var(--color-ink);
+    background: var(--color-paper);
+    font: inherit;
+  }
+
+  .field textarea {
+    min-height: 10rem;
+    resize: vertical;
+  }
+
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--color-teal);
+    outline: 3px solid color-mix(in srgb, var(--color-teal) 30%, transparent);
+    outline-offset: 2px;
+  }
+
+  .field [aria-invalid='true'] {
+    border-color: var(--color-error, #9c2f2f);
+  }
+
+  .field-error {
+    min-height: 1.25em;
+    margin: 0;
+    color: var(--color-error, #8f2525);
+    font-size: 0.88rem;
+    font-weight: 650;
+  }
+
+  .field-hint {
+    margin: 0;
+  }
+
+  .privacy-note {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-teal);
+    color: var(--color-muted);
+    background: var(--color-mint-soft);
+    font-size: 0.9rem;
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .form-status {
+    margin: 0;
+  }
+
+  .form-status:not(:empty) {
+    flex: 1 1 15rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--color-teal);
+    background: var(--color-mint-soft);
+  }
+
+  .honeypot {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+
+  @media (max-width: 48rem) {
+    .inquiry-panel,
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .inquiry-panel__intro {
+      position: static;
+    }
+
+    .field--full {
+      grid-column: auto;
+    }
+  }
+</style>

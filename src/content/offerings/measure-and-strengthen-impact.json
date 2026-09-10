@@ -1,0 +1,32 @@
+{
+  "slug": "measure-and-strengthen-impact",
+  "title": "Measure and strengthen impact",
+  "summary": "Define practical indicators, collect proportionate evidence, disclose limitations and learn from results.",
+  "detail": "The intended approach separates activities, outputs, outcomes and long-term ambitions. Any method must fit the decision being made, protect participants and avoid turning an estimate or product signal into an environmental or social result.",
+  "intendedFor": [
+    "Programme and product teams",
+    "Mission-led organisations",
+    "Potential evidence partners"
+  ],
+  "problem": "Broad impact language can hide weak definitions, missing baselines and evidence that cannot support the conclusion being claimed.",
+  "provides": [
+    "Theory-of-change and indicator framing",
+    "Evidence, boundary and limitation design",
+    "Learning reviews and responsible reporting support"
+  ],
+  "exclusions": [
+    "Audit, certification or regulatory assurance unless separately qualified",
+    "Invented baselines, outcome totals or causal claims",
+    "Official SDG, 3ZERO, EPR or government endorsement"
+  ],
+  "process": "Define the decision and change pathway, specify evidence and owners, collect only appropriate data, then review findings and limitations together.",
+  "expectedOutputs": [
+    "A documented theory of change or measurement question",
+    "Indicators with definitions, periods, scope, sources and owners",
+    "A learning record that distinguishes findings from uncertainty"
+  ],
+  "modelNote": "Proposed only. Suitable expertise, independence, scope and commercial terms must be agreed; this is not presented as an assurance service.",
+  "status": "proposed",
+  "evidenceReference": null,
+  "sortOrder": 4
+}

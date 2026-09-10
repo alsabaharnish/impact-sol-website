@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import InquiryForm from '../components/pages/InquiryForm.astro';
+import FaqList from '../components/pages/FaqList.astro';
+import { siteConfig } from '../data/site';
+
+const breadcrumbs = [{ name: 'Contact', path: '/contact/' }];
+const mailto = `mailto:${siteConfig.contactEmail}`;
+const faqs = [
+  {
+    question: 'Can I send confidential information?',
+    answer:
+      'Please do not send confidential documents or sensitive personal information through this first-contact route. Start with a high-level description; an appropriate method can be agreed later if a conversation continues.',
+  },
+  {
+    question: 'Can I request a media quote, speaking engagement or interview?',
+    answer:
+      'You may use the general form and clearly state the deadline, outlet or event, intended topic and whether comments would be on the record. Availability is not guaranteed while the initiative is being established.',
+  },
+  {
+    question: 'How do I report an accessibility problem?',
+    answer:
+      'Use this form or the published email address and include the page, what you were trying to do, the barrier you met and—if you are comfortable sharing it—the browser or assistive technology used.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Send Impact Sol. a general enquiry, website question or accessibility report through an accessible contact route."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Contact' }]} />
+  <PageHero
+    eyebrow="Contact"
+    title="Tell us what you are trying to move forward."
+    intro="Use this route for general questions, website feedback, media enquiries or anything that does not fit the partnership and maker forms."
+  />
+
+  <section class="section">
+    <div class="shell contact-options">
+      <div>
+        <p class="eyebrow">Direct route</p>
+        <h2>Email</h2>
+        <p><a class="contact-email" href={mailto}>{siteConfig.contactEmail}</a></p>
+        <p class="contact-note">This is the provisional published contact route while Impact Sol.’s official identity and mailboxes are being established.</p>
+      </div>
+      <dl>
+        <div><dt>Identity and registration</dt><dd>Impact Sol. is a proposed working identity. A confirmed legal name, form, registration detail and address have not been approved for publication.</dd></div>
+        <div><dt>Partnership idea</dt><dd><a href="/get-involved/#partnership-enquiry">Use the partnership form</a> so the right context is captured.</dd></div>
+        <div><dt>Chokro interest</dt><dd><a href="/get-involved/#chokro-interest">Use the maker and initiative form</a> to register your perspective.</dd></div>
+        <div><dt>Privacy, media or accessibility</dt><dd>Use the visible email or choose the matching category in the general form. No separate approved mailbox has been supplied.</dd></div>
+        <div><dt>Response expectation</dt><dd>Messages are reviewed as capacity allows. No response time or service hours are promised while the initiative is being established.</dd></div>
+        <div><dt>Phone, visits and social accounts</dt><dd>No monitored phone or WhatsApp number, public-visit address, or verified social profile is published in this build.</dd></div>
+        <div><dt>Urgent or emergency matters</dt><dd>This website does not provide an emergency, safeguarding or crisis-response service.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="general-enquiry" tabindex="-1">
+    <div class="shell">
+      <InquiryForm
+        inquiryType="general"
+        title="Send a general enquiry"
+        intro="Give us a short, non-sensitive summary and tell us what kind of response would be useful."
+        messageLabel="Your message"
+        submitLabel="Send enquiry"
+        includeOrganisation
+        includePhone
+        includeCountry
+      />
+    </div>
+  </section>
+
+  <section class="section section--bordered">
+    <div class="shell"><FaqList title="Contact questions" items={faqs} /></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-options {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .contact-email {
+    color: var(--color-forest);
+    font-size: clamp(1.15rem, 3vw, 1.8rem);
+    font-weight: 750;
+    overflow-wrap: anywhere;
+    text-underline-offset: 0.2em;
+  }
+
+  .contact-note {
+    max-width: 34rem;
+    color: var(--color-muted);
+  }
+
+  .contact-options dl {
+    margin: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .contact-options dl div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.55fr) minmax(0, 1.45fr);
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .contact-options dt {
+    color: var(--color-ink);
+    font-weight: 760;
+  }
+
+  .contact-options dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 46rem) {
+    .contact-options,
+    .contact-options dl div {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-options dl div { gap: 0.55rem; }
+  }
+</style>

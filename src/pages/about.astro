@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import FaqList from '../components/pages/FaqList.astro';
+import StatusPanel from '../components/pages/StatusPanel.astro';
+import { getFaqs } from '../content/read';
+
+const breadcrumbs = [{ name: 'About', path: '/about/' }];
+const faqs = await getFaqs('organisation');
+---
+
+<BaseLayout
+  title="About"
+  description="Why Impact Sol. is being established, the principles guiding the work, and the facts still to be confirmed before launch."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'About' }]} />
+  <PageHero
+    eyebrow="About Impact Sol."
+    title="Built for practical progress."
+    intro="Impact Sol. is being shaped as a home for useful products and partnerships that can support eco-conscious enterprise and a greener, more inclusive economy."
+  >
+    <div slot="aside">
+      <StatusPanel
+        title="An initiative being established"
+        text="The name, legal identity, team and operating scope are still being confirmed. This website presents the intended direction, not a claim of completed impact."
+      />
+    </div>
+  </PageHero>
+
+  <section class="section" id="current-stage" tabindex="-1">
+    <div class="shell split">
+      <div>
+        <p class="eyebrow">Why we are here</p>
+        <h2>Good intentions need useful infrastructure.</h2>
+      </div>
+      <div class="prose prose--large">
+        <p>People working toward more responsible ways of producing, trading and participating often face fragmented information, limited connections and tools that do not fit their context.</p>
+        <p>Impact Sol. is being developed to help close some of those gaps. The intention is to build focused digital products, convene practical partnerships and learn openly from real use. The work should be understandable to the people it affects—not hidden behind broad promises or fashionable language.</p>
+        <p>That direction is deliberately modest. Technology can support change, but it cannot replace fair governance, local knowledge, safe working conditions or responsible policy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="direction-title">
+    <div class="shell">
+      <div class="section-heading">
+        <div><p class="eyebrow">Provisional direction</p><h2 id="direction-title">Mission, vision, and the meaning of “Sol.”</h2></div>
+        <p>These statements come from the working requirements brief. They remain provisional until Impact Sol.’s owners complete the formation and brand-approval process.</p>
+      </div>
+      <div class="direction-grid">
+        <article><span>Mission</span><p>To equip people and organizations creating environmental and social value with the technology, connections, and practical support they need to grow sustainably.</p></article>
+        <article><span>Vision</span><p>A thriving economy where responsible businesses, local makers, and purpose-led innovation improve life for people and the planet.</p></article>
+        <article><span>Name story</span><p><strong>Sol is short for solutions.</strong> It also reflects the energy created when people, ideas, and technology come together around a shared purpose. New technologies belong only where they solve a real problem, strengthen trust, or extend positive impact.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="model-title">
+    <div class="shell model-layout">
+      <div>
+        <p class="eyebrow">Working business philosophy</p>
+        <h2 id="model-title">Commercially grounded and guided by social-business principles.</h2>
+      </div>
+      <div class="prose">
+        <p>Impact Sol. intends to develop practical products and partnership work that can sustain responsible delivery while supporting environmental and social value. That does not mean a particular revenue, ownership, subsidy, grant, pro-bono, or surplus-treatment model is already operating.</p>
+        <p>Before any offer is made public, the responsible team must approve what can be delivered, for whom, at what capacity, through which selection process, under which commercial terms, and with what safeguards. Paid, subsidised, grant-funded, and pro-bono work must be distinguished plainly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="people-title">
+    <div class="shell foundations">
+      <div>
+        <p class="eyebrow">People, place and history</p>
+        <h2 id="people-title">Publish the accountable facts when they are approved.</h2>
+        <p>No founder biography, portrait, team roster, advisor, governance role, award, affiliation, operating location, or service geography has been supplied with publication approval. This build does not invent them.</p>
+      </div>
+      <div class="foundations__items">
+        <article><span>Founder story and timeline</span><p>Withheld until the founder approves the narrative, dates, prior project relationships, and any personal information.</p></article>
+        <article><span>Leadership and governance</span><p>Withheld until current roles, decision rights, biographies, images, and publication consent are recorded.</p></article>
+        <article><span>Where the company works</span><p>Impact Sol.’s service geography is not yet confirmed. Chokro is separately described as designed for Bangladesh with a focused Dhaka pilot planned.</p></article>
+        <article><span>Current priorities</span><p>Confirm the legal and brand identity, document the Chokro relationship, approve service capacity and governance, complete policy review, and verify a responsible production release.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="principles-title">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">How we intend to work</p>
+        <h2 id="principles-title">Principles before promises.</h2>
+        <p>These are working commitments for how ideas should be selected, developed and communicated.</p>
+      </div>
+      <ol class="principle-grid">
+        <li>
+          <span>01</span>
+          <h3>Start with people and context</h3>
+          <p>Listen before defining the problem. Include the people who experience it in discovery, testing and decisions that affect them.</p>
+        </li>
+        <li>
+          <span>02</span>
+          <h3>Make the useful thing first</h3>
+          <p>Prefer a focused tool that works over a large idea that cannot yet be tested. Keep the route from need to benefit visible.</p>
+        </li>
+        <li>
+          <span>03</span>
+          <h3>Design for access and dignity</h3>
+          <p>Treat accessibility, privacy, safety and respectful language as product requirements—not finishing touches.</p>
+        </li>
+        <li>
+          <span>04</span>
+          <h3>Show the evidence and its limits</h3>
+          <p>Separate prototypes, outputs and outcomes. Publish methods and caveats alongside any future impact claim.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell accountability">
+      <div class="accountability__copy">
+        <p class="eyebrow">Accountability</p>
+        <h2>Clear about what is known—and what is not.</h2>
+        <p>Trust depends on accurate language. Until foundational details are approved, this site avoids claims about registration, ownership, geography, named partners, team members and results.</p>
+      </div>
+      <div class="accountability__list" role="list" aria-label="Publication checks">
+        <div role="listitem"><span>Publish now</span><strong>Purpose, intended approach and ways to express interest</strong></div>
+        <div role="listitem"><span>Confirm before launch</span><strong>Legal identity, governance, team and official contact routes</strong></div>
+        <div role="listitem"><span>Evidence before claiming</span><strong>Outcomes, environmental benefits and partner relationships</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--bordered">
+    <div class="shell">
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Start a conversation"
+    title="Bring a question, a challenge or a possibility."
+    text="If this direction overlaps with your work, tell us what you are exploring."
+    href="/get-involved/"
+    label="Get involved"
+    secondaryHref="/contact/"
+    secondaryLabel="Contact us"
+  />
+</BaseLayout>
+
+<style>
+  .split,
+  .accountability,
+  .model-layout,
+  .foundations {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .split h2,
+  .accountability h2 {
+    max-width: 13ch;
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+    border-left: 1px solid var(--color-line);
+    list-style: none;
+  }
+
+  .principle-grid li {
+    min-height: 18rem;
+    padding: clamp(1.4rem, 4vw, 2.5rem);
+    border-right: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-surface) 84%, transparent);
+  }
+
+  .principle-grid span {
+    display: block;
+    margin-bottom: clamp(2rem, 5vw, 4.5rem);
+    color: var(--color-teal);
+    font-size: 0.82rem;
+    font-weight: 780;
+  }
+
+  .principle-grid h3 {
+    max-width: 15ch;
+  }
+
+  .principle-grid p {
+    color: var(--color-muted);
+  }
+
+  .accountability {
+    padding: clamp(1.5rem, 5vw, 4rem);
+    border-radius: var(--radius-large);
+    color: var(--color-paper);
+    background: var(--color-forest);
+  }
+
+  .accountability h2,
+  .accountability .eyebrow {
+    color: inherit;
+  }
+
+  .accountability__copy > p:last-child {
+    color: var(--color-paper-muted);
+  }
+
+  .accountability__list {
+    display: grid;
+    border-top: 1px solid color-mix(in srgb, var(--color-paper) 24%, transparent);
+  }
+
+  .accountability__list div {
+    display: grid;
+    gap: 0.35rem;
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-paper) 24%, transparent);
+  }
+
+  .accountability__list span {
+    color: var(--color-sun-soft, #ffd47a);
+    font-size: 0.78rem;
+    font-weight: 760;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .direction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .direction-grid article {
+    min-height: 18rem;
+    padding: clamp(1.4rem, 3vw, 2.2rem);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .direction-grid article:last-child {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+
+  .direction-grid span,
+  .foundations__items span {
+    color: var(--color-teal);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .direction-grid p {
+    margin-top: clamp(3rem, 7vw, 6rem);
+    font-size: var(--step-1);
+  }
+
+  .direction-grid article:last-child p {
+    margin-top: var(--space-5);
+  }
+
+  .model-layout > div:first-child h2,
+  .foundations > div:first-child h2 {
+    max-width: 14ch;
+  }
+
+  .foundations > div:first-child > p:last-child {
+    color: var(--color-muted);
+  }
+
+  .foundations__items {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .foundations__items article {
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .foundations__items p {
+    margin: 0.45rem 0 0;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 48rem) {
+    .split,
+    .accountability,
+    .model-layout,
+    .foundations,
+    .principle-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .direction-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .direction-grid article:last-child {
+      grid-column: auto;
+    }
+  }
+</style>

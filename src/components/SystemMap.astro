@@ -1,0 +1,201 @@
+<figure class="system-map" aria-labelledby="system-map-title system-map-caption">
+  <div class="system-map__canvas">
+    <div class="system-map__orbit system-map__orbit--outer" aria-hidden="true"></div>
+    <div class="system-map__orbit system-map__orbit--inner" aria-hidden="true"></div>
+    <div class="system-map__core">
+      <span>Impact Sol.</span>
+      <strong id="system-map-title">Useful change</strong>
+      <small>built with people</small>
+    </div>
+    <div class="system-map__node system-map__node--one">
+      <span aria-hidden="true">01</span>
+      Understand
+    </div>
+    <div class="system-map__node system-map__node--two">
+      <span aria-hidden="true">02</span>
+      Co-design
+    </div>
+    <div class="system-map__node system-map__node--three">
+      <span aria-hidden="true">03</span>
+      Implement
+    </div>
+    <div class="system-map__node system-map__node--four">
+      <span aria-hidden="true">04</span>
+      Improve
+    </div>
+  </div>
+  <figcaption id="system-map-caption">
+    A collaborative cycle: understand the need, co-design, implement, then measure and improve.
+  </figcaption>
+</figure>
+
+<style>
+  .system-map {
+    width: min(100%, 35rem);
+    margin: 0 auto;
+  }
+
+  .system-map__canvas {
+    position: relative;
+    min-height: clamp(23rem, 42vw, 34rem);
+    isolation: isolate;
+  }
+
+  .system-map__canvas::before {
+    position: absolute;
+    inset: 5% 8%;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 52% 46%, rgb(242 180 65 / 22%), transparent 24%),
+      radial-gradient(circle at 50% 50%, var(--color-mint-soft), transparent 70%);
+    border-radius: 50%;
+    content: '';
+    filter: blur(3px);
+  }
+
+  .system-map__orbit {
+    position: absolute;
+    inset: 11%;
+    z-index: -1;
+    border: 1px solid color-mix(in srgb, var(--color-forest) 26%, transparent);
+    border-radius: 50%;
+    transform: rotate(-12deg);
+  }
+
+  .system-map__orbit--outer::before,
+  .system-map__orbit--outer::after {
+    position: absolute;
+    width: 0.64rem;
+    height: 0.64rem;
+    background: var(--color-sun);
+    border: 0.25rem solid var(--color-paper);
+    border-radius: 50%;
+    box-sizing: content-box;
+    content: '';
+  }
+
+  .system-map__orbit--outer::before {
+    top: 12%;
+    right: 8%;
+  }
+
+  .system-map__orbit--outer::after {
+    bottom: 6%;
+    left: 17%;
+  }
+
+  .system-map__orbit--inner {
+    inset: 25%;
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--color-teal) 33%, transparent);
+    transform: rotate(24deg);
+  }
+
+  .system-map__core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: clamp(10.5rem, 18vw, 13.5rem);
+    aspect-ratio: 1;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--color-paper);
+    background: var(--color-forest);
+    border-radius: 50%;
+    box-shadow: 0 2rem 4rem rgb(18 60 52 / 22%);
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .system-map__core span,
+  .system-map__core small {
+    color: var(--color-mint);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .system-map__core strong {
+    max-width: 7ch;
+    margin-block: 0.5rem;
+    font-size: clamp(1.45rem, 1rem + 1.4vw, 2.2rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .system-map__node {
+    position: absolute;
+    display: flex;
+    min-height: 46px;
+    padding: 0.62rem 0.86rem;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-line);
+    background: color-mix(in srgb, white 91%, transparent);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.84rem;
+    font-weight: 760;
+    backdrop-filter: blur(8px);
+  }
+
+  .system-map__node span {
+    color: var(--color-forest-bright);
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+  }
+
+  .system-map__node--one {
+    top: 5%;
+    left: 34%;
+  }
+
+  .system-map__node--two {
+    top: 37%;
+    right: 0;
+  }
+
+  .system-map__node--three {
+    right: 18%;
+    bottom: 5%;
+  }
+
+  .system-map__node--four {
+    bottom: 22%;
+    left: 0;
+  }
+
+  figcaption {
+    max-width: 30rem;
+    margin: -0.75rem auto 0;
+    color: var(--color-muted);
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
+  @media (max-width: 28rem) {
+    .system-map__node {
+      padding-inline: 0.65rem;
+      font-size: 0.75rem;
+    }
+
+    .system-map__node--one {
+      left: 27%;
+    }
+
+    .system-map__node--three {
+      right: 8%;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .system-map__node {
+      background: white;
+      backdrop-filter: none;
+    }
+  }
+</style>

@@ -1,0 +1,16 @@
+{
+  "name": "Impact Sol.",
+  "short_name": "Impact Sol",
+  "description": "Practical technology and partnership for responsible enterprise.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfaf4",
+  "theme_color": "#123c34",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "impact-sol-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "prebuild": "node scripts/validate-content.mjs",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "postbuild": "node scripts/check-built-site.mjs",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "serve": "node server/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "npm run build && npm test"
+  },
+  "dependencies": {
+    "astro": "7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "6.0.3"
+  }
+}

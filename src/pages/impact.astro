@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import FaqList from '../components/pages/FaqList.astro';
+import StatusPanel from '../components/pages/StatusPanel.astro';
+
+const breadcrumbs = [{ name: 'Purpose and approach', path: '/impact/' }];
+const faqs = [
+  {
+    question: 'Where are Impact Sol.’s impact numbers?',
+    answer:
+      'No verified impact dataset has been approved for publication. Publishing a number without its boundary, method, source and limitations would create false confidence, so this site explains the intended measurement approach instead.',
+  },
+  {
+    question: 'Will environmental benefits be calculated?',
+    answer:
+      'Only when a relevant, defensible method and appropriate expertise are available. Future environmental claims should state what was measured, what was estimated, the comparison used, the timeframe and material uncertainties.',
+  },
+  {
+    question: 'How will affected people influence evaluation?',
+    answer:
+      'The intended approach includes people affected by the work in deciding what useful change looks like, reviewing assumptions and interpreting results. The exact participation and governance model must be defined for each project.',
+  },
+];
+---
+
+<BaseLayout
+  title="Purpose and approach"
+  description="Impact Sol.’s intended purpose, decision principles and approach to responsible evidence—without unsupported impact claims."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Purpose and approach' }]} />
+  <PageHero
+    eyebrow="Purpose and approach"
+    title="Make useful change easier to build—and harder to overstate."
+    intro="Our purpose is to support eco-conscious enterprise and a more inclusive economy through practical products, honest partnerships and evidence people can inspect."
+  >
+    <div slot="aside">
+      <StatusPanel
+        title="No impact claims yet"
+        text="This initiative is being established. There is no approved baseline, outcome dataset or verified environmental claim to publish today."
+      />
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="shell purpose-statement">
+      <p class="eyebrow">Our intended contribution</p>
+      <p class="purpose-statement__text">Use technology and collaboration to reduce practical barriers—while keeping people, power, evidence and ecological limits in view.</p>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="change-title">
+    <div class="shell change-map">
+      <div class="change-map__intro">
+        <p class="eyebrow">A working theory of change</p>
+        <h2 id="change-title">From a real need to a defensible outcome.</h2>
+        <p>This is a planning frame, not proof that change has happened. Every link in the chain must be tested in context.</p>
+      </div>
+      <ol>
+        <li><span>Need</span><p>A specific barrier is understood with the people who experience it.</p></li>
+        <li><span>Work</span><p>A focused product or partnership addresses a plausible part of that barrier.</p></li>
+        <li><span>Output</span><p>People can access or use what was created; delivery is counted accurately.</p></li>
+        <li><span>Outcome</span><p>A meaningful change occurs and alternative explanations are considered.</p></li>
+        <li><span>Learning</span><p>Evidence, limitations and unintended effects shape the next decision.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="dimensions-title">
+    <div class="shell">
+      <div class="section-heading section-heading--wide">
+        <p class="eyebrow">What we will look for</p>
+        <h2 id="dimensions-title">Three dimensions, considered together.</h2>
+        <p>The relevance of each dimension depends on the work. These are areas for inquiry, not claims about results.</p>
+      </div>
+      <div class="dimensions">
+        <article>
+          <span aria-hidden="true">People</span>
+          <h3>Access and agency</h3>
+          <p>Who can participate, who cannot, whether people can make informed choices and how benefits and burdens are distributed.</p>
+          <ul><li>Accessibility and reach</li><li>Quality of participation</li><li>Safety, dignity and choice</li></ul>
+        </article>
+        <article>
+          <span aria-hidden="true">Practice</span>
+          <h3>Usefulness and durability</h3>
+          <p>Whether the work addresses the defined need, fits its context and can be maintained or handed over responsibly.</p>
+          <ul><li>Task success and relevance</li><li>Adoption with context</li><li>Stewardship and resilience</li></ul>
+        </article>
+        <article>
+          <span aria-hidden="true">Planet</span>
+          <h3>Environmental integrity</h3>
+          <p>Whether an environmental benefit is plausible, material and measured within a transparent boundary without shifting harm elsewhere.</p>
+          <ul><li>Method and baseline</li><li>Trade-offs and rebound effects</li><li>Uncertainty and verification</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="alignment-title">
+    <div class="shell alignment">
+      <div>
+        <p class="eyebrow">Alignment, not attribution</p>
+        <h2 id="alignment-title">Relevant frameworks can guide questions without becoming proof.</h2>
+        <p>Impact Sol. does not inherit product activity as organisation-level impact. No official UN, 3ZERO, government, EPR, or certification relationship is claimed.</p>
+      </div>
+      <div>
+        <article>
+          <span>Sustainable Development Goals</span>
+          <h3>Chokro’s conceptual contribution areas</h3>
+          <p>The current product concept has defensible alignment with SDG Targets 8.3, 11.6, 12.5, and 13.3. These are product-level contribution signals—not official indicators, audited outcomes, a certification, or a progress score.</p>
+          <dl>
+            <div><dt>8.3</dt><dd>Entrepreneurship and growth of small and medium-sized enterprises</dd></div>
+            <div><dt>11.6</dt><dd>Environmental impact of cities, including waste management</dd></div>
+            <div><dt>12.5</dt><dd>Waste prevention, reduction, recycling, and reuse</dd></div>
+            <div><dt>13.3</dt><dd>Climate education, awareness, and capacity</dd></div>
+          </dl>
+        </article>
+        <article>
+          <span>3ZERO</span>
+          <h3>Values alignment without implied affiliation</h3>
+          <p>The intended work may be described as aligned with the 3ZERO vision only in a way that does not imply partnership, membership, endorsement, or certification. Chokro’s current 3ZERO role labels also require written permission and trademark review before public release.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" aria-labelledby="claims-title">
+    <div class="shell claims-standard">
+      <div>
+        <p class="eyebrow eyebrow--light">Claims standard</p>
+        <h2 id="claims-title">Every number needs a sentence around it.</h2>
+        <p>Before publishing a metric or story as evidence of impact, the supporting record should answer these questions.</p>
+      </div>
+      <ol>
+        <li><span>01</span><p><strong>What changed?</strong>Name the outcome—not only the activity delivered.</p></li>
+        <li><span>02</span><p><strong>For whom, where and when?</strong>State the population, boundary and period.</p></li>
+        <li><span>03</span><p><strong>Compared with what?</strong>Explain the baseline or counterfactual and why it is reasonable.</p></li>
+        <li><span>04</span><p><strong>How do we know?</strong>Link the source, method, sample and responsible reviewer.</p></li>
+        <li><span>05</span><p><strong>What remains uncertain?</strong>Publish limitations, trade-offs and possible negative effects.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="learning-title">
+    <div class="shell learning-loop">
+      <div>
+        <p class="eyebrow">Learning in public</p>
+        <h2 id="learning-title">Evidence should change decisions.</h2>
+      </div>
+      <div class="prose">
+        <p>The point of measurement is not to decorate a report. Evidence should help decide whether to improve, continue, scale, transfer, pause or stop a piece of work.</p>
+        <p>When there is enough approved material, future updates should distinguish research, delivery data, early signals and independently reviewed outcomes. Until then, the most accurate number is no number.</p>
+        <h3>Minimum publication record</h3>
+        <p>Every future metric needs its definition, value, unit, reporting period, geography and programme scope, method, source, named data owner, last-updated date, approval status, and limitations. The reporting period and review owner must be decided before collection—not reconstructed for a headline later.</p>
+        <h3>Product-counter boundary</h3>
+        <p>If Chokro application counters are ever reused, they must be labelled as lifetime activity totals, may include cached or bounded values, do not establish a baseline or trend, and cannot be added across overlapping SDG mappings.</p>
+        <h3>Reports</h3>
+        <p>No report download is offered because no substantive, approved impact report has been supplied. A future report must carry its accountable owner, period, method, sources, limitations, accessible format, and version.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--bordered">
+    <div class="shell"><FaqList title="Evidence and impact questions" items={faqs} /></div>
+  </section>
+
+  <CtaBand
+    eyebrow="Challenge the approach"
+    title="Good evidence gets stronger when people question it."
+    text="If you have relevant evaluation experience or see a gap in this approach, we welcome a constructive conversation."
+    href="/contact/"
+    label="Send feedback"
+    secondaryHref="/what-we-do/"
+    secondaryLabel="See how we intend to work"
+  />
+</BaseLayout>
+
+<style>
+  .purpose-statement {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .purpose-statement__text {
+    max-width: 27ch;
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--step-4);
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+  }
+
+  .change-map {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(2rem, 7vw, 7rem);
+  }
+
+  .change-map ol {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .change-map li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .change-map li:last-child { border-bottom: 1px solid var(--color-line); }
+  .change-map li span { color: var(--color-forest); font-weight: 780; }
+  .change-map li p { margin: 0; color: var(--color-muted); }
+
+  .dimensions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+
+  .dimensions article {
+    padding: clamp(1.4rem, 3vw, 2.25rem);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+  }
+
+  .dimensions article > span {
+    display: inline-flex;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    color: var(--color-forest);
+    background: var(--color-mint-soft);
+    font-size: 0.74rem;
+    font-weight: 780;
+    text-transform: uppercase;
+  }
+
+  .dimensions h3 { margin-top: var(--space-5); }
+  .dimensions p, .dimensions li { color: var(--color-muted); }
+  .dimensions ul { padding-left: 1.2rem; }
+
+  .claims-standard,
+  .learning-loop,
+  .alignment {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(2rem, 7vw, 7rem);
+  }
+
+  .claims-standard > div > p:last-child { color: var(--color-paper-muted); }
+
+  .alignment > div:first-child > p:last-child { color: var(--color-muted); }
+  .alignment > div:last-child { display: grid; gap: var(--space-4); }
+  .alignment article { padding: var(--space-5); border: 1px solid var(--color-line); background: var(--color-surface); border-radius: var(--radius-md); }
+  .alignment article > span { color: var(--color-teal); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .alignment article h3 { margin: var(--space-3) 0; font-size: var(--step-1); }
+  .alignment article p, .alignment article dd { color: var(--color-muted); }
+  .alignment dl { margin: var(--space-4) 0 0; }
+  .alignment dl div { display: grid; padding-block: 0.7rem; grid-template-columns: 3.5rem 1fr; gap: 1rem; border-top: 1px solid var(--color-line); }
+  .alignment dt { color: var(--color-forest); font-weight: 800; }
+  .alignment dd { margin: 0; }
+
+  .claims-standard ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .claims-standard li {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-paper) 20%, transparent);
+  }
+
+  .claims-standard li > span {
+    color: var(--color-sun-soft, #ffd47a);
+    font-size: 0.75rem;
+    font-weight: 780;
+  }
+
+  .claims-standard li p { margin: 0; color: var(--color-paper-muted); }
+  .claims-standard li strong { display: block; color: var(--color-paper); }
+
+  @media (max-width: 52rem) {
+    .purpose-statement,
+    .change-map,
+    .claims-standard,
+    .learning-loop,
+    .alignment,
+    .dimensions {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .change-map li { grid-template-columns: 1fr; gap: 0.45rem; }
+  }
+</style>

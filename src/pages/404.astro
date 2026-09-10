@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SystemState from '../components/pages/SystemState.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The requested page could not be found. Return to the Impact Sol. homepage or choose a current pathway."
+  noindex
+  pageState="404"
+>
+  <SystemState
+    code="404"
+    eyebrow="Page not found"
+    title="This path does not lead anywhere yet."
+    text="The address may have changed, or the page may never have existed. Nothing was lost—you can return home or choose a current way to connect."
+    primaryHref="/"
+    primaryLabel="Return home"
+    secondaryHref="/get-involved/"
+    secondaryLabel="See ways to get involved"
+  />
+</BaseLayout>

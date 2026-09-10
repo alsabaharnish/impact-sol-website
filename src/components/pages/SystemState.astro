@@ -1,0 +1,120 @@
+---
+interface Props {
+  code?: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  primaryHref: string;
+  primaryLabel: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  code,
+  eyebrow,
+  title,
+  text,
+  primaryHref,
+  primaryLabel,
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+---
+
+<section class="system-state">
+  <div class="shell system-state__inner">
+    <div class="system-state__copy">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p class="lead">{text}</p>
+      <div class="button-row">
+        <a class="button" href={primaryHref}>{primaryLabel}</a>
+        {secondaryHref && secondaryLabel && (
+          <a class="text-link" href={secondaryHref}>{secondaryLabel}<span aria-hidden="true">→</span></a>
+        )}
+      </div>
+    </div>
+    <div class="system-state__mark" aria-hidden="true">
+      <span>{code || 'IS'}</span>
+      <i></i><i></i><i></i>
+    </div>
+  </div>
+</section>
+
+<style>
+  .system-state {
+    display: grid;
+    min-height: min(44rem, 72vh);
+    padding-block: clamp(4rem, 10vw, 9rem);
+    align-items: center;
+    overflow: clip;
+    background:
+      radial-gradient(circle at 82% 25%, rgb(242 180 65 / 18%), transparent 28rem),
+      linear-gradient(145deg, var(--color-paper), var(--color-mint-soft));
+  }
+
+  .system-state__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.55fr);
+    align-items: center;
+    gap: clamp(3rem, 9vw, 10rem);
+  }
+
+  h1 {
+    max-width: 13ch;
+    margin-bottom: var(--space-5);
+    font-size: var(--step-5);
+  }
+
+  .lead {
+    max-width: 39rem;
+  }
+
+  .system-state__mark {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--color-forest) 18%, transparent);
+    border-radius: 50%;
+  }
+
+  .system-state__mark::before,
+  .system-state__mark::after {
+    position: absolute;
+    border: 1px solid color-mix(in srgb, var(--color-teal) 22%, transparent);
+    border-radius: 50%;
+    content: '';
+  }
+
+  .system-state__mark::before { inset: 17%; }
+  .system-state__mark::after { inset: 34%; background: var(--color-forest); }
+
+  .system-state__mark span {
+    z-index: 1;
+    color: var(--color-paper);
+    font-size: var(--step-3);
+    font-weight: 820;
+    letter-spacing: -0.05em;
+  }
+
+  .system-state__mark i {
+    position: absolute;
+    width: 0.9rem;
+    height: 0.9rem;
+    background: var(--color-sun);
+    border: 0.3rem solid var(--color-paper);
+    border-radius: 50%;
+    box-sizing: content-box;
+  }
+
+  .system-state__mark i:nth-of-type(1) { top: 8%; right: 24%; }
+  .system-state__mark i:nth-of-type(2) { right: 2%; bottom: 31%; background: var(--color-teal); }
+  .system-state__mark i:nth-of-type(3) { bottom: 7%; left: 20%; background: var(--color-forest-bright); }
+
+  @media (max-width: 48rem) {
+    .system-state__inner { grid-template-columns: 1fr; }
+    .system-state__mark { width: min(78vw, 22rem); margin-inline: auto; }
+  }
+</style>

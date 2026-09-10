@@ -1,0 +1,32 @@
+{
+  "slug": "develop-partnerships-and-ecosystems",
+  "title": "Develop partnerships and ecosystems",
+  "summary": "Bring relevant organisations and communities together around a specific, shared challenge.",
+  "detail": "The intended role is to help clarify the need, participating roles, decision rights, safeguards and delivery path. No organisation is represented as a partner until the relationship is approved and documented.",
+  "intendedFor": [
+    "Civil-society and community organisations",
+    "Companies and institutions",
+    "Funders and public bodies"
+  ],
+  "problem": "Useful initiatives can stall when people, resources, responsibilities and evidence requirements remain disconnected.",
+  "provides": [
+    "Collaborative discovery and programme framing",
+    "Role, governance and delivery-path design",
+    "Shared learning and reporting structures"
+  ],
+  "exclusions": [
+    "A partnership created by submitting an enquiry",
+    "Unapproved affiliation, endorsement or logo use",
+    "Funding or delivery commitments before written agreement"
+  ],
+  "process": "Frame the shared need, conduct appropriate due diligence, co-design roles and safeguards, then agree delivery and review points in writing.",
+  "expectedOutputs": [
+    "A shared problem and participant map",
+    "Clear roles, safeguards and decision points",
+    "A proposed delivery and learning framework"
+  ],
+  "modelNote": "Proposed only. Every collaboration requires capacity review, due diligence and separate written terms; no active partner list is published.",
+  "status": "proposed",
+  "evidenceReference": null,
+  "sortOrder": 3
+}

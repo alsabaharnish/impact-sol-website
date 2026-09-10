@@ -1,0 +1,31 @@
+---
+interface Props {
+  inverse?: boolean;
+}
+
+const { inverse = false } = Astro.props;
+---
+
+<span class:list={['wordmark', { 'wordmark--inverse': inverse }]} aria-label="Impact Sol.">
+  <span aria-hidden="true">impact&nbsp;sol<span class="wordmark__period">.</span></span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    color: var(--color-ink);
+    font-size: clamp(1.22rem, 1rem + 0.45vw, 1.55rem);
+    font-weight: 760;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .wordmark--inverse {
+    color: var(--color-paper);
+  }
+
+  .wordmark__period {
+    color: var(--color-sun-deep);
+  }
+</style>

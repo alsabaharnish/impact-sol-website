@@ -1,0 +1,286 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+local_backend: true
+media_folder: public/uploads
+public_folder: /uploads
+
+editor:
+  preview: false
+
+collections:
+  - name: offerings
+    label: Offerings
+    label_singular: Offering
+    folder: src/content/offerings
+    create: true
+    delete: true
+    format: json
+    extension: json
+    identifier_field: title
+    slug: "{{fields.slug}}"
+    summary: "{{title}} — {{status}}"
+    sortable_fields: [sortOrder, title, status]
+    fields:
+      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: summary, widget: text, hint: 'Describe the intended work without outcome promises or numerical impact claims.' }
+      - { label: Detail, name: detail, widget: text }
+      - label: Intended for
+        name: intendedFor
+        widget: list
+        min: 1
+        max: 6
+        field: { label: Audience, name: audience, widget: string }
+      - { label: Problem addressed, name: problem, widget: text }
+      - label: What Impact Sol. may provide
+        name: provides
+        widget: list
+        min: 1
+        max: 6
+        field: { label: Item, name: item, widget: string }
+      - label: Explicit exclusions
+        name: exclusions
+        widget: list
+        min: 1
+        max: 6
+        field: { label: Exclusion, name: exclusion, widget: string }
+      - { label: Engagement process, name: process, widget: text }
+      - label: Expected outputs
+        name: expectedOutputs
+        widget: list
+        min: 1
+        max: 6
+        field: { label: Output, name: output, widget: string }
+      - { label: Commercial or availability note, name: modelNote, widget: text, hint: 'Distinguish proposed, paid, subsidised, grant-funded and pro-bono status accurately.' }
+      - label: Status
+        name: status
+        widget: select
+        options:
+          - { label: Proposed, value: proposed }
+          - { label: Available, value: available }
+        default: proposed
+        hint: 'Available requires owner approval and an evidence reference.'
+      - { label: Evidence or approval reference, name: evidenceReference, widget: string, required: false, hint: 'A durable document path, ticket, or approval record; never a marketing claim.' }
+      - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
+
+  - name: products
+    label: Products
+    label_singular: Product
+    folder: src/content/products
+    create: true
+    delete: true
+    format: json
+    extension: json
+    identifier_field: name
+    slug: "{{fields.slug}}"
+    summary: "{{name}} — {{stage}}"
+    sortable_fields: [sortOrder, name, stage]
+    fields:
+      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
+      - { label: Name, name: name, widget: string }
+      - { label: Tagline, name: tagline, widget: text }
+      - { label: Summary, name: summary, widget: text }
+      - label: Stage
+        name: stage
+        widget: select
+        options:
+          - { label: Concept, value: concept }
+          - { label: Working prototype, value: working-prototype }
+          - { label: Pilot, value: pilot }
+          - { label: Live, value: live }
+      - { label: Publicly available, name: publicAvailability, widget: boolean, default: false }
+      - label: Ownership status
+        name: ownershipStatus
+        widget: select
+        options:
+          - { label: Unconfirmed, value: unconfirmed }
+          - { label: Documented, value: documented }
+      - { label: Ownership note, name: ownershipNote, widget: text }
+      - label: Public relationship label
+        name: relationshipLabel
+        widget: select
+        options:
+          - { label: Proposed, value: proposed }
+          - { label: Endorsed, value: endorsed }
+        hint: 'Endorsed requires documented rights and an evidence reference.'
+      - label: Intended users
+        name: intendedUsers
+        widget: list
+        min: 1
+        max: 8
+        field: { label: User group, name: user, widget: string }
+      - label: Current capabilities
+        name: currentCapabilities
+        widget: list
+        min: 1
+        max: 12
+        field: { label: Capability, name: capability, widget: string }
+      - label: Current limitations
+        name: currentLimitations
+        widget: list
+        min: 1
+        max: 12
+        field: { label: Limitation, name: limitation, widget: string }
+      - { label: Geography and availability wording, name: geography, widget: text }
+      - { label: Last updated, name: lastUpdated, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+      - { label: Product privacy status, name: privacyStatus, widget: text }
+      - { label: Product support status, name: supportStatus, widget: text }
+      - label: Representative visual
+        name: representativeVisual
+        widget: object
+        fields:
+          - { label: File, name: path, widget: string }
+          - { label: Alternative text, name: alt, widget: string, required: false }
+          - { label: Caption, name: caption, widget: text }
+          - label: Rights status
+            name: rightsStatus
+            widget: select
+            options:
+              - { label: Provisional, value: provisional }
+              - { label: Approved, value: approved }
+      - label: Approved screenshots
+        name: screenshots
+        widget: list
+        required: false
+        default: []
+        fields:
+          - { label: File, name: path, widget: image }
+          - { label: Alternative text, name: alt, widget: string }
+          - { label: Caption, name: caption, widget: text }
+          - { label: Rights reference, name: rightsReference, widget: string }
+      - label: Search metadata
+        name: seo
+        widget: object
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: Indexable, name: indexable, widget: boolean, default: false, hint: 'Unavailable products must remain unindexed.' }
+      - { label: Evidence or approval reference, name: evidenceReference, widget: string, required: false, hint: 'Required for live, public-availability, or documented-ownership claims.' }
+      - label: Primary action
+        name: primaryCta
+        widget: select
+        options:
+          - { label: Register interest, value: register-interest }
+          - { label: Learn more, value: learn-more }
+      - { label: Product URL, name: productUrl, widget: string, required: false }
+      - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
+
+  - name: faqs
+    label: Frequently asked questions
+    label_singular: Question
+    folder: src/content/faqs
+    create: true
+    delete: true
+    format: json
+    extension: json
+    identifier_field: question
+    slug: "{{fields.slug}}"
+    summary: "{{question}}"
+    sortable_fields: [sortOrder, question, category]
+    fields:
+      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
+      - { label: Question, name: question, widget: string }
+      - { label: Answer, name: answer, widget: text, hint: 'Keep answers direct. State uncertainty and status explicitly.' }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: Organisation, value: organisation }
+          - { label: Work, value: work }
+          - { label: Products, value: products }
+          - { label: Partnerships, value: partnerships }
+          - { label: Access, value: access }
+      - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
+
+  - name: global
+    label: Global settings
+    files:
+      - name: site
+        label: Identity and public status
+        file: src/content/global/site.json
+        format: json
+        fields:
+          - { label: Working name, name: workingName, widget: string }
+          - { label: Short name, name: shortName, widget: string }
+          - label: Organisation status
+            name: status
+            widget: select
+            options:
+              - { label: Being established, value: being-established }
+              - { label: Operating, value: operating }
+          - { label: Status disclosure, name: statusDisclosure, widget: text }
+          - { label: Launch locale, name: launchLocale, widget: hidden, default: en }
+          - { label: Bangla-ready structure, name: banglaReady, widget: boolean, default: true }
+          - { label: Provisional contact email, name: contactEmailFallback, widget: string }
+          - { label: Contact email note, name: contactEmailNote, widget: text }
+          - { label: Approved public domain, name: approvedDomain, widget: string, required: false }
+          - { label: Evidence or approval reference, name: evidenceReference, widget: string, required: false, hint: 'Required for operating status or an approved domain.' }
+          - label: Approved social links
+            name: socialLinks
+            widget: list
+            required: false
+            default: []
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: URL, name: url, widget: string }
+
+  - name: legal
+    label: Legal and policy drafts
+    files:
+      - name: privacy
+        label: Privacy notice
+        file: src/content/legal/privacy.json
+        format: json
+        fields:
+          - { label: Slug, name: slug, widget: hidden, default: privacy }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - label: Review status
+            name: status
+            widget: select
+            options:
+              - { label: Working draft, value: working-draft }
+              - { label: Reviewed, value: reviewed }
+              - { label: Approved, value: approved }
+          - { label: Last reviewed, name: lastReviewed, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+          - { label: Body, name: body, widget: markdown }
+          - { label: Approval reference, name: approvalReference, widget: string, required: false, hint: 'Required before selecting Approved.' }
+      - name: terms
+        label: Website terms
+        file: src/content/legal/terms.json
+        format: json
+        fields:
+          - { label: Slug, name: slug, widget: hidden, default: terms }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - label: Review status
+            name: status
+            widget: select
+            options:
+              - { label: Working draft, value: working-draft }
+              - { label: Reviewed, value: reviewed }
+              - { label: Approved, value: approved }
+          - { label: Last reviewed, name: lastReviewed, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+          - { label: Body, name: body, widget: markdown }
+          - { label: Approval reference, name: approvalReference, widget: string, required: false, hint: 'Required before selecting Approved.' }
+      - name: accessibility
+        label: Accessibility statement
+        file: src/content/legal/accessibility.json
+        format: json
+        fields:
+          - { label: Slug, name: slug, widget: hidden, default: accessibility }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - label: Review status
+            name: status
+            widget: select
+            options:
+              - { label: Working draft, value: working-draft }
+              - { label: Reviewed, value: reviewed }
+              - { label: Approved, value: approved }
+          - { label: Last reviewed, name: lastReviewed, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+          - { label: Body, name: body, widget: markdown }
+          - { label: Approval reference, name: approvalReference, widget: string, required: false, hint: 'Required before selecting Approved.' }

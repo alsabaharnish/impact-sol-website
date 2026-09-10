@@ -1,0 +1,110 @@
+---
+interface Faq {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title?: string;
+  intro?: string;
+  items: Faq[];
+}
+
+const {
+  title = 'Frequently asked questions',
+  intro = 'Plain answers about where things stand and how to take part.',
+  items,
+} = Astro.props;
+---
+
+<section class="faq-block" aria-labelledby="faq-title">
+  <div class="faq-block__heading">
+    <p class="eyebrow">Questions, answered</p>
+    <h2 id="faq-title">{title}</h2>
+    <p>{intro}</p>
+  </div>
+  <div class="faq-list">
+    {items.map((item) => (
+      <details>
+        <summary>{item.question}<span aria-hidden="true">+</span></summary>
+        <div class="faq-answer"><p>{item.answer}</p></div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-block {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.66fr) minmax(0, 1.34fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .faq-block__heading h2 {
+    margin-top: var(--space-3);
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--color-line);
+  }
+
+  details {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2rem;
+    gap: var(--space-4);
+    min-height: 4.5rem;
+    padding: var(--space-4) 0;
+    align-items: center;
+    color: var(--color-ink);
+    cursor: pointer;
+    font-size: var(--step-1);
+    font-weight: 740;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary span {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    color: var(--color-forest);
+    transition: transform 180ms ease;
+  }
+
+  details[open] summary span {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-width: 46rem;
+    padding: 0 3.5rem var(--space-5) 0;
+    color: var(--color-muted);
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    summary span {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .faq-block {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

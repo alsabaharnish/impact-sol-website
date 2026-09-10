@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import { getLegalDocument } from '../content/read';
+import { siteConfig } from '../data/site';
+
+const statement = await getLegalDocument('accessibility');
+if (!statement) throw new Error('Accessibility statement content is missing.');
+const breadcrumbs = [{ name: 'Accessibility statement', path: '/accessibility/' }];
+const mailto = `mailto:${siteConfig.contactEmail}?subject=Accessibility%20feedback`;
+---
+
+<BaseLayout
+  title={`${statement.title} — draft`}
+  description={statement.description}
+  noindex={statement.status !== 'approved'}
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Accessibility statement' }]} />
+  <PageHero
+    eyebrow="Accessibility"
+    title={statement.title}
+    intro="Impact Sol. wants this website to be usable by as many people as possible. This working statement records the target, current review status, and a direct route for reporting barriers."
+    compact
+  />
+
+  <div class="shell statement-status" role="note" aria-label="Statement status">
+    <strong>{statement.status === 'working-draft' ? 'Status: working draft' : `Status: ${statement.status}`}</strong>
+    <span>Last reviewed {statement.lastReviewed}. A complete independent conformance audit has not yet been performed, so this page does not claim certification or full conformance.</span>
+  </div>
+
+  <div class="shell statement-layout">
+    <aside aria-label="On this page">
+      <p class="eyebrow">On this page</p>
+      <nav>
+        <a href="#commitment">Commitment and target</a>
+        <a href="#measures">Measures in this build</a>
+        <a href="#compatibility">Compatibility</a>
+        <a href="#limits">Known limits and testing</a>
+        <a href="#feedback">Report a barrier</a>
+        <a href="#preparation">Preparation</a>
+      </nav>
+    </aside>
+
+    <article class="statement-copy">
+      <section id="commitment" tabindex="-1">
+        <h2>Commitment and target</h2>
+        <p>{statement.body}</p>
+        <p>The design and engineering target is the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA across every public page and enquiry path. That target is a product requirement, not a statement that an external assessor has certified this pre-launch build.</p>
+      </section>
+
+      <section id="measures" tabindex="-1">
+        <h2>Measures included in this build</h2>
+        <ul>
+          <li>semantic page landmarks, logical heading structures, descriptive page titles, and a skip link;</li>
+          <li>keyboard-operable navigation, accordions, links, controls, and visible focus styles;</li>
+          <li>labelled form fields with inline instructions, field errors, and live status messages;</li>
+          <li>minimum 44 by 44 CSS-pixel primary targets and layouts intended to reflow at 320 CSS pixels;</li>
+          <li>contrast-aware colour roles that do not rely on colour alone for meaning;</li>
+          <li>reduced-motion support, no autoplay media, no essential carousel, and no hover-only task;</li>
+          <li>plain English, meaningful link labels, and captions for representative product diagrams; and</li>
+          <li>system-font fallbacks that include Bangla-capable families for a future reviewed edition.</li>
+        </ul>
+      </section>
+
+      <section id="compatibility" tabindex="-1">
+        <h2>Compatibility</h2>
+        <p>The site is intended to work with current versions of major browsers, keyboard-only input, browser zoom, and common screen-reader/browser combinations. Public content remains present as semantic HTML if JavaScript is unavailable; JavaScript adds form status and validation convenience but is not the only submission path.</p>
+        <p>The final acceptance baseline must record the actual browser, operating-system, device, and assistive-technology versions tested. Older software should degrade to readable content rather than a blank application shell.</p>
+      </section>
+
+      <section id="limits" tabindex="-1">
+        <h2>Known limits and testing still required</h2>
+        <p>At this pre-launch stage, the implementation has not completed the full WCAG Evaluation Methodology process, representative-user validation, NVDA testing on Windows, or a formal audit by an independent accessibility specialist. Production CMS authentication is also not active, so its accessibility has not been accepted.</p>
+        <p>Before public launch, every unique component and complete form process should receive automated checks plus manual keyboard, VoiceOver, NVDA, 200% zoom, 320-pixel reflow, high-contrast, reduced-motion, and slow-connection testing. Any confirmed barrier must be fixed or listed here with an accessible alternative and review date.</p>
+      </section>
+
+      <section id="feedback" tabindex="-1">
+        <h2>Report an accessibility barrier</h2>
+        <p>If something prevents you from reading content or completing a task, email <a href={mailto}>{siteConfig.contactEmail}</a> with “Accessibility feedback” in the subject. If possible, include the page, what you were trying to do, the browser or assistive technology used, and the format that would work better. Do not include sensitive personal information.</p>
+        <p>This mailbox is a provisional direct route. The owner must confirm that it is monitored and publish a realistic response target before launch. You can also use the <a href="/contact/">general contact route</a>.</p>
+      </section>
+
+      <section id="preparation" tabindex="-1">
+        <h2>Preparation of this statement</h2>
+        <dl>
+          <div><dt>Statement version</dt><dd>Pre-launch working draft</dd></div>
+          <div><dt>Last reviewed</dt><dd>{statement.lastReviewed}</dd></div>
+          <div><dt>Assessment method</dt><dd>Implementation review and automated build checks to date; formal WCAG-EM audit pending</dd></div>
+          <div><dt>Responsible organisation</dt><dd>To be confirmed with the final Impact Sol. legal identity</dd></div>
+        </dl>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .statement-status {
+    display: grid;
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    border-left: 4px solid var(--color-sun);
+    color: var(--color-forest);
+    background: var(--color-mint-soft);
+  }
+
+  .statement-status span { color: var(--color-muted); }
+
+  .statement-layout {
+    display: grid;
+    padding-block: clamp(3rem, 8vw, 7rem);
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 7vw, 7rem);
+  }
+
+  .statement-layout > aside { position: sticky; top: 7rem; }
+  .statement-layout nav { display: grid; margin-top: var(--space-3); border-top: 1px solid var(--color-line); }
+  .statement-layout nav a { display: flex; min-height: 44px; padding: 0.7rem 0; align-items: center; border-bottom: 1px solid var(--color-line); color: var(--color-forest); font-size: 0.9rem; font-weight: 650; }
+  .statement-copy { max-width: 52rem; }
+  .statement-copy section { padding-block: 0 2.5rem; scroll-margin-top: 7rem; }
+  .statement-copy section + section { padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
+  .statement-copy h2 { font-size: var(--step-2); }
+  .statement-copy :is(p, li, dd) { color: var(--color-muted); }
+  .statement-copy li + li { margin-top: 0.55rem; }
+  .statement-copy dl { margin: 0; }
+  .statement-copy dl div { display: grid; padding-block: 0.9rem; grid-template-columns: minmax(9rem, 0.45fr) 1fr; gap: 1rem; border-top: 1px solid var(--color-line); }
+  .statement-copy dt { font-weight: 760; }
+  .statement-copy dd { margin: 0; }
+
+  @media (max-width: 50rem) {
+    .statement-layout, .statement-status { grid-template-columns: 1fr; }
+    .statement-layout > aside { position: static; }
+  }
+
+  @media (max-width: 32rem) {
+    .statement-copy dl div { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+</style>

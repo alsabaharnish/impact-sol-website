@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+import { siteConfig } from '../data/site';
+import { getLegalDocument } from '../content/read';
+
+const breadcrumbs = [{ name: 'Terms of use', path: '/terms/' }];
+const mailto = `mailto:${siteConfig.contactEmail}?subject=Website%20terms`;
+const legalDocument = await getLegalDocument('terms');
+if (!legalDocument) throw new Error('Terms content is missing.');
+---
+
+<BaseLayout
+  title={`${legalDocument.title} — draft`}
+  description={legalDocument.description}
+  noindex={legalDocument.status !== 'approved'}
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs items={[{ label: 'Terms of use' }]} />
+  <PageHero
+    eyebrow="Draft for legal review"
+    title={legalDocument.title}
+    intro="These draft terms describe the intended rules for this informational website. They are not approved launch terms and must be completed for the final legal entity, jurisdiction and product scope."
+    compact
+  />
+
+  <div class="shell legal-status" role="note" aria-label="Document status">
+    <strong>Status: {legalDocument.status.replace('-', ' ')}</strong>
+    <span>Last reviewed {legalDocument.lastReviewed}. Operator identity, registered address, governing law, dispute process and liability language remain to be confirmed by qualified counsel.</span>
+  </div>
+
+  <div class="shell legal-layout">
+    <aside aria-label="On this page">
+      <p class="eyebrow">On this page</p>
+      <nav>
+        <a href="#about">About these terms</a>
+        <a href="#site">Using this website</a>
+        <a href="#enquiries">Enquiries and relationships</a>
+        <a href="#content">Content and claims</a>
+        <a href="#rights">Intellectual property</a>
+        <a href="#links">Third-party links</a>
+        <a href="#liability">Responsibility and liability</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </aside>
+
+    <article class="legal-copy">
+      <section id="about" tabindex="-1">
+        <h2>1. About these terms</h2>
+        <p class="cms-summary">{legalDocument.body}</p>
+        <p>These terms are intended to govern use of the public Impact Sol. website. Impact Sol. is currently described as an initiative being established, so the legal name, address, registration details and effective date must be added before public launch.</p>
+        <p>By using a final launched version of the website, visitors would be expected to accept its approved terms. This draft is published for transparency and implementation review; it should not be relied on as a complete legal agreement.</p>
+      </section>
+
+      <section id="site" tabindex="-1">
+        <h2>2. Using this website</h2>
+        <p>You may use the public website for lawful, personal or organisational information purposes. You must not:</p>
+        <ul>
+          <li>attempt to gain unauthorised access to the site, server, database or another person’s information;</li>
+          <li>interfere with security, availability, rate limits or form protections;</li>
+          <li>submit malicious code, spam, unlawful content or misleading identity information;</li>
+          <li>scrape or automate requests in a way that harms the service or other users; or</li>
+          <li>present website content in a way that falsely implies endorsement, partnership or verified impact.</li>
+        </ul>
+        <p>Access may be limited where reasonably necessary to protect the service, people or legal obligations. The final enforcement language requires legal review.</p>
+      </section>
+
+      <section id="enquiries" tabindex="-1">
+        <h2>3. Enquiries do not create a relationship</h2>
+        <p>Submitting a general, partnership, maker or initiative enquiry does not create a contract, partnership, agency, funding commitment, selection decision, endorsement or right to use Chokro. Any future relationship would require separate written terms, appropriate review and agreement by authorised parties.</p>
+        <p>Do not submit confidential material through a first-contact form. Unless a separate confidentiality agreement is signed, sending an enquiry should not be understood to create a duty to treat an unsolicited idea or business description as confidential.</p>
+      </section>
+
+      <section id="content" tabindex="-1">
+        <h2>4. Informational content and product status</h2>
+        <p>This site explains an intended direction while the initiative is being established. Plans, prototypes and proposed relationships can change. Chokro is presented as a working prototype and proposed Impact Sol. product, not as a publicly available service or a final statement of ownership.</p>
+        <p>No material on this website is professional, legal, financial, environmental-certification or investment advice. No metric, forecast or environmental outcome should be inferred where none is explicitly published with its method and limitations.</p>
+        <p>Reasonable care should be taken to keep approved content accurate, but the production terms must set appropriate correction, availability and reliance language for the final operator.</p>
+      </section>
+
+      <section id="rights" tabindex="-1">
+        <h2>5. Intellectual property and permitted reuse</h2>
+        <p>Ownership and licensing for the Impact Sol. name, website materials, Chokro assets and other content must be confirmed before launch. Until then, this draft does not grant a licence to reproduce brand marks, interface assets or substantial website content.</p>
+        <p>Ordinary linking to public pages is welcome provided it is accurate and does not imply affiliation. Statutory exceptions and user rights remain unaffected. A final copyright notice, content licence and permissions route should be added after the rights register is approved.</p>
+      </section>
+
+      <section id="links" tabindex="-1">
+        <h2>6. Third-party links and services</h2>
+        <p>A link to another website is provided for context and does not by itself mean that Impact Sol. controls, endorses or accepts responsibility for it. Third-party sites may have different terms, accessibility and privacy practices.</p>
+        <p>If external platforms, embedded content or public product links are added later, they should be reviewed and labelled so visitors can understand when they are leaving this website.</p>
+      </section>
+
+      <section id="liability" tabindex="-1">
+        <h2>7. Availability, responsibility and liability</h2>
+        <p>The website may be updated, paused or withdrawn. Security and accessibility issues can be reported, but uninterrupted or error-free availability cannot be promised.</p>
+        <p>Any exclusions, warranties, caps on liability, indemnities, consumer-law statements and exceptions for matters that cannot legally be excluded must be drafted for the confirmed operator and jurisdiction. No placeholder in this draft should be treated as limiting rights or liabilities before that review is complete.</p>
+      </section>
+
+      <section>
+        <h2>8. Privacy, accessibility and changes</h2>
+        <p>Use of personal information is described in the <a href="/privacy/">draft privacy notice</a>. The site’s accessibility target and feedback route are described in the <a href="/accessibility/">accessibility statement</a>.</p>
+        <p>The approved terms should carry an effective date and explain material changes. The final notice, governing law, venue and dispute-resolution process must be provided before launch.</p>
+      </section>
+
+      <section id="contact" tabindex="-1">
+        <h2>9. Contact</h2>
+        <p>Questions about this draft can be sent to <a href={mailto}>{siteConfig.contactEmail}</a>. This is a provisional contact route and does not replace the legal notice details required for launch.</p>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-status {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    border-left: 4px solid var(--color-sun);
+    color: var(--color-forest);
+    background: var(--color-mint-soft);
+  }
+
+  .legal-status span { color: var(--color-muted); }
+
+  .legal-layout {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    padding-block: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+
+  .legal-layout > aside { position: sticky; top: 7rem; }
+  .legal-layout nav { display: grid; margin-top: var(--space-3); border-top: 1px solid var(--color-line); }
+  .legal-layout nav a { display: flex; min-height: 44px; padding: 0.7rem 0; align-items: center; border-bottom: 1px solid var(--color-line); color: var(--color-forest); font-size: 0.9rem; font-weight: 650; }
+  .legal-copy { max-width: 52rem; }
+  .legal-copy section { padding-block: 0 2.5rem; scroll-margin-top: 7rem; }
+  .legal-copy section + section { padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
+  .legal-copy h2 { font-size: var(--step-2); }
+  .legal-copy p, .legal-copy li { color: var(--color-muted); }
+  .legal-copy li + li { margin-top: 0.55rem; }
+
+  @media (max-width: 50rem) {
+    .legal-layout { grid-template-columns: 1fr; }
+    .legal-layout > aside { position: static; }
+    .legal-status { grid-template-columns: 1fr; }
+  }
+</style>
