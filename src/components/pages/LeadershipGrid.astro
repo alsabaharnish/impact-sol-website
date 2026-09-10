@@ -1,0 +1,227 @@
+---
+import type { PersonRecord } from '../../content/read';
+
+interface Props {
+  people: PersonRecord[];
+}
+
+const { people } = Astro.props;
+
+/* Tier order is fixed so the structure reads the same however records are
+   sorted, and a tier with nobody in it simply does not appear. */
+const tiers = [
+  {
+    id: 'executive',
+    label: 'Executive leadership',
+    note: 'Accountable for day-to-day decisions and delivery.',
+  },
+  {
+    id: 'strategic',
+    label: 'Strategic leadership',
+    note: 'Shapes direction, partnerships and long-term priorities.',
+  },
+  {
+    id: 'advisory',
+    label: 'Advisors',
+    note: 'Contribute expertise without executive authority.',
+  },
+  {
+    id: 'board',
+    label: 'Board and governance',
+    note: 'Holds oversight and formal decision rights.',
+  },
+] as const;
+
+const groups = tiers
+  .map((tier) => ({ ...tier, members: people.filter((person) => person.group === tier.id) }))
+  .filter((tier) => tier.members.length > 0);
+
+const initialsOf = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+---
+
+<div class="leadership">
+  {groups.map((tier) => (
+    <section class="leadership__tier" aria-labelledby={`tier-${tier.id}`}>
+      <div class="leadership__tier-head">
+        <h3 id={`tier-${tier.id}`}>{tier.label}</h3>
+        <p>{tier.note}</p>
+      </div>
+      <ul class="leadership__grid">
+        {tier.members.map((person) => (
+          <li class="person">
+            <div class="person__portrait">
+              {person.photo ? (
+                <img
+                  src={person.photo.path}
+                  alt={person.photo.alt}
+                  width="320"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
+              )}
+            </div>
+            <div class="person__body">
+              <h4>{person.name}</h4>
+              <p class="person__role">{person.role}</p>
+              <p class="person__bio">{person.bio}</p>
+              {person.links.length > 0 && (
+                <ul class="person__links">
+                  {person.links.map((link) => (
+                    <li>
+                      <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
+                        {link.label}
+                        <span class="person__external" aria-hidden="true">↗</span>
+                        <span class="visually-hidden">(opens in a new tab)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>
+
+<style>
+  .leadership {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.25rem);
+  }
+
+  .leadership__tier-head {
+    display: grid;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+    gap: 0.3rem;
+  }
+
+  .leadership__tier-head h3 {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+
+  .leadership__tier-head p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .leadership__grid {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    list-style: none;
+  }
+
+  .person {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+  }
+
+  /* A fixed portrait ratio keeps the row of faces aligned whatever the source
+     image is, and reserves its space so nothing shifts as photos load. */
+  .person__portrait {
+    position: relative;
+    display: grid;
+    aspect-ratio: 4 / 5;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-mint-soft);
+    border-radius: var(--radius-md);
+  }
+
+  .person__portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .person__initials {
+    color: color-mix(in srgb, var(--color-forest) 45%, var(--color-mint-soft));
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .person__body {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .person__body h4 {
+    margin: 0;
+    font-size: var(--step-0);
+  }
+
+  .person__role {
+    margin: 0;
+    color: var(--color-forest-bright);
+    font-size: 0.86rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .person__bio {
+    margin: 0.35rem 0 0;
+    color: var(--color-ink-soft);
+    font-size: 0.9rem;
+    line-height: var(--leading-snug);
+  }
+
+  .person__links {
+    display: flex;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    list-style: none;
+  }
+
+  .person__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .person__external {
+    font-size: 0.8em;
+  }
+
+  /* One card per row on phones. The portrait sits above the text at a fixed
+     small size rather than beside it: a side-by-side split measured only
+     ~24 characters per line at 375px, narrower than at 320px. Stacked, the
+     biography gets the full column and the face is still recognisable. */
+  @media (max-width: 30rem) {
+    .leadership__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .person {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+
+    .person__portrait {
+      width: 5.5rem;
+    }
+  }
+</style>

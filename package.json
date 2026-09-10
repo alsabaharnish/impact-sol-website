@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "prebuild": "node scripts/validate-content.mjs",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build --force",
     "postbuild": "node scripts/check-built-site.mjs",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "verify": "npm run build",

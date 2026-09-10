@@ -371,6 +371,19 @@ main:focus {
   color: color-mix(in srgb, var(--color-mint) 88%, var(--color-paper));
 }
 
+/* Sits under a section title and carries the line the title used to hold. */
+.section-standfirst {
+  max-width: 26ch;
+  margin-top: var(--space-3);
+  margin-bottom: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--step-1);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
+  text-wrap: balance;
+}
+
 .lead {
   max-width: 42rem;
   color: var(--color-ink-soft);
@@ -1190,6 +1203,16 @@ tbody th {
   color: var(--color-ink);
   font-weight: var(--weight-semibold);
   text-align: left;
+}
+
+/* Announced by assistive technology, absent from the visual layout. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 [hidden] {

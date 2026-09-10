@@ -186,4 +186,78 @@ const legal = defineCollection({
     }),
 });
 
-export const collections = { offerings, products, faqs, global, legal };
+/* People are real individuals, so a record only reaches the public page once
+   its subject's publication consent is recorded. `withheld` records stay in
+   the repository and render nowhere. */
+const people = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/people' }),
+  schema: z
+    .object({
+      slug,
+      name: z.string().min(2).max(80),
+      role: z.string().min(2).max(90),
+      group: z.enum(['executive', 'strategic', 'advisory', 'board']),
+      bio: z.string().min(40).max(700),
+      photo: z
+        .object({
+          path: z.string().startsWith('/'),
+          alt: z.string().min(5).max(240),
+        })
+        .nullable()
+        .optional(),
+      links: z
+        .array(
+          z.object({
+            label: z.string().min(2).max(40),
+            url: z.url(),
+          }),
+        )
+        .max(3)
+        .default([]),
+      publicationStatus: z.enum(['withheld', 'approved']),
+      consentReference: evidence,
+      sortOrder: z.number().int().min(1).max(99),
+    })
+    .superRefine((person, context) => {
+      if (person.publicationStatus === 'approved' && !person.consentReference) {
+        context.addIssue({
+          code: 'custom',
+          path: ['consentReference'],
+          message:
+            'Publishing a person\u2019s name, role and biography requires a recorded consent reference.',
+        });
+      }
+      if (person.publicationStatus === 'approved' && person.photo && !person.photo.alt) {
+        context.addIssue({
+          code: 'custom',
+          path: ['photo', 'alt'],
+          message: 'An approved portrait requires alternative text.',
+        });
+      }
+    }),
+});
+
+/* Naming another organisation is a claim about them. Every partner carries a
+   written name/logo permission reference, and the relationship is labelled
+   rather than implied. */
+const partners = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/partners' }),
+  schema: z.object({
+    slug,
+    name: z.string().min(2).max(90),
+    relationship: z.enum(['proposed', 'active']),
+    description: z.string().min(30).max(400),
+    logo: z
+      .object({
+        path: z.string().startsWith('/'),
+        alt: z.string().min(5).max(240),
+      })
+      .nullable()
+      .optional(),
+    url: z.url().nullable().optional(),
+    permissionReference: z.string().min(3).max(500),
+    sortOrder: z.number().int().min(1).max(99),
+  }),
+});
+
+export const collections = { offerings, products, faqs, global, legal, people, partners };

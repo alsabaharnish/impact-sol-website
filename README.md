@@ -94,6 +94,8 @@ Editable records live in `src/content/`:
 - `offerings/` — proposed or approved work areas
 - `products/` — product maturity, availability, rights status, and call to action
 - `faqs/` — reusable answers grouped by topic
+- `people/` — leadership and advisors, published only with recorded consent
+- `partners/` — named organisations, each with written name and logo permission
 - `legal/` — explicitly labelled policy drafts and approval references
 
 `src/content.config.ts` supplies typed schemas. `scripts/validate-content.mjs` blocks missing required fields, common placeholders, several unsafe absolute claims, numerical marketing outcomes, and status changes without evidence. It is a guardrail, not a substitute for editorial, legal, or evidence review.

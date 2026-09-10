@@ -5,10 +5,20 @@ import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import FaqList from '../components/pages/FaqList.astro';
 import StatusPanel from '../components/pages/StatusPanel.astro';
-import { getFaqs } from '../content/read';
+import LeadershipGrid from '../components/pages/LeadershipGrid.astro';
+import PartnerList from '../components/pages/PartnerList.astro';
+import { getFaqs, getPartners, getPeople } from '../content/read';
 
 const breadcrumbs = [{ name: 'About', path: '/about/' }];
 const faqs = await getFaqs('organisation');
+
+/* Both sections are data-driven: they appear when approved records exist and
+   the page's "not yet supplied" disclosures retire themselves at the same
+   moment, so the copy can never contradict what is on screen. */
+const leadership = await getPeople();
+const partners = await getPartners();
+const hasLeadership = leadership.length > 0;
+const hasPartners = partners.length > 0;
 ---
 
 <BaseLayout
@@ -30,11 +40,12 @@ const faqs = await getFaqs('organisation');
     </div>
   </PageHero>
 
-  <section class="section" id="current-stage" tabindex="-1">
+  <section class="section" id="current-stage" aria-labelledby="about-title" tabindex="-1">
     <div class="shell split">
       <div>
         <p class="eyebrow">Why we are here</p>
-        <h2>Good intentions need useful infrastructure.</h2>
+        <h2 id="about-title">About Impact Sol.</h2>
+        <p class="section-standfirst">Good intentions need useful infrastructure.</p>
       </div>
       <div class="prose prose--large">
         <p>People working toward more responsible ways of producing, trading and participating often face fragmented information, limited connections and tools that do not fit their context.</p>
@@ -71,16 +82,75 @@ const faqs = await getFaqs('organisation');
     </div>
   </section>
 
+  <section
+    class="section section--surface"
+    id="leadership"
+    aria-labelledby="leadership-title"
+    tabindex="-1"
+  >
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Organisation</p>
+          <h2 id="leadership-title">Executive &amp; Strategic Leadership</h2>
+        </div>
+        <p>
+          {hasLeadership
+            ? 'Each person below has recorded publication consent for their name, role and biography. Decision rights and formal governance are confirmed separately before launch.'
+            : 'No leadership record has been published yet. Roles, biographies, portraits and publication consent are recorded before anyone appears here, so this section stays empty rather than provisional.'}
+        </p>
+      </div>
+
+      {hasLeadership ? (
+        <LeadershipGrid people={leadership} />
+      ) : (
+        <div class="notice">
+          <p>
+            <strong>Not yet published.</strong> The organogram, executive roles, advisors and
+            governance structure are being confirmed. Each entry needs a current role, decision
+            rights, an approved biography, a portrait with usage rights, and the individual's
+            consent to publish before it is added.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {hasPartners && (
+    <section class="section section--tint" id="partners" aria-labelledby="partners-title" tabindex="-1">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Working together</p>
+            <h2 id="partners-title">Our Partners</h2>
+          </div>
+          <p>
+            Every organisation named here has given written permission for the use of its name and
+            mark. Each relationship is labelled as proposed or active rather than left to
+            inference.
+          </p>
+        </div>
+        <PartnerList partners={partners} />
+      </div>
+    </section>
+  )}
+
   <section class="section" aria-labelledby="people-title">
     <div class="shell foundations">
       <div>
         <p class="eyebrow">People, place and history</p>
         <h2 id="people-title">Publish the accountable facts when they are approved.</h2>
-        <p>No founder biography, portrait, team roster, advisor, governance role, award, affiliation, operating location, or service geography has been supplied with publication approval. This build does not invent them.</p>
+        <p>
+          {hasLeadership
+            ? 'Published leadership records appear above with recorded consent. No founder narrative, award, affiliation, operating location, or service geography has been supplied with publication approval, and this build does not invent them.'
+            : 'No founder biography, portrait, team roster, advisor, governance role, award, affiliation, operating location, or service geography has been supplied with publication approval. This build does not invent them.'}
+        </p>
       </div>
       <div class="foundations__items">
         <article><span>Founder story and timeline</span><p>Withheld until the founder approves the narrative, dates, prior project relationships, and any personal information.</p></article>
-        <article><span>Leadership and governance</span><p>Withheld until current roles, decision rights, biographies, images, and publication consent are recorded.</p></article>
+        {!hasLeadership && (
+          <article><span>Leadership and governance</span><p>Withheld until current roles, decision rights, biographies, images, and publication consent are recorded.</p></article>
+        )}
         <article><span>Where the company works</span><p>Impact Sol.’s service geography is not yet confirmed. Chokro is separately described as designed for Bangladesh with a focused Dhaka pilot planned.</p></article>
         <article><span>Current priorities</span><p>Confirm the legal and brand identity, document the Chokro relationship, approve service capacity and governance, complete policy review, and verify a responsible production release.</p></article>
       </div>
@@ -124,7 +194,11 @@ const faqs = await getFaqs('organisation');
       <div class="accountability__copy">
         <p class="eyebrow">Accountability</p>
         <h2>Clear about what is known—and what is not.</h2>
-        <p>Trust depends on accurate language. Until foundational details are approved, this site avoids claims about registration, ownership, geography, named partners, team members and results.</p>
+        <p>
+          {hasPartners || hasLeadership
+            ? 'Trust depends on accurate language. Named people and organisations appear only with recorded consent or written permission; registration, ownership, geography and results remain unclaimed until approved.'
+            : 'Trust depends on accurate language. Until foundational details are approved, this site avoids claims about registration, ownership, geography, named partners, team members and results.'}
+        </p>
       </div>
       <div class="accountability__list" role="list" aria-label="Publication checks">
         <div role="listitem"><span>Publish now</span><strong>Purpose, intended approach and ways to express interest</strong></div>

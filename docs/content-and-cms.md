@@ -21,6 +21,8 @@ Do not publish numerical outcomes, testimonials, customer or partner names, logo
 | `offerings` | Proposed or approved areas of work | `status`, `evidenceReference` |
 | `products` | Product maturity, availability, rights status, CTA, URL | `stage`, `publicAvailability`, `ownershipStatus`, `evidenceReference` |
 | `faqs` | Plain-language reusable answers | Any answer that implies a promise or completed status |
+| `people` | Leadership, strategic roles, advisors, board | `publicationStatus`, `consentReference`, portrait rights |
+| `partners` | Named partner organisations | `relationship`, `permissionReference`, logo rights |
 | `legal` | Privacy, terms, and accessibility copy | `status`, `approvalReference`, jurisdiction-specific statements |
 
 The file name must match each record's `slug`. Slugs are lowercase ASCII words joined by hyphens. URLs should remain stable; changing a slug requires a redirect and an SEO review.
@@ -43,6 +45,8 @@ The Astro schema enforces field shapes and cross-field status rules. The prebuil
 
 - an evidence reference when a product becomes live or publicly available, or when ownership is marked documented;
 - an evidence reference when Impact Sol status becomes operating or an approved domain is entered;
+- a recorded consent reference before a person's name, role, biography or portrait is published;
+- a written name and logo permission reference on every partner record;
 - an approval reference before legal content can be marked approved;
 - explicit working-draft wording while a legal document remains a draft.
 

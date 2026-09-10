@@ -1,0 +1,113 @@
+---
+import type { PartnerRecord } from '../../content/read';
+
+interface Props {
+  partners: PartnerRecord[];
+}
+
+const { partners } = Astro.props;
+
+const relationshipLabel: Record<PartnerRecord['relationship'], string> = {
+  proposed: 'Proposed',
+  active: 'Active',
+};
+---
+
+<ul class="partners">
+  {partners.map((partner) => (
+    <li class="partner">
+      <div class="partner__head">
+        {partner.logo ? (
+          <img
+            class="partner__logo"
+            src={partner.logo.path}
+            alt={partner.logo.alt}
+            width="160"
+            height="64"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span class="partner__wordmark">{partner.name}</span>
+        )}
+        <span class="tag">{relationshipLabel[partner.relationship]}</span>
+      </div>
+      <h3>
+        {partner.url ? (
+          <a href={partner.url} rel="noopener noreferrer nofollow" target="_blank">
+            {partner.name}
+            <span aria-hidden="true">↗</span>
+            <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        ) : (
+          partner.name
+        )}
+      </h3>
+      <p>{partner.description}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .partners {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: clamp(1rem, 2.2vw, 1.8rem);
+    list-style: none;
+  }
+
+  .partner {
+    display: grid;
+    align-content: start;
+    padding: clamp(1.35rem, 2.7vw, 1.9rem);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    gap: 0.4rem;
+  }
+
+  .partner__head {
+    display: flex;
+    margin-bottom: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  /* Logos arrive at every size and weight, so the box is fixed and the mark
+     is contained rather than cropped or stretched. */
+  .partner__logo {
+    width: auto;
+    max-width: 9rem;
+    height: 2.6rem;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .partner__wordmark {
+    color: var(--color-forest);
+    font-size: var(--step-1);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .partner h3 {
+    margin: 0;
+    font-size: var(--step-0);
+  }
+
+  .partner h3 a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .partner p {
+    margin: 0;
+    color: var(--color-ink-soft);
+    font-size: 0.9rem;
+    line-height: var(--leading-snug);
+  }
+</style>

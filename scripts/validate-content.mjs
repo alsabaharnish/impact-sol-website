@@ -70,6 +70,14 @@ const rules = {
     minimum: 1,
     required: ['slug', 'question', 'answer', 'category', 'sortOrder'],
   },
+  people: {
+    minimum: 0,
+    required: ['slug', 'name', 'role', 'group', 'bio', 'publicationStatus', 'sortOrder'],
+  },
+  partners: {
+    minimum: 0,
+    required: ['slug', 'name', 'relationship', 'description', 'permissionReference', 'sortOrder'],
+  },
   legal: {
     minimum: 3,
     requiredSlugs: ['accessibility', 'privacy', 'terms'],
@@ -137,6 +145,10 @@ for (const [collection, rule] of Object.entries(rules)) {
   try {
     files = await jsonFiles(directory);
   } catch (error) {
+    if (rule.minimum === 0 && error.code === 'ENOENT') {
+      loaded.set(collection, []);
+      continue;
+    }
     errors.push(`${collection}: collection directory cannot be read (${error.message})`);
     continue;
   }
@@ -233,6 +245,33 @@ for (const { file, value: product } of loaded.get('products') ?? []) {
   }
   if (product.seo?.indexable === true && product.publicAvailability !== true) {
     errors.push(`${file}: an unavailable product cannot be independently indexable`);
+  }
+}
+
+for (const { file, value: person } of loaded.get('people') ?? []) {
+  if (person.publicationStatus === 'approved' && !person.consentReference) {
+    errors.push(`${file}: publishing a person requires a recorded consentReference`);
+  }
+  if (person.publicationStatus === 'approved' && person.photo && !person.photo.alt) {
+    errors.push(`${file}: an approved portrait requires photo.alt`);
+  }
+  if (person.photo && !String(person.photo.path ?? '').startsWith('/')) {
+    errors.push(`${file}: photo.path must be a site-absolute path`);
+  }
+  if (!['withheld', 'approved'].includes(person.publicationStatus)) {
+    errors.push(`${file}: publicationStatus must be "withheld" or "approved"`);
+  }
+}
+
+for (const { file, value: partner } of loaded.get('partners') ?? []) {
+  if (!partner.permissionReference) {
+    errors.push(`${file}: naming a partner requires a written permissionReference`);
+  }
+  if (partner.logo && !partner.logo.alt) {
+    errors.push(`${file}: a partner logo requires logo.alt`);
+  }
+  if (!['proposed', 'active'].includes(partner.relationship)) {
+    errors.push(`${file}: relationship must be "proposed" or "active"`);
   }
 }
 

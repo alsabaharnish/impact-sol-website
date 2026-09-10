@@ -229,6 +229,98 @@ collections:
               - { label: Label, name: label, widget: string }
               - { label: URL, name: url, widget: string }
 
+  - name: people
+    label: Leadership and advisors
+    label_singular: Person
+    folder: src/content/people
+    create: true
+    delete: true
+    format: json
+    extension: json
+    identifier_field: name
+    slug: "{{fields.slug}}"
+    summary: "{{name}} — {{role}} ({{publicationStatus}})"
+    sortable_fields: [sortOrder, name, group, publicationStatus]
+    fields:
+      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens, e.g. asha-rahman.'] }
+      - { label: Full name, name: name, widget: string }
+      - { label: Role or title, name: role, widget: string, hint: 'The current role, for example Chief Executive Officer or Strategic Advisor.' }
+      - label: Group
+        name: group
+        widget: select
+        options:
+          - { label: Executive leadership, value: executive }
+          - { label: Strategic leadership, value: strategic }
+          - { label: Advisor, value: advisory }
+          - { label: Board and governance, value: board }
+        default: executive
+        hint: 'Controls which tier the person appears under.'
+      - { label: Biography, name: bio, widget: text, hint: 'Factual and approved by the person. No awards, superlatives or numerical outcome claims.' }
+      - label: Portrait
+        name: photo
+        widget: object
+        required: false
+        collapsed: false
+        hint: 'Upload only an image you hold usage rights for, with the person’s consent.'
+        fields:
+          - { label: Image, name: path, widget: image }
+          - { label: Alternative text, name: alt, widget: string, hint: 'Describe the portrait, for example “Portrait of Asha Rahman”.' }
+      - label: Links
+        name: links
+        widget: list
+        required: false
+        default: []
+        max: 3
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
+      - label: Publication status
+        name: publicationStatus
+        widget: select
+        options:
+          - { label: Withheld — not shown on the site, value: withheld }
+          - { label: Approved — published, value: approved }
+        default: withheld
+        hint: 'Approved requires the person’s recorded consent to publish their name, role, biography and portrait.'
+      - { label: Consent reference, name: consentReference, widget: string, required: false, hint: 'Required to publish. A durable ticket, document path or approval record — never the consent text itself.' }
+      - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99, hint: 'Order within the group. Must be unique across all people.' }
+
+  - name: partners
+    label: Partners
+    label_singular: Partner
+    folder: src/content/partners
+    create: true
+    delete: true
+    format: json
+    extension: json
+    identifier_field: name
+    slug: "{{fields.slug}}"
+    summary: "{{name}} — {{relationship}}"
+    sortable_fields: [sortOrder, name, relationship]
+    fields:
+      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
+      - { label: Organisation name, name: name, widget: string }
+      - label: Relationship
+        name: relationship
+        widget: select
+        options:
+          - { label: Proposed, value: proposed }
+          - { label: Active, value: active }
+        default: proposed
+        hint: 'Label the relationship accurately. Do not imply endorsement or funding that is not agreed.'
+      - { label: Description, name: description, widget: text, hint: 'What the relationship covers. No outcome, funding or endorsement claims without evidence.' }
+      - label: Logo
+        name: logo
+        widget: object
+        required: false
+        collapsed: false
+        fields:
+          - { label: Image, name: path, widget: image }
+          - { label: Alternative text, name: alt, widget: string }
+      - { label: Website, name: url, widget: string, required: false }
+      - { label: Permission reference, name: permissionReference, widget: string, hint: 'Required. The written name and logo permission on record for this organisation.' }
+      - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
+
   - name: legal
     label: Legal and policy drafts
     files:
