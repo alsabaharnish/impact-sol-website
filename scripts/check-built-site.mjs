@@ -13,6 +13,8 @@ const requiredPages = [
   'about/index.html',
   'about/leadership/index.html',
   'about/partners/index.html',
+  'get-involved/partnership/index.html',
+  'get-involved/maker/index.html',
   'what-we-do/index.html',
   'products/index.html',
   'products/chokro/index.html',
@@ -116,7 +118,8 @@ for (const file of htmlFiles) {
 
 const expectedForms = new Map([
   ['contact/index.html', ['impact-sol-general']],
-  ['get-involved/index.html', ['impact-sol-partnership', 'impact-sol-maker']],
+  ['get-involved/partnership/index.html', ['impact-sol-partnership']],
+  ['get-involved/maker/index.html', ['impact-sol-maker']],
 ]);
 const detectedFormNames = new Set();
 

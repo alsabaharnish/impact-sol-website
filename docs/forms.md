@@ -9,8 +9,8 @@ Netlify identifies the forms by these unique names:
 | Public route | Netlify form name |
 | --- | --- |
 | `/contact/` | `impact-sol-general` |
-| `/get-involved/#partnership-enquiry` | `impact-sol-partnership` |
-| `/get-involved/#maker-enquiry` | `impact-sol-maker` |
+| `/get-involved/partnership/` | `impact-sol-partnership` |
+| `/get-involved/maker/` | `impact-sol-maker` |
 
 All forms include `form-name`, `inquiryType`, `sourcePath`, and `privacyNoticeVersion`. Depending on the route, a submission may also include name, email, message, organisation or initiative, phone, country, website, role, category, collaboration interest, initiative stage, and support sought.
 

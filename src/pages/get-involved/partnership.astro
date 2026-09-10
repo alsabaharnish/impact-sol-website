@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import StatusPanel from '../../components/pages/StatusPanel.astro';
+import InquiryForm from '../../components/pages/InquiryForm.astro';
+import FaqList from '../../components/pages/FaqList.astro';
+import { getFaqs } from '../../content/read';
+
+const breadcrumbs = [
+  { name: 'Get involved', path: '/get-involved/' },
+  { name: 'Propose a partnership', path: '/get-involved/partnership/' },
+];
+const faqs = await getFaqs('partnerships');
+---
+
+<BaseLayout
+  title="Propose a partnership"
+  description="Describe a possible collaboration with Impact Sol.: the challenge, intended participants, desired outcome, your organisation’s role, and timing."
+  breadcrumbs={breadcrumbs}
+>
+  <Breadcrumbs
+    items={[{ label: 'Get involved', href: '/get-involved/' }, { label: 'Partnership' }]}
+  />
+  <PageHero
+    eyebrow="Partnerships"
+    title="Propose a partnership."
+    intro="For initiatives, social enterprises, NGOs, foundations, public bodies and corporate sustainability teams exploring a grounded collaboration."
+  >
+    <div slot="aside">
+      <StatusPanel
+        title="What a partnership enquiry is"
+        text="A starting conversation. Sending this form does not create an agreement, a commitment of capacity, or a funding relationship."
+      />
+    </div>
+  </PageHero>
+
+  <section class="section section--tint" id="partnership-enquiry" tabindex="-1">
+    <div class="shell">
+      <InquiryForm
+        inquiryType="partnership"
+        title="Propose a partnership"
+        intro="Describe the challenge, intended participants, desired outcome, your organisation’s possible role, stage or timing, and any known budget context. ‘Not yet known’ is a valid budget answer."
+        messageLabel="Participants, desired outcome, timing and context"
+        submitLabel="Send partnership enquiry"
+        includeOrganisation
+        includePhone
+        includeCountry
+        includeWebsite
+      />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="other-routes-title">
+    <div class="shell">
+      <div class="reading-width">
+        <h2 id="other-routes-title">Not the right route?</h2>
+        <ul class="link-list">
+          <li>
+            <a href="/get-involved/maker/">
+              <span>
+                <strong>Register maker or initiative interest</strong>
+                <span class="link-list__note">
+                  For makers, small sellers and initiatives, including Chokro interest
+                </span>
+              </span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="/get-involved/">
+              <span>
+                <strong>See all pathways</strong>
+                <span class="link-list__note">Compare the routes by role before choosing</span>
+              </span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contact/">
+              <span>
+                <strong>Send a general enquiry</strong>
+                <span class="link-list__note">Questions, feedback or anything else</span>
+              </span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {faqs.length > 0 && (
+    <section class="section section--bordered">
+      <div class="shell"><FaqList title="Before you get in touch" items={faqs} /></div>
+    </section>
+  )}
+</BaseLayout>

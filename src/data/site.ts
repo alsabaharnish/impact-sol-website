@@ -35,9 +35,24 @@ export const primaryNavigation: readonly NavItem[] = [
     ],
   },
   { href: '/what-we-do/', label: 'What we do' },
-  { href: '/products/', label: 'Products' },
+  {
+    href: '/products/',
+    label: 'Products',
+    children: [
+      { href: '/products/', label: 'All products' },
+      { href: '/products/chokro/', label: 'Chokro' },
+    ],
+  },
   { href: '/impact/', label: 'Purpose & approach' },
-  { href: '/get-involved/', label: 'Get involved' },
+  {
+    href: '/get-involved/',
+    label: 'Get involved',
+    children: [
+      { href: '/get-involved/', label: 'Choose a pathway' },
+      { href: '/get-involved/partnership/', label: 'Propose a partnership' },
+      { href: '/get-involved/maker/', label: 'Register maker or initiative interest' },
+    ],
+  },
   { href: '/contact/', label: 'Contact' },
 ];
 
@@ -51,6 +66,8 @@ export const publicRoutes = [
   '/products/chokro/',
   '/impact/',
   '/get-involved/',
+  '/get-involved/partnership/',
+  '/get-involved/maker/',
   '/contact/',
   '/privacy/',
   '/terms/',
