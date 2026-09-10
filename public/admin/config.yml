@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: alsabaharnish/impact-sol-website
   branch: main
+  auth_scope: public_repo
 
 publish_mode: editorial_workflow
 local_backend: true
