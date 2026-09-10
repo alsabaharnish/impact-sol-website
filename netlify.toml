@@ -21,7 +21,12 @@
   for = "/admin/*"
   [headers.values]
     Cache-Control = "no-store"
-    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://api.netlify.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://api.netlify.com; media-src 'self'; worker-src 'self' blob:; manifest-src 'self'"
+    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://api.netlify.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://api.netlify.com https://raw.githubusercontent.com https://objects.githubusercontent.com https://avatars.githubusercontent.com https://www.githubstatus.com; media-src 'self'; worker-src 'self' blob:; manifest-src 'self'"
+    # connect-src covers more than api.github.com because the Decap GitHub
+    # backend also reads file and media content from raw/objects
+    # .githubusercontent.com, loads the signed-in user's avatar, and polls
+    # githubstatus.com. With those blocked, saving fails as
+    # "Failed to persist entry: TypeError: Failed to fetch".
     # "same-origin" severs window.opener for any cross-origin popup this page
     # opens, which silently breaks the Decap GitHub sign-in: authorization
     # succeeds, then api.netlify.com/auth/done cannot postMessage the token
