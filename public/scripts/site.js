@@ -34,6 +34,118 @@
     });
   }
 
+  /* Navigation dropdowns. CSS already opens these on hover where a real
+     pointer exists; this adds the click, touch and keyboard paths so the
+     submenu is never hover-only. */
+  const navGroups = [...document.querySelectorAll('[data-nav-group]')];
+
+  const setNavGroup = (group, open) => {
+    const toggle = group.querySelector('[data-nav-toggle]');
+    const menu = group.querySelector('[data-nav-menu]');
+    if (open) group.dataset.open = 'true';
+    else delete group.dataset.open;
+    toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    // Focus left inside a closed menu would keep the CSS :focus-within rule
+    // holding it open, contradicting aria-expanded. Bring focus back out.
+    if (!open && menu?.contains(document.activeElement)) {
+      if (toggle instanceof HTMLElement) toggle.focus();
+      else if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    }
+  };
+
+  const closeNavGroups = (except) => {
+    for (const group of navGroups) if (group !== except) setNavGroup(group, false);
+  };
+
+  for (const group of navGroups) {
+    const toggle = group.querySelector('[data-nav-toggle]');
+    const menu = group.querySelector('[data-nav-menu]');
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) continue;
+
+    const items = () => [...menu.querySelectorAll('a')];
+
+    toggle.addEventListener('click', () => {
+      const willOpen = group.dataset.open !== 'true';
+      closeNavGroups(group);
+      setNavGroup(group, willOpen);
+      if (willOpen) items()[0]?.focus();
+    });
+
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      closeNavGroups(group);
+      setNavGroup(group, true);
+      const list = items();
+      (event.key === 'ArrowDown' ? list[0] : list[list.length - 1])?.focus();
+    });
+
+    menu.addEventListener('keydown', (event) => {
+      const list = items();
+      const index = list.indexOf(document.activeElement);
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const next =
+          event.key === 'ArrowDown'
+            ? (index + 1) % list.length
+            : (index - 1 + list.length) % list.length;
+        list[next]?.focus();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        list[0]?.focus();
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        list[list.length - 1]?.focus();
+      }
+    });
+
+    // Escape closes from anywhere inside and returns focus to the control
+    // that opened it.
+    group.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (group.dataset.open !== 'true' && !group.contains(document.activeElement)) return;
+      setNavGroup(group, false);
+      toggle.focus();
+    });
+
+
+    // Leaving the group entirely by keyboard closes it.
+    group.addEventListener('focusout', (event) => {
+      if (group.contains(event.relatedTarget)) return;
+      setNavGroup(group, false);
+    });
+
+    /* Pointer hover, only where a real pointer exists so a tap on a
+       touchscreen never opens the menu by accident. The close is delayed so a
+       diagonal move from the label to the panel does not drop it. */
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let closeTimer;
+
+    group.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      closeNavGroups(group);
+      setNavGroup(group, true);
+    });
+
+    group.addEventListener('pointerleave', (event) => {
+      if (event.pointerType !== 'mouse' || !canHover.matches) return;
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        // Keyboard focus inside the menu outranks the mouse having left.
+        if (group.contains(document.activeElement)) return;
+        setNavGroup(group, false);
+      }, 180);
+    });
+  }
+
+  if (navGroups.length > 0) {
+    document.addEventListener('pointerdown', (event) => {
+      if (event.target instanceof Element && event.target.closest('[data-nav-group]')) return;
+      closeNavGroups(null);
+    });
+  }
+
   document.addEventListener('click', (event) => {
     const link = event.target instanceof Element ? event.target.closest('a') : null;
     if (!(link instanceof HTMLAnchorElement)) return;

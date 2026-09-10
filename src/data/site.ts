@@ -18,18 +18,34 @@ export const siteConfig = {
   lastReviewed: '2026-09-09',
 } as const;
 
-export const primaryNavigation = [
-  { href: '/about/', label: 'About' },
+export interface NavItem {
+  href: string;
+  label: string;
+  children?: readonly NavItem[];
+}
+
+export const primaryNavigation: readonly NavItem[] = [
+  {
+    href: '/about/',
+    label: 'About',
+    children: [
+      { href: '/about/', label: 'About Impact Sol.' },
+      { href: '/about/leadership/', label: 'Executive & Strategic Leadership' },
+      { href: '/about/partners/', label: 'Our Partners' },
+    ],
+  },
   { href: '/what-we-do/', label: 'What we do' },
   { href: '/products/', label: 'Products' },
   { href: '/impact/', label: 'Purpose & approach' },
   { href: '/get-involved/', label: 'Get involved' },
   { href: '/contact/', label: 'Contact' },
-] as const;
+];
 
 export const publicRoutes = [
   '/',
   '/about/',
+  '/about/leadership/',
+  '/about/partners/',
   '/what-we-do/',
   '/products/',
   '/products/chokro/',

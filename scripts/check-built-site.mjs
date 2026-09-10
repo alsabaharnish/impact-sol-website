@@ -11,6 +11,8 @@ const errors = [];
 const requiredPages = [
   'index.html',
   'about/index.html',
+  'about/leadership/index.html',
+  'about/partners/index.html',
   'what-we-do/index.html',
   'products/index.html',
   'products/chokro/index.html',

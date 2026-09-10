@@ -753,6 +753,19 @@ main:focus {
   color: var(--color-forest);
 }
 
+/* A row can carry a second line of status under its label. */
+.link-list a > span:first-child {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.link-list__note {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-snug);
+}
+
 /* ----------------------------- Prose ------------------------------ */
 
 .prose {

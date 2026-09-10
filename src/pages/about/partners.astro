@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import StatusPanel from '../../components/pages/StatusPanel.astro';
+import PartnerList from '../../components/pages/PartnerList.astro';
+import { getPartners } from '../../content/read';
+
+const breadcrumbs = [
+  { name: 'About', path: '/about/' },
+  { name: 'Our Partners', path: '/about/partners/' },
+];
+
+const partners = await getPartners();
+const hasPartners = partners.length > 0;
+
+const description = hasPartners
+  ? 'Organisations working with Impact Sol., each named with written permission and an explicitly labelled relationship.'
+  : 'Impact Sol. does not yet name any partner organisation. Relationships are published only with written permission.';
+---
+
+<BaseLayout
+  title="Our Partners"
+  description={description}
+  breadcrumbs={breadcrumbs}
+  noindex={!hasPartners}
+>
+  <Breadcrumbs items={[{ label: 'About', href: '/about/' }, { label: 'Partners' }]} />
+  <PageHero
+    eyebrow="Working together"
+    title="Our Partners"
+    intro={
+      hasPartners
+        ? 'Every organisation named here has given written permission for the use of its name and mark. Each relationship is labelled as proposed or active rather than left to inference.'
+        : 'No partner organisation is named yet. Naming another organisation is a claim about them, so it waits for written permission and an agreed description of the relationship.'
+    }
+  >
+    <div slot="aside">
+      <StatusPanel
+        title={hasPartners ? 'Named with permission' : 'None named yet'}
+        text={
+          hasPartners
+            ? 'Relationships are labelled proposed or active. No funding, endorsement or delivery is implied beyond what each description states.'
+            : 'Conversations may be underway. They are not published as partnerships until both sides agree the wording.'
+        }
+      />
+    </div>
+  </PageHero>
+
+  {hasPartners ? (
+    <section class="section" aria-labelledby="partner-list-title">
+      <div class="shell">
+        <h2 id="partner-list-title" class="visually-hidden">Partner organisations</h2>
+        <PartnerList partners={partners} />
+      </div>
+    </section>
+  ) : (
+    <section class="section" aria-labelledby="pending-title">
+      <div class="shell">
+        <div class="reading-width">
+          <h2 id="pending-title">What is agreed before an organisation is named</h2>
+          <ul class="check-list">
+            <li>Written permission to use the organisation’s name and mark.</li>
+            <li>A description of the relationship that both sides accept.</li>
+            <li>An accurate label: proposed, or active.</li>
+          </ul>
+          <div class="notice">
+            <p>
+              Logos are not displayed as social proof. An organisation appears here only when the
+              relationship is real and the wording is approved by both parties.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaBand
+    eyebrow="Partnerships"
+    title="Propose a partnership."
+    text="If your organisation’s work overlaps with this direction, start with what you are trying to change."
+    href="/get-involved/#institutions"
+    label="Propose a partnership"
+    secondaryHref="/contact/"
+    secondaryLabel="Contact us"
+  />
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import StatusPanel from '../../components/pages/StatusPanel.astro';
+import LeadershipGrid from '../../components/pages/LeadershipGrid.astro';
+import { getPeople } from '../../content/read';
+
+const breadcrumbs = [
+  { name: 'About', path: '/about/' },
+  { name: 'Executive & Strategic Leadership', path: '/about/leadership/' },
+];
+
+const leadership = await getPeople();
+const hasLeadership = leadership.length > 0;
+
+/* An empty roster is a real state, not an error, but it should not be indexed
+   as if it were content. */
+const description = hasLeadership
+  ? 'The people accountable for Impact Sol., published with each individual’s recorded consent.'
+  : 'Executive roles, advisors and governance for Impact Sol. are being confirmed. No leadership record is published yet.';
+---
+
+<BaseLayout
+  title="Executive & Strategic Leadership"
+  description={description}
+  breadcrumbs={breadcrumbs}
+  noindex={!hasLeadership}
+>
+  <Breadcrumbs items={[{ label: 'About', href: '/about/' }, { label: 'Leadership' }]} />
+  <PageHero
+    eyebrow="Organisation"
+    title="Executive & Strategic Leadership"
+    intro={
+      hasLeadership
+        ? 'Each person listed here has recorded publication consent for their name, role and biography. Decision rights and formal governance are confirmed separately before launch.'
+        : 'Roles, biographies, portraits and publication consent are recorded before anyone appears here, so this page stays empty rather than provisional.'
+    }
+  >
+    <div slot="aside">
+      <StatusPanel
+        title={hasLeadership ? 'Published with consent' : 'Not yet published'}
+        text={
+          hasLeadership
+            ? 'Names, roles and biographies appear only where the individual has consented to publication. Governance and decision rights remain a launch gate.'
+            : 'The organogram, executive roles, advisors and governance structure are still being confirmed.'
+        }
+      />
+    </div>
+  </PageHero>
+
+  {hasLeadership ? (
+    <section class="section" aria-labelledby="roster-title">
+      <div class="shell">
+        <h2 id="roster-title" class="visually-hidden">Leadership roster</h2>
+        <LeadershipGrid people={leadership} />
+      </div>
+    </section>
+  ) : (
+    <section class="section" aria-labelledby="pending-title">
+      <div class="shell">
+        <div class="reading-width">
+          <h2 id="pending-title">What is recorded before a name is published</h2>
+          <ul class="check-list">
+            <li>A current role and the decision rights attached to it.</li>
+            <li>A biography approved by the person it describes.</li>
+            <li>A portrait with documented usage rights.</li>
+            <li>The individual’s recorded consent to publish all of the above.</li>
+          </ul>
+          <div class="notice">
+            <p>
+              Until those are on record for at least one person, this page publishes nothing. It
+              does not stand in placeholder names, stock portraits or unconfirmed titles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaBand
+    eyebrow="Work with us"
+    title="Talking to the right person starts with the right question."
+    text="Tell us what you are exploring and we will route it to whoever can answer it."
+    href="/get-involved/"
+    label="Get involved"
+    secondaryHref="/contact/"
+    secondaryLabel="Contact us"
+  />
+</BaseLayout>
