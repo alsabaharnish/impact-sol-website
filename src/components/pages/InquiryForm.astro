@@ -34,10 +34,9 @@ const formName = `impact-sol-${inquiryType}`;
 
 <section class="inquiry-panel" aria-labelledby={`${prefix}-title`}>
   <div class="inquiry-panel__intro">
-    <p class="eyebrow">Send an enquiry</p>
     <h2 id={`${prefix}-title`}>{title}</h2>
     <p>{intro}</p>
-    <p class="form-note"><span aria-hidden="true">*</span> Required fields</p>
+    <p class="form-note">Fields marked <span class="required-mark" aria-hidden="true">*</span> are required.</p>
   </div>
 
   <form
@@ -67,7 +66,7 @@ const formName = `impact-sol-${inquiryType}`;
     <div class="form-grid">
       {inquiryType === 'general' && (
         <div class="field">
-          <label for={`${prefix}-subject`}>Inquiry category <span aria-hidden="true">*</span></label>
+          <label for={`${prefix}-subject`}>Inquiry category <span class="required-mark" aria-hidden="true">*</span></label>
           <select id={`${prefix}-subject`} name="subject" required aria-describedby={`${prefix}-subject-error`}>
             <option value="">Choose a category</option>
             <option value="General question">General question</option>
@@ -81,7 +80,7 @@ const formName = `impact-sol-${inquiryType}`;
       )}
 
       <div class="field">
-        <label for={`${prefix}-name`}>Name <span aria-hidden="true">*</span></label>
+        <label for={`${prefix}-name`}>Name <span class="required-mark" aria-hidden="true">*</span></label>
         <input
           id={`${prefix}-name`}
           name="name"
@@ -96,7 +95,7 @@ const formName = `impact-sol-${inquiryType}`;
       </div>
 
       <div class="field">
-        <label for={`${prefix}-email`}>Email <span aria-hidden="true">*</span></label>
+        <label for={`${prefix}-email`}>Email <span class="required-mark" aria-hidden="true">*</span></label>
         <input
           id={`${prefix}-email`}
           name="email"
@@ -112,7 +111,7 @@ const formName = `impact-sol-${inquiryType}`;
 
       {includeOrganisation && (
         <div class="field">
-          <label for={`${prefix}-organisation`}>{organisationLabel} {detailedRoute ? <span aria-hidden="true">*</span> : <span class="optional">(optional)</span>}</label>
+          <label for={`${prefix}-organisation`}>{organisationLabel} {detailedRoute ? <span class="required-mark" aria-hidden="true">*</span> : <span class="optional-mark">optional</span>}</label>
           <input
             id={`${prefix}-organisation`}
             name={organisationField}
@@ -128,7 +127,7 @@ const formName = `impact-sol-${inquiryType}`;
 
       {includePhone && (
         <div class="field">
-          <label for={`${prefix}-phone`}>Phone <span class="optional">(optional)</span></label>
+          <label for={`${prefix}-phone`}>Phone <span class="optional-mark">optional</span></label>
           <input
             id={`${prefix}-phone`}
             name="phone"
@@ -144,7 +143,7 @@ const formName = `impact-sol-${inquiryType}`;
 
       {includeCountry && (
         <div class="field">
-          <label for={`${prefix}-country`}>Country or region {detailedRoute ? <span aria-hidden="true">*</span> : <span class="optional">(optional)</span>}</label>
+          <label for={`${prefix}-country`}>Country or region {detailedRoute ? <span class="required-mark" aria-hidden="true">*</span> : <span class="optional-mark">optional</span>}</label>
           <input
             id={`${prefix}-country`}
             name="country"
@@ -160,7 +159,7 @@ const formName = `impact-sol-${inquiryType}`;
 
       {includeWebsite && (
         <div class="field">
-          <label for={`${prefix}-website-url`}>Website or public profile <span class="optional">(optional)</span></label>
+          <label for={`${prefix}-website-url`}>Website or public profile <span class="optional-mark">optional</span></label>
           <input
             id={`${prefix}-website-url`}
             name="websiteUrl"
@@ -178,11 +177,11 @@ const formName = `impact-sol-${inquiryType}`;
       {inquiryType === 'partnership' && (
         <>
           <div class="field">
-            <label for={`${prefix}-role`}>Your role or organisation type <span aria-hidden="true">*</span></label>
+            <label for={`${prefix}-role`}>Your role or organisation type <span class="required-mark" aria-hidden="true">*</span></label>
             <input id={`${prefix}-role`} name="role" type="text" maxlength="100" required />
           </div>
           <div class="field">
-            <label for={`${prefix}-interest`}>Proposed collaboration <span aria-hidden="true">*</span></label>
+            <label for={`${prefix}-interest`}>Proposed collaboration <span class="required-mark" aria-hidden="true">*</span></label>
             <input id={`${prefix}-interest`} name="partnershipInterest" type="text" maxlength="300" required />
           </div>
         </>
@@ -191,11 +190,11 @@ const formName = `impact-sol-${inquiryType}`;
       {inquiryType === 'maker' && (
         <>
           <div class="field">
-            <label for={`${prefix}-role`}>Type of work <span aria-hidden="true">*</span></label>
+            <label for={`${prefix}-role`}>Type of work <span class="required-mark" aria-hidden="true">*</span></label>
             <input id={`${prefix}-role`} name="role" type="text" maxlength="100" required />
           </div>
           <div class="field">
-            <label for={`${prefix}-stage`}>Current stage <span aria-hidden="true">*</span></label>
+            <label for={`${prefix}-stage`}>Current stage <span class="required-mark" aria-hidden="true">*</span></label>
             <select id={`${prefix}-stage`} name="initiativeStage" required>
               <option value="">Choose a stage</option>
               <option value="idea">Idea</option>
@@ -206,7 +205,7 @@ const formName = `impact-sol-${inquiryType}`;
             </select>
           </div>
           <div class="field field--full">
-            <label for={`${prefix}-support`}>Primary challenge or support sought <span aria-hidden="true">*</span></label>
+            <label for={`${prefix}-support`}>Primary challenge or support sought <span class="required-mark" aria-hidden="true">*</span></label>
             <textarea id={`${prefix}-support`} name="supportNeeded" rows="3" maxlength="500" required></textarea>
           </div>
         </>
@@ -214,7 +213,7 @@ const formName = `impact-sol-${inquiryType}`;
     </div>
 
     <div class="field">
-      <label for={`${prefix}-message`}>{messageLabel} <span aria-hidden="true">*</span></label>
+      <label for={`${prefix}-message`}>{messageLabel} <span class="required-mark" aria-hidden="true">*</span></label>
       <textarea
         id={`${prefix}-message`}
         name="message"
@@ -252,35 +251,45 @@ const formName = `impact-sol-${inquiryType}`;
     align-items: start;
   }
 
+  /* Sticks only while the form is actually taller than the viewport, so a
+     short column no longer leaves a tall dead zone beneath itself. */
   .inquiry-panel__intro {
     position: sticky;
     top: 7rem;
+    align-self: start;
   }
 
   .inquiry-panel__intro h2 {
-    margin-top: var(--space-3);
+    margin-bottom: var(--space-3);
+    font-size: var(--step-3);
   }
 
+  .inquiry-panel__intro > p {
+    max-width: 32ch;
+    color: var(--color-ink-soft);
+  }
+
+  /* One elevation source. The panel floats; it does not also draw a border. */
   .inquiry-form {
     position: relative;
     display: grid;
     gap: var(--space-5);
-    padding: clamp(1.25rem, 4vw, 2.5rem);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-large);
+    padding: clamp(1.35rem, 4vw, 2.5rem);
     background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
+    gap: var(--space-4) var(--space-4);
   }
 
   .field {
     display: grid;
-    gap: 0.45rem;
+    gap: 0.42rem;
+    min-width: 0;
   }
 
   .field--full {
@@ -289,54 +298,108 @@ const formName = `impact-sol-${inquiryType}`;
 
   .field label {
     color: var(--color-ink);
-    font-weight: 720;
+    font-size: 0.9rem;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-snug);
   }
 
-  .optional,
+  .required-mark {
+    margin-left: 0.1em;
+    color: var(--color-error);
+    font-weight: var(--weight-bold);
+  }
+
+  /* "optional" reads as a quiet chip rather than parenthetical noise. */
+  .optional-mark {
+    margin-left: 0.35em;
+    padding: 0.05rem 0.34rem;
+    color: var(--color-muted);
+    background: var(--color-paper-muted);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    vertical-align: 0.06em;
+  }
+
   .field-hint,
   .form-note,
   .form-status {
     color: var(--color-muted);
-    font-size: 0.9rem;
-    font-weight: 450;
+    font-size: 0.85rem;
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-snug);
   }
 
+  /* Every control shares one surface, border and radius. Selects are drawn
+     rather than left native, which on macOS ignored the background entirely
+     and rendered white beside cream inputs. */
   .field input:not([type='checkbox']),
   .field select,
   .field textarea {
     width: 100%;
     min-height: 3rem;
-    padding: 0.8rem 0.9rem;
-    border: 1px solid var(--color-line-strong, var(--color-line));
-    border-radius: var(--radius-small, 0.5rem);
+    padding: 0.72rem 0.85rem;
+    border: 1px solid var(--color-line-strong);
     color: var(--color-ink);
-    background: var(--color-paper);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 1px 2px rgb(16 32 28 / 5%) inset;
     font: inherit;
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .field select {
+    padding-right: 2.6rem;
+    background-image: var(--icon-chevron);
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1.15rem;
+    appearance: none;
+  }
+
+  .field :is(input, select, textarea):hover:not(:disabled) {
+    border-color: var(--color-line-hover);
   }
 
   .field textarea {
     min-height: 10rem;
+    line-height: var(--leading-body);
     resize: vertical;
   }
 
-  .field input:focus-visible,
-  .field select:focus-visible,
-  .field textarea:focus-visible {
-    border-color: var(--color-teal);
-    outline: 3px solid color-mix(in srgb, var(--color-teal) 30%, transparent);
+  .field :is(input, select, textarea):focus-visible {
+    border-color: var(--color-forest);
+    outline: 3px solid var(--color-forest);
     outline-offset: 2px;
+    box-shadow: 0 0 0 1px var(--color-sun-soft);
   }
 
+  .field :is(input, select, textarea):disabled {
+    color: var(--color-muted);
+    background-color: var(--color-paper-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  /* Invalid state carries a 2px border and a tinted field, so it survives
+     grayscale and high-contrast rather than relying on hue alone. */
   .field [aria-invalid='true'] {
-    border-color: var(--color-error, #9c2f2f);
+    border-color: var(--color-error);
+    border-width: 2px;
+    background-color: var(--color-error-surface);
   }
 
   .field-error {
     min-height: 1.25em;
     margin: 0;
-    color: var(--color-error, #8f2525);
-    font-size: 0.88rem;
-    font-weight: 650;
+    color: var(--color-error);
+    font-size: 0.85rem;
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
   }
 
   .field-hint {
@@ -345,11 +408,13 @@ const formName = `impact-sol-${inquiryType}`;
 
   .privacy-note {
     margin: 0;
-    padding: var(--space-3) var(--space-4);
-    border-left: 3px solid var(--color-teal);
-    color: var(--color-muted);
-    background: var(--color-mint-soft);
-    font-size: 0.9rem;
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink-soft);
+    background: var(--color-paper);
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    line-height: var(--leading-snug);
   }
 
   .form-actions {
@@ -365,9 +430,23 @@ const formName = `impact-sol-${inquiryType}`;
 
   .form-status:not(:empty) {
     flex: 1 1 15rem;
-    padding: 0.75rem 1rem;
-    border-left: 3px solid var(--color-teal);
-    background: var(--color-mint-soft);
+    padding: 0.7rem 0.95rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    border-radius: var(--radius-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .form-status[data-state='success'] {
+    border-color: var(--color-success-line);
+    color: var(--color-success);
+    background: var(--color-success-surface);
+  }
+
+  .form-status[data-state='error'] {
+    border-color: var(--color-error-line);
+    color: var(--color-error);
+    background: var(--color-error-surface);
   }
 
   .honeypot {
@@ -379,14 +458,23 @@ const formName = `impact-sol-${inquiryType}`;
     white-space: nowrap !important;
   }
 
-  @media (max-width: 48rem) {
-    .inquiry-panel,
-    .form-grid {
+  @media (max-width: 62rem) {
+    .inquiry-panel {
       grid-template-columns: 1fr;
     }
 
     .inquiry-panel__intro {
       position: static;
+    }
+
+    .inquiry-panel__intro > p {
+      max-width: 60ch;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .form-grid {
+      grid-template-columns: 1fr;
     }
 
     .field--full {

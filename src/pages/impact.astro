@@ -191,8 +191,8 @@ const faqs = [
     margin: 0;
     color: var(--color-ink);
     font-size: var(--step-4);
-    font-weight: 650;
-    letter-spacing: -0.035em;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-heading);
     line-height: 1.12;
   }
 
@@ -219,7 +219,7 @@ const faqs = [
   }
 
   .change-map li:last-child { border-bottom: 1px solid var(--color-line); }
-  .change-map li span { color: var(--color-forest); font-weight: 780; }
+  .change-map li span { color: var(--color-forest); font-weight: var(--weight-black); }
   .change-map li p { margin: 0; color: var(--color-muted); }
 
   .dimensions {
@@ -243,7 +243,7 @@ const faqs = [
     color: var(--color-forest);
     background: var(--color-mint-soft);
     font-size: 0.74rem;
-    font-weight: 780;
+    font-weight: var(--weight-black);
     text-transform: uppercase;
   }
 
@@ -264,12 +264,12 @@ const faqs = [
   .alignment > div:first-child > p:last-child { color: var(--color-muted); }
   .alignment > div:last-child { display: grid; gap: var(--space-4); }
   .alignment article { padding: var(--space-5); border: 1px solid var(--color-line); background: var(--color-surface); border-radius: var(--radius-md); }
-  .alignment article > span { color: var(--color-teal); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .alignment article > span { color: var(--color-teal); font-size: 0.72rem; font-weight: var(--weight-black); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
   .alignment article h3 { margin: var(--space-3) 0; font-size: var(--step-1); }
   .alignment article p, .alignment article dd { color: var(--color-muted); }
   .alignment dl { margin: var(--space-4) 0 0; }
   .alignment dl div { display: grid; padding-block: 0.7rem; grid-template-columns: 3.5rem 1fr; gap: 1rem; border-top: 1px solid var(--color-line); }
-  .alignment dt { color: var(--color-forest); font-weight: 800; }
+  .alignment dt { color: var(--color-forest); font-weight: var(--weight-black); }
   .alignment dd { margin: 0; }
 
   .claims-standard ol {
@@ -289,7 +289,7 @@ const faqs = [
   .claims-standard li > span {
     color: var(--color-sun-soft, #ffd47a);
     font-size: 0.75rem;
-    font-weight: 780;
+    font-weight: var(--weight-black);
   }
 
   .claims-standard li p { margin: 0; color: var(--color-paper-muted); }

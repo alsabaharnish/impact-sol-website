@@ -1,0 +1,9 @@
+/* Linked by BaseLayout only when inter-variable.woff2 is actually present,
+   so a missing font never costs a failed request. Run `npm run fonts`. */
+@font-face {
+  font-family: "Inter var";
+  src: url("/fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

@@ -12,13 +12,15 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
     "postbuild": "node scripts/check-built-site.mjs",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "verify": "npm run build"
+    "verify": "npm run build",
+    "fonts": "node scripts/setup-fonts.mjs"
   },
   "dependencies": {
     "astro": "7.3.2"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@fontsource-variable/inter": "^5.3.0",
     "typescript": "6.0.3"
   }
 }

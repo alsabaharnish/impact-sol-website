@@ -45,8 +45,8 @@ const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
     gap: 0.55rem;
     color: var(--color-forest);
     font-size: 0.76rem;
-    font-weight: 780;
-    letter-spacing: 0.08em;
+    font-weight: var(--weight-black);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
   }
 
@@ -61,7 +61,7 @@ const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
     max-width: 18ch;
     margin: 0;
     font-size: var(--step-2);
-    letter-spacing: -0.025em;
+    letter-spacing: var(--tracking-snug);
   }
 
   .status-panel > p:last-of-type {

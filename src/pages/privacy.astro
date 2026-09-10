@@ -127,9 +127,10 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
     gap: var(--space-4);
     margin-top: var(--space-6);
     padding: var(--space-4);
-    border-left: 4px solid var(--color-sun);
+    border: 1px solid var(--color-warning-line);
     color: var(--color-forest);
-    background: var(--color-mint-soft);
+    background: var(--color-warning-surface);
+    border-radius: var(--radius-md);
   }
 
   .legal-status span { color: var(--color-muted); }
@@ -161,7 +162,7 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
     border-bottom: 1px solid var(--color-line);
     color: var(--color-forest);
     font-size: 0.9rem;
-    font-weight: 650;
+    font-weight: var(--weight-semibold);
   }
 
   .legal-copy { max-width: 52rem; }

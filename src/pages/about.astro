@@ -164,7 +164,7 @@ const faqs = await getFaqs('organisation');
 
   .split h2,
   .accountability h2 {
-    max-width: 13ch;
+    max-width: var(--measure-heading);
   }
 
   .principle-grid {
@@ -190,11 +190,11 @@ const faqs = await getFaqs('organisation');
     margin-bottom: clamp(2rem, 5vw, 4.5rem);
     color: var(--color-teal);
     font-size: 0.82rem;
-    font-weight: 780;
+    font-weight: var(--weight-black);
   }
 
   .principle-grid h3 {
-    max-width: 15ch;
+    max-width: var(--measure-heading);
   }
 
   .principle-grid p {
@@ -232,7 +232,7 @@ const faqs = await getFaqs('organisation');
   .accountability__list span {
     color: var(--color-sun-soft, #ffd47a);
     font-size: 0.78rem;
-    font-weight: 760;
+    font-weight: var(--weight-bold);
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -260,8 +260,8 @@ const faqs = await getFaqs('organisation');
   .foundations__items span {
     color: var(--color-teal);
     font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    font-weight: var(--weight-black);
+    letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
   }
 
@@ -276,7 +276,7 @@ const faqs = await getFaqs('organisation');
 
   .model-layout > div:first-child h2,
   .foundations > div:first-child h2 {
-    max-width: 14ch;
+    max-width: var(--measure-heading);
   }
 
   .foundations > div:first-child > p:last-child {

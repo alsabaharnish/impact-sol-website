@@ -262,11 +262,11 @@ const currentStatus =
   .product-status dl { margin: var(--space-5) 0 0; }
   .product-status dl div { display: grid; padding-block: 0.65rem; grid-template-columns: 7.5rem 1fr; gap: 1rem; border-top: 1px solid var(--color-line); }
   .product-status dt { color: var(--color-muted); font-size: 0.78rem; }
-  .product-status dd { margin: 0; font-size: 0.83rem; font-weight: 680; }
+  .product-status dd { margin: 0; font-size: 0.83rem; font-weight: var(--weight-semibold); }
 
   .status-strip { color: var(--color-paper); background: var(--color-ink); }
   .status-strip > div { display: grid; min-height: 6rem; padding-block: 1rem; grid-template-columns: 10rem 1fr; align-items: center; gap: 1.5rem; }
-  .status-strip strong { color: var(--color-mint); font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .status-strip strong { color: var(--color-mint); font-size: 0.76rem; letter-spacing: var(--tracking-caps); text-transform: uppercase; }
   .status-strip p { margin: 0; color: var(--color-paper-muted); font-size: 0.88rem; }
 
   .problem-layout, .epr-layout, .stage-map, .alignment-layout, .release-grid {
@@ -276,34 +276,38 @@ const currentStatus =
     align-items: start;
   }
 
-  .problem-layout h2, .epr-layout h2, .stage-map h2, .alignment-layout h2, .release-grid h2 { max-width: 14ch; font-size: var(--step-4); }
+  .problem-layout h2, .epr-layout h2, .stage-map h2, .alignment-layout h2, .release-grid h2 { max-width: var(--measure-heading); font-size: var(--step-4); }
   .problem-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--color-line); border-left: 1px solid var(--color-line); }
   .problem-cards article { min-height: 22rem; padding: clamp(1.4rem, 3vw, 2.2rem); border-right: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
-  .problem-cards span { display: block; margin-bottom: clamp(4rem, 8vw, 7rem); color: var(--color-teal); font-size: 0.74rem; font-weight: 800; }
+  .problem-cards span { display: block; margin-bottom: clamp(4rem, 8vw, 7rem); color: var(--color-teal); font-size: 0.74rem; font-weight: var(--weight-black); }
   .problem-cards h3 { font-size: var(--step-1); }
   .problem-cards p { color: var(--color-muted); }
 
   .current-approach { display: grid; grid-template-columns: minmax(17rem, 0.75fr) minmax(0, 1.25fr); gap: clamp(3rem, 8vw, 8rem); }
-  .current-approach h2 { max-width: 13ch; color: inherit; font-size: var(--step-4); }
+  .current-approach h2 { max-width: var(--measure-heading); color: inherit; font-size: var(--step-4); }
   .current-approach > div:first-child > p:not(.eyebrow) { color: var(--color-paper-muted); }
   .current-approach__visual { margin-top: var(--space-6); }
   .capability-list { border-top: 1px solid rgb(255 255 255 / 18%); }
   .capability-list article { padding-block: var(--space-5); border-bottom: 1px solid rgb(255 255 255 / 18%); }
-  .capability-list span { color: var(--color-mint); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .capability-list span { color: var(--color-mint); font-size: 0.72rem; font-weight: var(--weight-black); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
   .capability-list h3 { margin: 0.45rem 0; color: inherit; font-size: var(--step-1); }
   .capability-list p { margin: 0; color: var(--color-paper-muted); font-size: 0.9rem; }
 
-  .comparison { max-width: 100%; margin-top: var(--space-6); overflow-x: auto; border: 1px solid var(--color-line); border-radius: var(--radius-md); }
-  table { width: 100%; min-width: 48rem; border-collapse: collapse; background: var(--color-surface); }
-  th, td { padding: 1rem; border-right: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); text-align: left; vertical-align: top; }
-  thead th { color: var(--color-paper); background: var(--color-forest); font-size: 0.82rem; }
-  tbody th { width: 11rem; color: var(--color-forest); background: var(--color-mint-soft); font-size: 0.82rem; }
-  tbody td { color: var(--color-ink-soft); font-size: 0.86rem; }
-  .table-note { color: var(--color-muted); font-size: 0.75rem; }
+  .comparison { max-width: 100%; margin-top: var(--space-6); overflow-x: auto; overscroll-behavior-x: contain; border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); }
+  table { width: 100%; min-width: 48rem; border-collapse: separate; border-spacing: 0; background: var(--color-surface); }
+  th, td { padding: 0.95rem 1rem; border-right: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); text-align: left; vertical-align: top; }
+  tr > :last-child { border-right: 0; }
+  tbody tr:last-child :is(th, td) { border-bottom: 0; }
+  thead th { position: sticky; top: 0; z-index: 2; color: var(--color-paper); background: var(--color-forest); font-size: 0.78rem; font-weight: var(--weight-semibold); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+  /* The question column stays put while the two routes are compared. */
+  tbody th { position: sticky; left: 0; z-index: 1; width: 11rem; color: var(--color-forest); background: var(--color-mint-soft); box-shadow: 1px 0 0 var(--color-line); font-size: 0.84rem; font-weight: var(--weight-semibold); }
+  tbody td { color: var(--color-ink-soft); font-size: 0.88rem; line-height: var(--leading-snug); }
+  tbody tr:hover td { background: color-mix(in srgb, var(--color-mint-soft) 40%, var(--color-surface)); }
+  .table-note { margin-top: var(--space-3); color: var(--color-muted); font-size: 0.8rem; }
 
   .roles-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
   .roles-grid article { padding: clamp(1.4rem, 3vw, 2.1rem); border: 1px solid var(--color-line); background: var(--color-surface); border-radius: var(--radius-md); }
-  .roles-grid span, .stage-map__list span { color: var(--color-teal); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .roles-grid span, .stage-map__list span { color: var(--color-teal); font-size: 0.7rem; font-weight: var(--weight-black); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
   .roles-grid h3, .stage-map__list h3 { margin: var(--space-4) 0 var(--space-3); font-size: var(--step-1); }
   .roles-grid p { margin: 0; color: var(--color-muted); }
 
@@ -312,6 +316,8 @@ const currentStatus =
   .epr-copy .notice { margin-top: var(--space-5); }
 
   .stage-map h2 { color: inherit; }
+  /* 260px intro beside a 634px stage list. */
+  .stage-map > div:first-child { position: sticky; top: 7rem; }
   .stage-map__list { border-top: 1px solid rgb(255 255 255 / 18%); }
   .stage-map__list article { padding-block: var(--space-5); border-bottom: 1px solid rgb(255 255 255 / 18%); }
   .stage-map__list h3 { color: inherit; }
@@ -320,7 +326,7 @@ const currentStatus =
   .alignment-layout > div > p:last-child { color: var(--color-muted); }
   .alignment-layout dl { margin: 0; border-top: 1px solid var(--color-line); }
   .alignment-layout dl div { display: grid; padding-block: var(--space-4); grid-template-columns: 4rem 1fr; gap: 1rem; border-bottom: 1px solid var(--color-line); }
-  .alignment-layout dt { color: var(--color-forest); font-size: var(--step-1); font-weight: 800; }
+  .alignment-layout dt { color: var(--color-forest); font-size: var(--step-1); font-weight: var(--weight-black); }
   .alignment-layout dd { margin: 0; color: var(--color-muted); }
 
   .release-grid > div > p:not(.eyebrow) { color: var(--color-muted); }
@@ -332,6 +338,7 @@ const currentStatus =
 
   @media (max-width: 58rem) {
     .problem-layout, .current-approach, .epr-layout, .stage-map, .alignment-layout, .release-grid { grid-template-columns: 1fr; }
+    .stage-map > div:first-child { position: static; }
     .roles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 

@@ -1,4 +1,15 @@
+/* ------------------------------------------------------------------
+   Impact Sol design system
+   Order: face → tokens → reset → primitives → components → responsive
+------------------------------------------------------------------ */
+
+/* The Inter variable face is declared in public/fonts/inter.css and linked
+   by BaseLayout only when the file exists, so a missing font costs no failed
+   request. Until then the stack falls back and the weight scale still reads,
+   because every step below is a standard weight. Run `npm run fonts`. */
+
 :root {
+  /* Palette — unchanged brand values */
   --color-ink: #10201c;
   --color-ink-soft: #304a42;
   --color-muted: #5d716a;
@@ -11,33 +22,51 @@
   --color-mint: #bde7d2;
   --color-mint-soft: #e8f3ed;
   --color-sun: #f2b441;
+  --color-sun-soft: #ffd47a;
   --color-sun-deep: #9a5d00;
-  --color-line: #cfddd5;
-  --color-line-strong: #8fa59c;
   --color-error: #a72d2d;
   --color-success: #176448;
-  --shadow-sm: 0 0.5rem 1.5rem rgb(16 32 28 / 8%);
-  --shadow-lg: 0 1.5rem 4.5rem rgb(16 32 28 / 15%);
-  --radius-sm: 0.65rem;
-  --radius-md: 1.1rem;
-  --radius-lg: 1.8rem;
-  --radius-pill: 999px;
-  --radius-small: var(--radius-sm);
-  --radius-medium: var(--radius-md);
-  --radius-large: var(--radius-lg);
-  --shadow-soft: var(--shadow-sm);
-  --color-sun-soft: #ffd47a;
-  --gutter: clamp(1.1rem, 0.45rem + 2.8vw, 3.75rem);
-  --shell: 76rem;
-  --reading: 44rem;
-  --space-1: 0.3rem;
-  --space-2: 0.55rem;
-  --space-3: 0.85rem;
-  --space-4: 1.25rem;
-  --space-5: 1.8rem;
-  --space-6: 2.6rem;
-  --space-7: 3.75rem;
-  --space-8: 5.5rem;
+
+  /* Lines. `line` is a hairline for grouping; `line-strong` draws
+     interactive borders and clears 3:1 against white for SC 1.4.11. */
+  --color-line: #cfddd5;
+  --color-line-strong: #6d8880;
+  --color-line-hover: #4b6a61;
+
+  /* Tinted surfaces for status treatments */
+  --color-error-surface: #fdf3f2;
+  --color-error-line: #e6c4c1;
+  --color-warning-surface: #fdf6e7;
+  --color-warning-line: #e8d3a3;
+  --color-success-surface: #eff6f1;
+  --color-success-line: #bcd8c7;
+
+  /* Typography */
+  --font-sans:
+    "Inter var", Inter, "Noto Sans Bengali", "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+
+  /* Five real steps. Standard values so the hierarchy survives intact
+     in every fallback face instead of collapsing to regular + bold. */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 800;
+
+  /* Tracking scales with size: display tightens, small caps open up. */
+  --tracking-display: -0.032em;
+  --tracking-heading: -0.022em;
+  --tracking-snug: -0.012em;
+  --tracking-caps: 0.09em;
+
+  /* Leading by role, not one value for every heading. */
+  --leading-display: 1.03;
+  --leading-heading: 1.14;
+  --leading-snug: 1.32;
+  --leading-body: 1.6;
+  --leading-relaxed: 1.68;
+
   --step--1: clamp(0.78rem, 0.76rem + 0.08vw, 0.84rem);
   --step-0: clamp(1rem, 0.96rem + 0.18vw, 1.1rem);
   --step-1: clamp(1.2rem, 1.1rem + 0.42vw, 1.48rem);
@@ -46,12 +75,59 @@
   --step-4: clamp(2.25rem, 1.72rem + 2.15vw, 3.7rem);
   --step-5: clamp(2.7rem, 1.9rem + 3.15vw, 4.9rem);
   --step-6: clamp(3.15rem, 2.05rem + 4.55vw, 6.25rem);
+
+  /* Measure */
+  --shell: 76rem;
+  --reading: 44rem;
+  --measure-body: 68ch;
+  --measure-display: 17ch;
+  --measure-heading: 22ch;
+  --gutter: clamp(1.1rem, 0.45rem + 2.8vw, 3.75rem);
+
+  /* Space */
+  --space-1: 0.3rem;
+  --space-2: 0.55rem;
+  --space-3: 0.85rem;
+  --space-4: 1.25rem;
+  --space-5: 1.8rem;
+  --space-6: 2.6rem;
+  --space-7: 3.75rem;
+  --space-8: 5.5rem;
+
+  /* Radius — cards land in the 12–16px band, pills stay for controls */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 999px;
+  --radius-small: var(--radius-sm);
+  --radius-medium: var(--radius-md);
+  --radius-large: var(--radius-lg);
+
+  /* Elevation — every level carries offset and blur */
+  --shadow-xs: 0 1px 2px rgb(16 32 28 / 6%);
+  --shadow-sm: 0 2px 4px rgb(16 32 28 / 4%), 0 6px 16px -6px rgb(16 32 28 / 10%);
+  --shadow-md: 0 4px 8px rgb(16 32 28 / 5%), 0 16px 32px -12px rgb(16 32 28 / 13%);
+  --shadow-lg: 0 8px 16px rgb(16 32 28 / 6%), 0 32px 64px -20px rgb(16 32 28 / 18%);
+  --shadow-soft: var(--shadow-sm);
+
+  /* Motion — one curve, three durations */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 320ms;
+
   color: var(--color-ink);
-  font-family:
-    Inter, "Noto Sans Bengali", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   font-synthesis: none;
-  line-height: 1.55;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
   text-rendering: optimizeLegibility;
+
+  /* Browser surfaces belong to the design system too */
+  accent-color: var(--color-forest);
+  caret-color: var(--color-forest-bright);
+  scrollbar-color: var(--color-line-strong) transparent;
 }
 
 *,
@@ -65,6 +141,7 @@ html {
   background: var(--color-paper);
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -73,6 +150,7 @@ body {
   color: var(--color-ink);
   background: var(--color-paper);
   font-size: var(--step-0);
+  font-variant-numeric: proportional-nums;
   overflow-wrap: break-word;
 }
 
@@ -98,19 +176,40 @@ textarea {
   color: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 a {
   color: var(--color-forest-bright);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 0.19em;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    text-decoration-color var(--duration-fast) var(--ease-out);
 }
 
 a:hover {
-  text-decoration-thickness: 0.14em;
+  text-decoration-color: currentColor;
 }
 
-:where(a, button, input, select, textarea, summary):focus-visible {
-  outline: 3px solid var(--color-sun);
-  outline-offset: 3px;
+/* Two-tone ring: the sun hairline keeps the brand signal, the forest
+   ring carries the 3:1 contrast the sun alone cannot (1.76:1 on paper). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-forest);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--color-sun-soft);
+}
+
+:where(.section--dark, .site-footer, .card--dark, .cta-band, .stage-band)
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: var(--color-sun);
+  box-shadow: 0 0 0 1px var(--color-forest);
 }
 
 ::selection {
@@ -118,14 +217,31 @@ a:hover {
   background: var(--color-forest);
 }
 
+::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
 h1,
 h2,
 h3,
 h4 {
   color: var(--color-ink);
-  font-weight: 740;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+}
+
+h1 {
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+
+h4 {
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
 }
 
 h1,
@@ -157,14 +273,17 @@ main:focus {
   color: var(--color-paper);
   background: var(--color-ink);
   border-radius: var(--radius-sm);
-  font-weight: 750;
+  box-shadow: var(--shadow-md);
+  font-weight: var(--weight-bold);
   transform: translateY(-180%);
-  transition: transform 160ms ease;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .skip-link:focus {
   transform: translateY(0);
 }
+
+/* ----------------------------- Layout ----------------------------- */
 
 .shell {
   width: min(100% - (2 * var(--gutter)), var(--shell));
@@ -187,10 +306,7 @@ main:focus {
   background: var(--color-surface);
 }
 
-.section--mint {
-  background: var(--color-mint-soft);
-}
-
+.section--mint,
 .section--tint {
   background: var(--color-mint-soft);
 }
@@ -208,7 +324,7 @@ main:focus {
   color: inherit;
 }
 
-.section--dark p {
+.section--dark p:not(.eyebrow) {
   color: var(--color-paper-muted);
 }
 
@@ -222,37 +338,45 @@ main:focus {
 
 .section-heading h2,
 .display-heading {
-  max-width: 17ch;
+  max-width: var(--measure-heading);
   margin-bottom: 0;
   font-size: var(--step-4);
-  text-wrap: balance;
 }
 
-.section-heading p {
-  max-width: 37rem;
+.section-heading p:not(.eyebrow) {
+  max-width: min(37rem, var(--measure-body));
   margin-bottom: 0;
   color: var(--color-ink-soft);
 }
 
+/* Loose prose inside a full-width section otherwise ran to 80ch at 1440px. */
+.section > .shell > p,
+.section > .shell > .stack > p {
+  max-width: var(--measure-body);
+}
+
+/* Classification metadata. Demoted so the heading leads. */
 .section-kicker,
 .eyebrow {
-  margin-bottom: var(--space-3);
-  color: var(--color-forest-bright);
+  margin-bottom: var(--space-2);
+  color: color-mix(in srgb, currentcolor 66%, transparent);
   font-size: var(--step--1);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1.3;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  line-height: var(--leading-snug);
   text-transform: uppercase;
 }
 
 .eyebrow--light {
-  color: var(--color-mint);
+  color: color-mix(in srgb, var(--color-mint) 88%, var(--color-paper));
 }
 
 .lead {
+  max-width: 42rem;
   color: var(--color-ink-soft);
   font-size: var(--step-1);
-  line-height: 1.58;
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-body);
 }
 
 .small,
@@ -262,7 +386,7 @@ main:focus {
 }
 
 .fine-print {
-  line-height: 1.65;
+  line-height: var(--leading-relaxed);
 }
 
 .stack > * + * {
@@ -295,6 +419,8 @@ main:focus {
   gap: clamp(2.5rem, 7vw, 7rem);
 }
 
+/* ---------------------------- Buttons ----------------------------- */
+
 .button-row {
   display: flex;
   margin-top: var(--space-5);
@@ -304,38 +430,91 @@ main:focus {
 }
 
 .button {
+  position: relative;
   display: inline-flex;
   min-height: 48px;
-  padding: 0.78rem 1.18rem;
+  padding: 0.78rem 1.35rem;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  border: 2px solid var(--color-forest);
+  border: 1.5px solid var(--color-forest);
   color: var(--color-paper);
   background: var(--color-forest);
   border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-xs);
   font-size: 0.94rem;
-  font-weight: 760;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-snug);
   line-height: 1.1;
   text-align: center;
   text-decoration: none;
   transition:
-    color 150ms ease,
-    background-color 150ms ease,
-    border-color 150ms ease,
-    transform 150ms ease;
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .button:hover {
   border-color: var(--color-ink);
   background: var(--color-ink);
+  box-shadow: var(--shadow-sm);
   text-decoration: none;
   transform: translateY(-1px);
 }
 
+.button:active {
+  box-shadow: var(--shadow-xs);
+  transform: translateY(0);
+  transition-duration: 40ms;
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  border-color: var(--color-line-strong);
+  color: color-mix(in srgb, var(--color-paper) 78%, var(--color-line-strong));
+  background: var(--color-line-strong);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Loading. The submit handler sets disabled and data-loading together, so
+   the loading state has to reclaim the brand fill: a greyed-out spinner
+   reads as "unavailable" when it should read as "working". The label keeps
+   its place so the control never changes width. */
+.button[data-loading="true"] {
+  border-color: var(--color-forest);
+  color: transparent;
+  background: var(--color-forest);
+  pointer-events: none;
+}
+
+.button--sun[data-loading="true"] {
+  border-color: var(--color-sun);
+  background: var(--color-sun);
+}
+
+.button[data-loading="true"]::after {
+  position: absolute;
+  width: 1.05rem;
+  height: 1.05rem;
+  border: 2px solid color-mix(in srgb, currentcolor 30%, transparent);
+  border-top-color: var(--color-paper);
+  border-radius: 50%;
+  animation: button-spin 620ms linear infinite;
+  content: "";
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 .button--small {
-  min-height: 44px;
-  padding: 0.65rem 1rem;
+  min-height: 42px;
+  padding: 0.6rem 1.05rem;
   font-size: 0.87rem;
 }
 
@@ -343,6 +522,7 @@ main:focus {
 .button--outline {
   color: var(--color-forest);
   background: transparent;
+  box-shadow: none;
 }
 
 .button--secondary:hover,
@@ -357,9 +537,13 @@ main:focus {
 }
 
 .button--sun:hover {
-  border-color: #ffd073;
+  border-color: var(--color-sun-soft);
   color: var(--color-ink);
-  background: #ffd073;
+  background: var(--color-sun-soft);
+}
+
+.button--sun[data-loading="true"]::after {
+  border-top-color: var(--color-ink);
 }
 
 .text-link {
@@ -368,12 +552,12 @@ main:focus {
   align-items: center;
   gap: 0.45rem;
   color: var(--color-forest);
-  font-weight: 760;
-  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  font-weight: var(--weight-semibold);
+  text-decoration-color: color-mix(in srgb, currentColor 32%, transparent);
 }
 
 .text-link span {
-  transition: transform 150ms ease;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .text-link:hover span {
@@ -384,6 +568,8 @@ main:focus {
   color: var(--color-paper);
 }
 
+/* ----------------------------- Cards ------------------------------ */
+
 .card,
 .feature-card,
 .pathway-card {
@@ -392,6 +578,19 @@ main:focus {
   border: 1px solid var(--color-line);
   background: var(--color-surface);
   border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+/* Cards that lead somewhere say so on hover. */
+.card:has(a:hover),
+.feature-card:has(a:hover),
+.pathway-card:has(a:hover) {
+  border-color: color-mix(in srgb, var(--color-forest) 34%, var(--color-line));
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
 }
 
 .card--soft {
@@ -400,14 +599,14 @@ main:focus {
 
 .card--dark {
   color: var(--color-paper);
-  border-color: color-mix(in srgb, var(--color-paper) 13%, transparent);
+  border-color: color-mix(in srgb, var(--color-paper) 15%, transparent);
   background: var(--color-forest);
 }
 
 .card :is(h2, h3),
 .feature-card :is(h2, h3),
 .pathway-card :is(h2, h3) {
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.55rem;
   font-size: var(--step-2);
 }
 
@@ -421,7 +620,7 @@ main:focus {
   color: inherit;
 }
 
-.card--dark p {
+.card--dark p:not(.eyebrow) {
   color: var(--color-paper-muted);
 }
 
@@ -429,49 +628,55 @@ main:focus {
 .number-chip,
 .icon-chip {
   display: inline-grid;
-  width: 2.65rem;
-  height: 2.65rem;
-  margin-bottom: var(--space-5);
+  width: 2.15rem;
+  height: 2.15rem;
+  margin-bottom: var(--space-4);
   place-items: center;
   color: var(--color-forest);
   background: var(--color-mint-soft);
   border-radius: 50%;
-  font-size: 0.82rem;
-  font-weight: 820;
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
 }
 
 .tag,
 .status-chip {
   display: inline-flex;
-  min-height: 30px;
-  padding: 0.3rem 0.72rem;
+  min-height: 28px;
+  padding: 0.28rem 0.7rem;
   align-items: center;
-  border: 1px solid color-mix(in srgb, var(--color-forest) 25%, transparent);
+  gap: 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--color-forest) 22%, transparent);
   color: var(--color-forest);
   background: var(--color-mint-soft);
   border-radius: var(--radius-pill);
   font-size: 0.76rem;
-  font-weight: 780;
-  letter-spacing: 0.025em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.01em;
 }
 
+/* Callouts read as a bordered surface rather than a colour bar. */
 .notice,
 .callout {
-  padding: var(--space-5);
-  border-left: 0.3rem solid var(--color-teal);
-  background: color-mix(in srgb, var(--color-mint-soft) 68%, white);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-mint-soft) 62%, var(--color-surface));
 }
 
 .notice--warning {
-  border-left-color: var(--color-sun-deep);
-  background: #fff7e6;
+  border-color: var(--color-warning-line);
+  background: var(--color-warning-surface);
 }
 
 .notice :last-child,
 .callout :last-child {
   margin-bottom: 0;
 }
+
+/* ----------------------------- Lists ------------------------------ */
 
 .list-clean,
 .check-list,
@@ -483,37 +688,59 @@ main:focus {
 
 .check-list li {
   position: relative;
-  padding-left: 1.75rem;
+  padding-left: 1.85rem;
 }
 
 .check-list li + li {
   margin-top: 0.8rem;
 }
 
+/* Drawn mark, not a text glyph, so weight and alignment are stable. */
 .check-list li::before {
   position: absolute;
-  top: 0.17em;
+  top: 0.34em;
   left: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: currentcolor;
   color: var(--color-forest-bright);
-  content: "✓";
-  font-weight: 900;
+  content: "";
+  -webkit-mask: var(--icon-check) center / contain no-repeat;
+  mask: var(--icon-check) center / contain no-repeat;
 }
 
-.link-list li {
-  border-bottom: 1px solid var(--color-line);
+:root {
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' d='M4 10.6l3.9 3.9L16 6.4'/%3E%3C/svg%3E");
+  --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M5 7.7l5 5 5-5'/%3E%3C/svg%3E");
+}
+
+.link-list li + li {
+  border-top: 1px solid var(--color-line);
 }
 
 .link-list a {
   display: flex;
   min-height: 52px;
-  padding-block: 0.65rem;
+  padding: 0.7rem 0.25rem;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  border-radius: var(--radius-sm);
   color: var(--color-ink);
-  font-weight: 720;
+  font-weight: var(--weight-semibold);
   text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    padding-left var(--duration-base) var(--ease-out);
 }
+
+.link-list a:hover {
+  padding-left: 0.6rem;
+  background: var(--color-mint-soft);
+  color: var(--color-forest);
+}
+
+/* ----------------------------- Prose ------------------------------ */
 
 .prose {
   max-width: var(--reading);
@@ -521,7 +748,7 @@ main:focus {
 
 .prose :is(h2, h3, h4) {
   margin-top: 2.2em;
-  margin-bottom: 0.7em;
+  margin-bottom: 0.55em;
 }
 
 .prose h2 {
@@ -545,7 +772,7 @@ main:focus {
 }
 
 .prose a {
-  font-weight: 680;
+  font-weight: var(--weight-semibold);
 }
 
 .prose > :first-child {
@@ -566,16 +793,18 @@ main:focus {
 }
 
 .definition-list dt {
-  color: var(--color-forest);
+  color: var(--color-muted);
   font-size: var(--step--1);
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
 }
 
 .definition-list dd {
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
 }
+
+/* ------------------------------ FAQ ------------------------------- */
 
 .faq-list {
   border-top: 1px solid var(--color-line);
@@ -588,58 +817,83 @@ main:focus {
 .faq-list summary {
   display: flex;
   min-height: 64px;
-  padding-block: 1rem;
+  padding: 1rem 0.75rem 1rem 0.25rem;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  border-radius: var(--radius-sm);
   color: var(--color-ink);
   cursor: pointer;
   font-size: var(--step-1);
-  font-weight: 730;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-snug);
   list-style: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.faq-list summary:hover {
+  background: var(--color-mint-soft);
 }
 
 .faq-list summary::-webkit-details-marker {
   display: none;
 }
 
+/* Rotating chevron replaces the +/− text glyphs. */
 .faq-list summary::after {
   flex: 0 0 auto;
+  width: 1.35rem;
+  height: 1.35rem;
+  background: currentcolor;
   color: var(--color-forest-bright);
-  content: "+";
-  font-size: 1.6rem;
-  font-weight: 500;
+  content: "";
+  transition: transform var(--duration-base) var(--ease-out);
+  -webkit-mask: var(--icon-chevron) center / contain no-repeat;
+  mask: var(--icon-chevron) center / contain no-repeat;
 }
 
 .faq-list details[open] summary::after {
-  content: "−";
+  transform: rotate(-180deg);
 }
 
 .faq-list details > div,
 .faq-list details > p {
   max-width: var(--reading);
-  padding: 0 2.5rem var(--space-5) 0;
+  padding: 0 2.5rem var(--space-5) 0.25rem;
   color: var(--color-ink-soft);
 }
 
+.faq-list details[open] > :where(div, p) {
+  animation: disclose var(--duration-slow) var(--ease-out);
+}
+
+@keyframes disclose {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem);
+  }
+}
+
+/* ------------------------------ Forms ----------------------------- */
+
 .form-card {
   padding: clamp(1.35rem, 3.4vw, 2.75rem);
-  border: 1px solid var(--color-line);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .form-card h2,
 .form-card h3 {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
   font-size: var(--step-3);
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.05rem 1.2rem;
+  gap: 1.15rem 1.2rem;
 }
 
 .form-field {
@@ -653,41 +907,95 @@ main:focus {
 .form-field label,
 .form-label {
   display: inline-block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.42rem;
   color: var(--color-ink);
   font-size: 0.9rem;
-  font-weight: 750;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.required-mark {
+  margin-left: 0.15em;
+  color: var(--color-error);
+  font-weight: var(--weight-bold);
+}
+
+.optional-mark {
+  margin-left: 0.3em;
+  color: var(--color-muted);
+  font-weight: var(--weight-regular);
 }
 
 .form-field input,
 .form-field select,
 .form-field textarea,
-form :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+form
+  :where(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+    select,
+    textarea
+  ) {
   width: 100%;
   min-height: 48px;
-  padding: 0.74rem 0.85rem;
-  border: 1.5px solid #8fa59c;
-  background: #fff;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink);
+  background-color: var(--color-surface);
   border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs) inset;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+form :where(input, select, textarea):hover:not(:disabled) {
+  border-color: var(--color-line-hover);
+}
+
+form :where(input, select, textarea):focus-visible {
+  border-color: var(--color-forest);
+  box-shadow: 0 0 0 1px var(--color-sun-soft);
+}
+
+form :where(input, select, textarea):disabled {
+  color: var(--color-muted);
+  background-color: var(--color-paper-muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Native selects ignore background-color on macOS, so the control is
+   drawn here to match the text inputs beside it. */
+form select {
+  padding-right: 2.6rem;
+  background-image: var(--icon-chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 1.15rem;
+  appearance: none;
 }
 
 .form-field textarea,
 form textarea {
   min-height: 9rem;
+  line-height: var(--leading-body);
   resize: vertical;
 }
 
-.form-field :is(input, select, textarea)[aria-invalid="true"],
-form :is(input, select, textarea)[aria-invalid="true"] {
+.form-field :where(input, select, textarea)[aria-invalid="true"],
+form :where(input, select, textarea)[aria-invalid="true"] {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 1px var(--color-error);
+  border-width: 2px;
+  background-color: var(--color-error-surface);
+  box-shadow: none;
 }
 
 .field-hint,
 .field-error {
   display: block;
-  margin-top: 0.35rem;
-  font-size: 0.79rem;
+  margin-top: 0.38rem;
+  font-size: 0.81rem;
+  line-height: var(--leading-snug);
 }
 
 .field-hint {
@@ -696,7 +1004,7 @@ form :is(input, select, textarea)[aria-invalid="true"] {
 
 .field-error {
   color: var(--color-error);
-  font-weight: 670;
+  font-weight: var(--weight-semibold);
 }
 
 .checkbox-field {
@@ -707,15 +1015,15 @@ form :is(input, select, textarea)[aria-invalid="true"] {
 }
 
 .checkbox-field input {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-top: 0.18rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.2rem;
   accent-color: var(--color-forest);
 }
 
 .checkbox-field label {
   margin: 0;
-  font-weight: 520;
+  font-weight: var(--weight-regular);
 }
 
 .form-actions {
@@ -729,15 +1037,26 @@ form :is(input, select, textarea)[aria-invalid="true"] {
 .form-status {
   min-height: 1.6em;
   margin: var(--space-4) 0 0;
-  font-weight: 690;
+  font-weight: var(--weight-semibold);
+}
+
+.form-status:not(:empty) {
+  padding: 0.7rem 0.95rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
 }
 
 .form-status[data-state="success"] {
+  border-color: var(--color-success-line);
   color: var(--color-success);
+  background: var(--color-success-surface);
 }
 
 .form-status[data-state="error"] {
+  border-color: var(--color-error-line);
   color: var(--color-error);
+  background: var(--color-error-surface);
 }
 
 .honeypot,
@@ -747,10 +1066,12 @@ form :is(input, select, textarea)[aria-invalid="true"] {
   height: 1px !important;
   padding: 0 !important;
   overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+/* ------------------------------ Steps ----------------------------- */
 
 .steps {
   margin: 0;
@@ -761,38 +1082,40 @@ form :is(input, select, textarea)[aria-invalid="true"] {
 
 .steps > li {
   position: relative;
-  padding: 0 0 var(--space-6) 4rem;
+  padding: 0 0 var(--space-6) 3.6rem;
   counter-increment: steps;
 }
 
 .steps > li::before {
   position: absolute;
-  top: 0;
+  top: -0.1rem;
   left: 0;
   display: grid;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.3rem;
+  height: 2.3rem;
   place-items: center;
   color: var(--color-paper);
   background: var(--color-forest);
   border-radius: 50%;
   content: counter(steps, decimal-leading-zero);
-  font-size: 0.74rem;
-  font-weight: 820;
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
 }
 
 .steps > li:not(:last-child)::after {
   position: absolute;
-  top: 3rem;
+  top: 2.6rem;
   bottom: 0.35rem;
-  left: 1.27rem;
+  left: 1.14rem;
   width: 1px;
   background: var(--color-line);
   content: "";
 }
 
 .steps h3 {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
   font-size: var(--step-1);
 }
 
@@ -801,25 +1124,79 @@ form :is(input, select, textarea)[aria-invalid="true"] {
   color: var(--color-ink-soft);
 }
 
+/* ---------------------------- Page nav ---------------------------- */
+
 .page-nav {
   position: sticky;
   top: 6rem;
 }
 
 .page-nav h2 {
+  color: var(--color-muted);
   font-size: 0.82rem;
-  letter-spacing: 0.1em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
 }
 
 .page-nav a[aria-current="true"] {
   color: var(--color-forest);
-  font-weight: 800;
+  font-weight: var(--weight-bold);
+}
+
+/* ----------------------------- Tables ----------------------------- */
+
+.table-scroll {
+  position: relative;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  /* Right-edge fade signals that there is more to scroll. */
+  background:
+    linear-gradient(to right, var(--color-surface) 60%, transparent) left / 3rem
+      100% no-repeat,
+    linear-gradient(to left, var(--color-surface) 60%, transparent) right / 3rem
+      100% no-repeat,
+    var(--color-surface);
+  background-attachment: local, local, scroll;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+thead th {
+  color: var(--color-muted);
+  font-size: var(--step--1);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+:is(th, td) {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+
+tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+tbody th {
+  color: var(--color-ink);
+  font-weight: var(--weight-semibold);
+  text-align: left;
 }
 
 [hidden] {
   display: none !important;
 }
+
+/* --------------------------- Responsive --------------------------- */
 
 @media (max-width: 56rem) {
   .section-heading,
@@ -838,6 +1215,11 @@ form :is(input, select, textarea)[aria-invalid="true"] {
 }
 
 @media (max-width: 40rem) {
+  :root {
+    --measure-display: 22ch;
+    --measure-heading: 26ch;
+  }
+
   .grid--2,
   .two-column,
   .grid--3,
@@ -862,7 +1244,7 @@ form :is(input, select, textarea)[aria-invalid="true"] {
   }
 
   .steps > li {
-    padding-left: 3.5rem;
+    padding-left: 3.3rem;
   }
 }
 
@@ -875,6 +1257,11 @@ form :is(input, select, textarea)[aria-invalid="true"] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+
+  .button[data-loading="true"]::after {
+    animation-duration: 900ms !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 @media (forced-colors: active) {
@@ -883,6 +1270,11 @@ form :is(input, select, textarea)[aria-invalid="true"] {
   .status-chip,
   .card {
     border: 2px solid currentColor;
+  }
+
+  .faq-list summary::after,
+  .check-list li::before {
+    background: CanvasText;
   }
 }
 

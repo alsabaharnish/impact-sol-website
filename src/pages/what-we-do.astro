@@ -161,11 +161,11 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
     border-radius: 50%;
     color: var(--color-teal);
     font-size: 0.8rem;
-    font-weight: 800;
+    font-weight: var(--weight-black);
   }
 
   .workstream-list h3 {
-    max-width: 15ch;
+    max-width: var(--measure-heading);
     margin-top: var(--space-2);
   }
 
@@ -190,7 +190,7 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
     align-items: center;
     color: var(--color-forest);
     cursor: pointer;
-    font-weight: 760;
+    font-weight: var(--weight-bold);
   }
 
   .offering-detail > div {
@@ -279,13 +279,13 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
     background: var(--color-forest);
     content: counter(process, decimal-leading-zero);
     font-size: 0.68rem;
-    font-weight: 750;
+    font-weight: var(--weight-bold);
   }
 
   .process li span {
     color: var(--color-ink);
     font-size: var(--step-1);
-    font-weight: 760;
+    font-weight: var(--weight-bold);
   }
 
   .process li p {

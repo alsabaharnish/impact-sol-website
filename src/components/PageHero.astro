@@ -62,11 +62,11 @@ const { eyebrow, title, intro, compact = false } = Astro.props;
   }
 
   .page-hero h1 {
-    max-width: 13ch;
+    max-width: var(--measure-display);
     margin: 0;
     font-size: var(--step-6);
-    letter-spacing: -0.055em;
-    line-height: 0.98;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
     text-wrap: balance;
   }
 

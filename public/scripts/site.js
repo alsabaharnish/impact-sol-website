@@ -216,10 +216,12 @@
       }
 
       const submit = form.querySelector('[type="submit"]');
-      const originalLabel = submit instanceof HTMLButtonElement ? submit.textContent : '';
+      // The label stays in place so the control keeps its width; the spinner
+      // and aria-busy carry the pending state instead of a text swap.
       if (submit instanceof HTMLButtonElement) {
         submit.disabled = true;
-        submit.textContent = 'Sending…';
+        submit.dataset.loading = 'true';
+        submit.setAttribute('aria-busy', 'true');
       }
       setStatus(form, 'Sending your message…');
 
@@ -265,11 +267,11 @@
           form: form.dataset.inquiryForm || 'inquiry',
           result: 'server',
         });
-        form.querySelector('[aria-invalid="true"]')?.focus();
       } finally {
         if (submit instanceof HTMLButtonElement) {
           submit.disabled = false;
-          submit.textContent = originalLabel;
+          delete submit.dataset.loading;
+          submit.removeAttribute('aria-busy');
         }
       }
     });

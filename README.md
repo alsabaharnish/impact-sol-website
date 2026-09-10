@@ -7,6 +7,7 @@ The public site launches in English. Its structured content can support a review
 ## Technology
 
 - Astro 7 and TypeScript for semantic, static HTML
+- A self-hosted Inter variable face, linked only when present
 - Structured JSON content with Astro schemas and a prebuild risk check
 - Decap CMS at `/admin/`, using GitHub OAuth and editorial workflow
 - Netlify Forms for general, partnership, and maker/initiative enquiries
@@ -36,9 +37,31 @@ npm run verify
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Start the Astro development server. |
+| `npm run fonts` | Copy the Inter variable face into `public/fonts/`. |
 | `npm run build` | Validate content, type-check Astro, generate `dist/`, and inspect the built site. |
 | `npm run preview` | Preview the generated static site. |
 | `npm run verify` | Run the full release build and checks. |
+
+## Typeface
+
+The design system uses a five-step weight scale (400/500/600/700/800). Those
+steps only render as five distinct weights when a variable face is available,
+so Inter is served from `public/fonts/` rather than assumed to be installed:
+
+```sh
+npm install --save-dev @fontsource-variable/inter
+npm run fonts
+```
+
+`BaseLayout` links `/fonts/inter.css` and preloads the face **only when
+`public/fonts/inter-variable.woff2` exists**, so a missing font costs no
+failed request — the stack falls back to Segoe UI / Roboto / Helvetica and the
+hierarchy still reads, because every step is a standard weight. The existing
+`font-src 'self'` and `style-src 'self'` rules in `netlify.toml` already allow
+both files; no header change is needed.
+
+Commit the `.woff2` so deploys are reproducible, or add `npm run fonts` ahead
+of `prebuild` if you would rather resolve it from the lockfile at build time.
 
 ## Configuration
 
