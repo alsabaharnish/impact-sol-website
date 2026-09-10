@@ -100,7 +100,7 @@ Editable records live in `src/content/`:
 
 `src/content.config.ts` supplies typed schemas. `scripts/validate-content.mjs` blocks missing required fields, common placeholders, several unsafe absolute claims, numerical marketing outcomes, and status changes without evidence. It is a guardrail, not a substitute for editorial, legal, or evidence review.
 
-For local CMS editing, `public/admin/config.yml` enables `local_backend`. Start Astro and a trusted, pinned Decap local proxy in separate terminals, then visit `/admin/`. If no approved proxy is installed, edit the JSON files directly and run `npm run verify`.
+The editor configuration is `src/admin/config.yml`, served at `/admin/config.yml` by `src/pages/admin/config.yml.ts`. That route adds `local_backend: true` for local origins only, so production never advertises a developer proxy. For local CMS editing, start Astro and a trusted, pinned Decap local proxy in separate terminals, then visit `/admin/`. If no approved proxy is installed, edit the JSON files directly and run `npm run verify`.
 
 Production CMS sign-in uses the GitHub backend for `alsabaharnish/impact-sol-website`. The GitHub OAuth App and Netlify authentication provider must contain the real Client ID and secret. Each editor needs appropriate repository access and MFA. Protect `main`, require review and a successful `npm run verify`, test recovery and offboarding, and keep the secret outside this repository. See [Content and CMS](docs/content-and-cms.md).
 

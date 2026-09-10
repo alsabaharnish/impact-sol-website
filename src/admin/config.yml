@@ -5,7 +5,6 @@ backend:
   auth_scope: public_repo
 
 publish_mode: editorial_workflow
-local_backend: true
 media_folder: public/uploads
 public_folder: /uploads
 

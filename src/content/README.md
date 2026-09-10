@@ -1,6 +1,6 @@
 # Editable content
 
-These JSON files are the structured source for editable Impact Sol content. The matching schemas live in `src/content.config.ts`; the Decap editor configuration lives in `public/admin/config.yml`.
+These JSON files are the structured source for editable Impact Sol content. The matching schemas live in `src/content.config.ts`; the Decap editor configuration lives in `src/admin/config.yml`.
 
 Pages should consume the validated records through `src/content/read.ts`. It exposes sorted offerings, products and FAQs, the single global-settings record, and legal documents without making page templates know the underlying file layout. A typical Astro frontmatter block is:
 

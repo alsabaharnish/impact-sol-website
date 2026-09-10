@@ -69,7 +69,7 @@ Recommended roles are author, reviewer, and publisher. Do not give every contrib
 
 ## Local editing
 
-`public/admin/config.yml` sets `local_backend: true`. Run the website and an organisation-approved, pinned Decap local proxy, then open `/admin/`. The editor bundle itself is pinned to Decap CMS `3.16.1` in `public/admin/index.html`.
+`local_backend: true` is added to `/admin/config.yml` for local origins only, by `src/pages/admin/config.yml.ts`. It is never present in a production build, because the CMS would otherwise probe `http://localhost:8081` on every load and the admin CSP blocks that as a `connect-src` violation. Run the website and an organisation-approved, pinned Decap local proxy, then open `/admin/`. The editor bundle itself is pinned to Decap CMS `3.16.1` in `public/admin/index.html`.
 
 Direct JSON editing is equally valid:
 
