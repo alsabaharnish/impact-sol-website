@@ -22,7 +22,13 @@
   [headers.values]
     Cache-Control = "no-store"
     Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://api.netlify.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://api.netlify.com; media-src 'self'; worker-src 'self' blob:; manifest-src 'self'"
-    Cross-Origin-Opener-Policy = "same-origin"
+    # "same-origin" severs window.opener for any cross-origin popup this page
+    # opens, which silently breaks the Decap GitHub sign-in: authorization
+    # succeeds, then api.netlify.com/auth/done cannot postMessage the token
+    # back and the editor hangs. "same-origin-allow-popups" keeps this document
+    # protected from cross-origin openers while letting popups it opens reply.
+    # Public pages keep the stricter "same-origin" from the /* block above.
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=31536000"
