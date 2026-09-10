@@ -12,14 +12,14 @@ The browser may emit a local, provider-neutral custom event hook for quality mea
 | `cta_select` | Compare intended pathways | stable CTA ID, source path, destination path | names, email addresses, message text |
 | `faq_toggle` | Identify information that needs clearer placement | FAQ slug, open/closed state, source path | typed search terms or free text |
 | `form_start` | Detect form discoverability | form type, source path | field values |
-| `form_submit_result` | Monitor usability and service health | form type, success/validation/server/rate-limit category | validation field values, email, name, message, raw status body |
+| `form_submit_result` | Monitor usability and service health | form type, success/validation/service category | validation field values, email, name, message, raw status body |
 | `error_view` | Find broken routes and service states | error type, pathname | query strings, full referrer, client identifiers |
 
 Paths must be stripped of query strings and fragments. Do not create persistent visitor IDs, fingerprints, cross-site identifiers, session replay, heatmaps, ad audiences, or user profiles for this site.
 
 ## Operational metrics
 
-Server-side operational monitoring may count response classes, latency, queue age, retries, failed deliveries, cleanup success, and rate-limit events. Keep those statistics aggregate. Logs must not contain enquiry bodies, contact details, raw addresses, secrets, database records, or provider email payloads.
+Netlify operational review may count successful submissions, spam classifications, notification failures, deployment failures, and retention-review completion. Keep those statistics aggregate. Logs, alerts, and tickets must not contain enquiry bodies, contact details, raw addresses, secrets, CSV exports, or notification payloads.
 
 ## Decision process for future analytics
 

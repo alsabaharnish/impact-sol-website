@@ -59,7 +59,7 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
         <p>The general, partnership and maker or initiative forms collect your name, email address and message. Depending on the form, you may also choose to provide an organisation, phone number, country or region, and website or public-profile link.</p>
         <p>Do not submit passwords, payment information, health details, identity documents, confidential business material or other sensitive information through these enquiry forms.</p>
         <h3>Technical and anti-abuse information</h3>
-        <p>The production server may process limited request information needed to deliver the site, prevent spam, apply rate limits, diagnose failures and protect the forms. This can include timestamps, request headers and a one-way representation of a network address. The final hosting setup and server-log retention must be documented before launch.</p>
+        <p>Netlify may process limited request information needed to deliver the site, filter spam, diagnose failures and protect the forms. This can include timestamps, request headers and network information. The final hosting setup and log retention must be documented before launch.</p>
       </section>
 
       <section id="use" tabindex="-1">
@@ -78,15 +78,15 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
 
       <section id="sharing" tabindex="-1">
         <h2>4. Sharing and service providers</h2>
-        <p>Enquiry data may be processed by the website host, database or storage provider, and transactional email provider configured for the production service. Authorised people supporting Impact Sol. may also access a message when needed to respond or maintain the system.</p>
+        <p>Enquiry data is processed and stored by Netlify as the website host and form provider. It may also be included in an email notification if that feature is enabled. Authorised people supporting Impact Sol. may access a message when needed to respond or maintain the system.</p>
         <p>No provider should use enquiry information for its own advertising. The final notice must name or clearly categorise production providers, their processing locations, contractual safeguards and any legally required disclosures.</p>
         <p>Information may also need to be disclosed where a confirmed operator is required to do so by law, or to protect people and systems from fraud, abuse or a serious security threat. The exact wording requires legal review.</p>
       </section>
 
       <section id="retention" tabindex="-1">
         <h2>5. Retention and security</h2>
-        <p>The current server design uses a configurable retention period, with a 90-day default for stored form records. Production owners must confirm that period, backup behaviour and deletion procedure before launch. A message may need to be retained longer if it becomes part of continuing correspondence or a legal record, subject to an approved retention policy.</p>
-        <p>The site is designed to use encrypted transport in production, server-side validation, request-size limits, anti-spam controls, rate limiting and restricted access. No internet service can promise absolute security. If a material incident affects personal information, the confirmed operator should follow the notification duties that apply to it.</p>
+        <p>Production owners must approve a retention period and regularly export or delete Netlify form submissions to apply it. A message may need to be retained longer if it becomes part of continuing correspondence or a legal record, subject to an approved retention policy.</p>
+        <p>The site is designed to use encrypted transport in production, browser validation, Netlify spam filtering, a hidden spam trap and restricted dashboard access. No internet service can promise absolute security. If a material incident affects personal information, the confirmed operator should follow the notification duties that apply to it.</p>
       </section>
 
       <section id="choices" tabindex="-1">

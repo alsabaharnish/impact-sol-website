@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="Enquiry received"
+  description="Confirmation that an enquiry was submitted to Impact Sol. for review."
+  noindex
+  breadcrumbs={[{ name: 'Enquiry received', path: '/thank-you/' }]}
+>
+  <Breadcrumbs items={[{ label: 'Enquiry received' }]} />
+  <PageHero
+    eyebrow="Thank you"
+    title="Your enquiry has been received."
+    intro="It is now available to the authorised Impact Sol. team for review. No response time is promised while the initiative is being established."
+    compact
+  >
+    <div class="button-row">
+      <a class="button" href="/">Return to the homepage</a>
+      <a class="text-link" href="/contact/">View contact options <span aria-hidden="true">→</span></a>
+    </div>
+  </PageHero>
+</BaseLayout>

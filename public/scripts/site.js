@@ -160,7 +160,7 @@
     status.dataset.state = state;
   };
 
-  for (const form of document.querySelectorAll('form[action="/api/inquiries"]')) {
+  for (const form of document.querySelectorAll('form[data-inquiry-form]')) {
     form.noValidate = true;
     let started = false;
     let completed = false;
@@ -230,34 +230,17 @@
           if (typeof value === 'string') payload.append(key, value);
         }
 
-        const response = await fetch(form.action, {
+        const response = await fetch('/', {
           method: 'POST',
           headers: {
-            Accept: 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
           },
-          body: payload,
+          body: payload.toString(),
           credentials: 'same-origin',
         });
 
-        const result = await response.json().catch(() => ({}));
         if (!response.ok) {
-          if (result.errors && typeof result.errors === 'object') {
-            for (const [fieldName, message] of Object.entries(result.errors)) {
-              const field = form.elements.namedItem(fieldName);
-              if (
-                typeof message === 'string' &&
-                (field instanceof HTMLInputElement ||
-                  field instanceof HTMLTextAreaElement ||
-                  field instanceof HTMLSelectElement)
-              ) {
-                setFieldError(form, field, message);
-              }
-            }
-          }
-          const error = new Error('submission_failed');
-          error.publicMessage = result.message;
-          throw error;
+          throw new Error('submission_failed');
         }
 
         form.reset();
@@ -265,18 +248,17 @@
         if (sourceField instanceof HTMLInputElement) sourceField.value = window.location.pathname;
         setStatus(
           form,
-          result.message || 'Thank you. Your message has been received for review.',
+          'Thank you. Your enquiry has been received for review.',
           'success',
         );
         emit('form_submit_result', {
           form: form.dataset.inquiryForm || 'inquiry',
           result: 'success',
         });
-      } catch (error) {
+      } catch {
         setStatus(
           form,
-          error.publicMessage ||
-            'We could not send this form right now. Please use the email option on this page.',
+          'We could not send this form right now. Please use the email option on this page.',
           'error',
         );
         emit('form_submit_result', {

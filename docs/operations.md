@@ -1,90 +1,84 @@
-# Operations runbook
+# Netlify operations runbook
 
 ## Service shape
 
-Astro generates the public assets into `dist/`. The Node process serves those assets and the enquiry endpoint, and uses SQLite for enquiries, the delivery outbox, and rate-limit state. Email delivery is optional at configuration level but must be fully configured and tested before public forms are presented as operational.
-
-Run the service behind a managed HTTPS reverse proxy. Keep the application listener private where possible. Preserve the application's security headers and add platform headers only after checking for conflicts.
+Astro generates the static site into `dist/`. Netlify serves those assets, applies the headers in `netlify.toml`, and handles the three enquiry forms. Form submissions are stored in the Netlify project rather than a local database. The website’s `/admin/` route remains a separate Decap content editor backed by GitHub.
 
 ## Build and release
 
-1. Start from a reviewed commit with a clean dependency lockfile.
-2. Set the approved canonical origin for the build.
+1. Start from a reviewed commit and clean dependency lockfile.
+2. Confirm the production branch, primary Netlify domain, and GitHub OAuth configuration.
 3. Run `npm ci` followed by `npm run verify`.
-4. Retain the build log and artifact digest.
-5. Deploy the code and `dist/` without replacing the persistent data volume.
-6. Start one tested delivery worker topology. If multiple Node replicas are used, verify SQLite locking, volume semantics, and outbox claiming under that topology first.
-7. Smoke-test page routes, assets, headers, 404s, maintenance mode, every enquiry type, mail delivery, and retention cleanup.
-8. Record the commit, configuration revision, database backup, approvers, and rollback version.
+4. Let Netlify deploy the reviewed commit using `npm run build` and publish `dist/`.
+5. Check the production pages, assets, security headers, redirects, 404 behaviour, canonicals, robots file, sitemap, admin login, and all three form routes.
+6. Confirm the three forms appear in the Netlify Forms dashboard and delete controlled test submissions after verification.
+7. Record the release commit, approvals, deployment URL, form test result, and rollback version.
 
-## Health and monitoring
+The production canonical origin is read from Netlify’s primary `URL` during production builds. `IMPACT_SOL_SITE_URL` remains an explicit override. After a custom domain becomes the primary Netlify domain, redeploy and verify canonical links, social metadata, robots, sitemap, OAuth homepage settings, and redirects.
+
+## Form monitoring
 
 At minimum, monitor:
 
-- process availability and restart loops;
-- HTTP error rate and latency without recording submitted form bodies;
-- rejected origin, body-limit, and rate-limit counts at an aggregate level;
-- outbox pending age, retries, permanently failed jobs, provider rejections, bounces, and complaints;
-- database volume capacity, filesystem permissions, backup freshness, and cleanup results;
-- certificate and domain expiry;
-- dependency and secret-scanning alerts.
+- Netlify deployment failures and availability;
+- unexpected submission volume and spam classification;
+- form-notification failures or delivery gaps, if notifications are enabled;
+- whether the approved team mailbox is monitored;
+- storage and manual retention/deletion reviews;
+- certificate and domain expiry; and
+- dependency, repository, and account security alerts.
 
-Alerts need a named recipient and escalation path. Do not put names, email addresses, messages, raw IP addresses, API keys, or database contents into logs or alert payloads.
+Alerts and tickets must not copy full messages or unnecessary personal information. Name an owner and escalation route before launch.
 
-## Enquiry delivery incident
+## Enquiry incident
 
-If submissions are accepted but messages are not delivered:
+If a form shows success but a submission cannot be found:
 
-1. Keep the durable database and outbox intact.
-2. Check provider status, verified sender, credential validity, recipient configuration, and failed-job codes.
-3. Do not repeatedly resubmit user forms or manually email message bodies through unapproved channels.
-4. Correct configuration, restart the worker if needed, and allow idempotent retries.
-5. Reconcile accepted enquiry IDs against delivered or terminally failed outbox jobs.
-6. Notify the privacy/security owner if exposure or loss is suspected.
-7. Record scope, timeline, action, recovery, and follow-up without copying personal data into the incident ticket unless access is explicitly controlled.
+1. Check the correct form in **Netlify → Forms**.
+2. Check its **Spam submissions** list.
+3. Confirm form detection is enabled and the latest deploy detected all three form names.
+4. Confirm the submitter used the production site and not a local or preview build.
+5. Check Netlify service status and deployment logs without publishing submitted data.
+6. Disable or remove the public form call to action if submissions cannot be handled safely; keep only an approved, monitored alternative.
+7. Record the scope, timeline, decision, recovery, and follow-up without putting message bodies into an uncontrolled incident ticket.
 
-Enable maintenance mode if forms cannot safely accept submissions. Provide the approved direct-contact alternative only if that mailbox is monitored.
+If only notification email fails, submissions may still be present in Netlify. Review the Forms dashboard directly before asking anyone to resubmit.
 
 ## Data access, export, and deletion
 
-Restrict database access to authorised operational staff. Requests for access, correction, export, deletion, restriction, or legal hold must be verified and handled under an owner-approved procedure. Query and export tooling should be run on an encrypted administrative environment, produce the minimum necessary data, and record who authorised the action.
+Restrict Netlify project access to authorised operational staff and require multi-factor authentication. Verify privacy requests outside the dashboard before acting.
 
-Deletion must cover the enquiry and its queued/delivered outbox rows according to the database relationship, then confirm that scheduled backups expire under the approved backup retention policy. Never promise immediate removal from immutable backups unless the backup system supports and the policy requires it.
+For an approved export, select the form in Netlify and use **Download as CSV**, then transfer the minimum necessary data through an approved secure channel. For deletion, select the relevant submission and permanently delete it after completing any required verification or legal-hold check.
 
-## Backup
+Deletion must also cover controlled exports, mailbox copies, tickets, and any other approved downstream system. Never promise removal from provider backups unless the provider contract and policy support that promise.
 
-Back up both of these assets:
+## Retention
 
-- Git repository and release metadata for code and content;
-- SQLite database on its persistent volume for accepted enquiries and delivery state.
+Netlify Forms does not use an application retention timer from this repository. The privacy owner must approve the retention period and assign a recurring review. On schedule:
 
-Use a consistent SQLite-aware backup, a storage-level snapshot that coordinates writes, or stop writes briefly. Copying only `inquiries.sqlite` while WAL mode is active can omit committed data in the WAL file. Encrypt backups, restrict restore access, set an approved retention, and test restoration into an isolated environment on a schedule.
+1. Identify records beyond the approved period.
+2. Check legal holds or continuing correspondence requirements.
+3. Export only records that have an approved operational need.
+4. Permanently delete expired submissions.
+5. Record completion without copying submission content into the record.
 
-A restore test should verify database integrity, representative inquiry/outbox relationships, application startup, queue recovery without duplicate delivery, and cleanup timing. Use a safe mail sink or disabled delivery in restore tests.
+Apply aligned retention to notification emails, CSV exports, support tickets, logs, and incident records.
 
-## Rollback
+## Backup and rollback
 
-Rollback the application by redeploying the last verified release artifact or commit. Preserve the live data volume and take a consistent backup before rollback. Confirm that the older code can read the current schema; future non-additive database changes require an explicit compatibility and migration plan.
+Git and Netlify deploy history provide code and content recovery. Record a known-good production deployment for each release. Before relying on deploy history, exercise one rollback and confirm public pages, `/admin/`, and form definitions recover as expected.
 
-After rollback, smoke-test public routes, response headers, form validation, one controlled submission, queue processing, and cleanup. Record why the rollback occurred and block the failed version from automatic redeployment.
-
-Content-only rollback should use Git revert or republish a previously approved revision through the editorial workflow. Do not overwrite history or manually edit production output.
-
-## Retention and cleanup
-
-`INQUIRY_RETENTION_DAYS` controls application cleanup, but the configured number must match the approved privacy notice and operational policy. Also define retention for provider email copies, logs, alerts, exports, incident tickets, and backups. Review cleanup success without logging deleted content.
-
-Rate-limit records contain keyed hashes rather than raw addresses; they still require access control and scheduled cleanup.
+Form data is operational data, not part of a site rollback. Rolling back a deploy must not be treated as deleting or restoring submissions. If business continuity requires a separate submission archive, define an encrypted, access-controlled export schedule and its retention before creating one.
 
 ## Security maintenance
 
-- Apply supported Node and dependency security updates through a reviewed branch and full verification.
-- Rotate the email credential and IP-hash secret under a documented plan. Changing the hash secret resets continuity of rate-limit identities.
-- Review allowed origins, proxy trust, CSP, and admin access whenever the host changes.
-- Test that production rejects an insecure hash secret and has no development origins.
-- Keep runtime files outside the public static root.
-- Review third-party CDN policy for the admin editor. The public pages should remain independent of that script.
+- Keep GitHub and Netlify accounts protected by MFA and least privilege.
+- Review the GitHub OAuth App, authorised editors, Netlify members, notification destinations, and recovery controls at every release and staff change.
+- Apply supported dependency updates through a reviewed branch and full verification.
+- Verify the Netlify security headers after configuration changes.
+- Keep `/admin/` excluded from search and review its third-party Decap script policy.
+- Reassess the privacy notice before adding analytics, advertising, uploads, CAPTCHA, automation, or another data recipient.
 
 ## Scheduled review
 
-At least at each release, and on an owner-defined periodic schedule, review public claims, product maturity, links, policies, accessibility limitations, retention, accounts, dependencies, backups, alerts, domain ownership, and incident contacts. Remove stale copy rather than leaving an unsupported statement online.
+At each release and on an owner-defined schedule, review claims, product maturity, links, policies, accessibility limitations, form access, retention, accounts, dependencies, notifications, domain ownership, and incident contacts. Remove stale copy instead of leaving an unsupported public statement online.

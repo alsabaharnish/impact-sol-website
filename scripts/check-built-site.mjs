@@ -17,6 +17,7 @@ const requiredPages = [
   'impact/index.html',
   'get-involved/index.html',
   'contact/index.html',
+  'thank-you/index.html',
   'privacy/index.html',
   'terms/index.html',
   'accessibility/index.html',
@@ -109,6 +110,41 @@ for (const file of htmlFiles) {
       errors.push(`${relative}: invalid JSON-LD`);
     }
   }
+}
+
+const expectedForms = new Map([
+  ['contact/index.html', ['impact-sol-general']],
+  ['get-involved/index.html', ['impact-sol-partnership', 'impact-sol-maker']],
+]);
+const detectedFormNames = new Set();
+
+for (const [relative, expectedNames] of expectedForms) {
+  const file = join(distRoot, relative);
+  const html = htmlByFile.get(file) ?? (existsSync(file) ? await readFile(file, 'utf8') : '');
+  for (const formName of expectedNames) {
+    const escapedName = formName.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+    const formTag = html.match(new RegExp(`<form\\b(?=[^>]*\\bname=["']${escapedName}["'])[^>]*>`, 'iu'))?.[0];
+    if (!formTag) {
+      errors.push(`${relative}: missing Netlify form ${formName}`);
+      continue;
+    }
+    detectedFormNames.add(formName);
+    if (!/\bmethod=["']post["']/iu.test(formTag)) errors.push(`${relative}: ${formName} must use POST`);
+    if (!/\bdata-netlify=["']true["']/iu.test(formTag)) errors.push(`${relative}: ${formName} is missing data-netlify`);
+    if (!/\bdata-netlify-honeypot=["']companyWebsite["']/iu.test(formTag)) {
+      errors.push(`${relative}: ${formName} is missing its Netlify honeypot declaration`);
+    }
+    if (!new RegExp(`<input\\b(?=[^>]*\\bname=["']form-name["'])(?=[^>]*\\bvalue=["']${escapedName}["'])[^>]*>`, 'iu').test(html)) {
+      errors.push(`${relative}: ${formName} is missing its AJAX form-name field`);
+    }
+    if (!/<input\b(?=[^>]*\bname=["']companyWebsite["'])[^>]*>/iu.test(html)) {
+      errors.push(`${relative}: ${formName} is missing its honeypot field`);
+    }
+  }
+}
+
+if (detectedFormNames.size !== 3) {
+  errors.push(`expected three uniquely named Netlify forms, found ${detectedFormNames.size}`);
 }
 
 for (const [file, html] of htmlByFile) {

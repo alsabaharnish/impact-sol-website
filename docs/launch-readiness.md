@@ -45,16 +45,17 @@ Use a durable ticket or approval record for every sign-off. Store sensitive evid
 
 ## Forms and email inputs
 
-- [ ] Configure the exact allowed production origins and a unique random IP-hash secret.
-- [ ] Configure a durable encrypted SQLite volume, backup schedule, restore test, and restricted service account.
-- [ ] Configure and verify the sender domain, internal recipient, API credential, and bounce/complaint monitoring.
+- [ ] Enable Netlify form detection and confirm all three named forms appear after deployment.
+- [ ] Approve the Netlify team members permitted to view, export, or delete submissions; require MFA and least privilege.
+- [ ] Approve the monitored notification mailbox and configure Netlify form notifications, if notifications are required.
+- [ ] Approve a submission-retention period and assign a recurring Netlify deletion review.
 - [ ] Confirm all three form routes: general, partnership, and maker/initiative.
-- [ ] Test validation, keyboard/error flow, spam trap, size limit, rate limit, duplicate submission behaviour, generic errors, queue retries, acknowledgement, internal routing, retention cleanup, and failed-delivery alerting.
-- [ ] Ensure logs and monitoring do not contain message bodies, email addresses, or raw client addresses.
+- [ ] Test validation, keyboard/error flow, inline and no-JavaScript confirmations, honeypot detection, spam classification, notification routing, CSV export, and deletion.
+- [ ] Ensure logs, alerts, and operational tickets do not contain message bodies, email addresses, or unnecessary network information.
 
 ## CMS and content operations
 
-- [ ] Select the production Git/identity backend; the committed Git Gateway settings are not an authentication deployment.
+- [ ] Verify the GitHub OAuth App and Netlify GitHub authentication provider use the real client credentials and approved callback.
 - [ ] Require MFA, least-privilege roles, reviewer/publisher separation, offboarding, and recovery controls.
 - [ ] Protect `/admin/`, review its CSP/network requirements, and verify that it is excluded from search.
 - [ ] Configure preview builds and a required green `npm run verify` check.
@@ -84,7 +85,7 @@ Use a durable ticket or approval record for every sign-off. Store sensitive evid
 - [ ] Confirm the homepage, ordinary-page, and JavaScript budgets documented in the README.
 - [ ] Check responsive images, caching, compression, font loading, no autoplay, and third-party requests.
 - [ ] Verify titles, descriptions, H1s, lowercase URLs, canonicals, robots, sitemap, Open Graph data, structured data, breadcrumbs, 404 behaviour, maintenance mode, and redirect mapping.
-- [ ] Verify TLS, HSTS, CSP, frame restrictions, MIME sniffing protection, referrer policy, permissions policy, origin checks, dependency audit, and secret scanning on the real host.
+- [ ] Verify TLS, HSTS, CSP, frame restrictions, MIME sniffing protection, referrer policy, permissions policy, Netlify form controls, dependency audit, and secret scanning on the real host.
 - [ ] Confirm preview and admin environments are not indexed.
 - [ ] Complete a vulnerability and abuse review of the public forms.
 
@@ -102,7 +103,7 @@ Record these fields for the launch decision:
 | Accessibility test report |  |
 | Performance report |  |
 | Security review |  |
-| Backup restore result |  |
+| Netlify rollback and form-retention test |  |
 | Rollback owner and tested version |  |
 | Final publisher |  |
 | Launch date/time and timezone |  |

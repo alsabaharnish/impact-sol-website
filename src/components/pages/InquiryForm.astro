@@ -29,6 +29,7 @@ const prefix = `inquiry-${inquiryType}`;
 const organisationField = inquiryType === 'maker' ? 'initiativeName' : 'organization';
 const organisationLabel = inquiryType === 'maker' ? 'Business or initiative name' : 'Organisation';
 const detailedRoute = inquiryType === 'partnership' || inquiryType === 'maker';
+const formName = `impact-sol-${inquiryType}`;
 ---
 
 <section class="inquiry-panel" aria-labelledby={`${prefix}-title`}>
@@ -39,7 +40,16 @@ const detailedRoute = inquiryType === 'partnership' || inquiryType === 'maker';
     <p class="form-note"><span aria-hidden="true">*</span> Required fields</p>
   </div>
 
-  <form class="inquiry-form" action="/api/inquiries" method="post" data-inquiry-form={inquiryType}>
+  <form
+    class="inquiry-form"
+    name={formName}
+    action="/thank-you/"
+    method="post"
+    data-netlify="true"
+    data-netlify-honeypot="companyWebsite"
+    data-inquiry-form={inquiryType}
+  >
+    <input type="hidden" name="form-name" value={formName} />
     <input type="hidden" name="inquiryType" value={inquiryType} />
     <input type="hidden" name="sourcePath" value={Astro.url.pathname} />
 
@@ -229,7 +239,7 @@ const detailedRoute = inquiryType === 'partnership' || inquiryType === 'maker';
     </div>
 
     <noscript>
-      <p class="form-note">JavaScript is not required to submit this form. Your browser will take you to the server response after submission.</p>
+      <p class="form-note">JavaScript is not required to submit this form. After a successful submission, your browser will open a confirmation page.</p>
     </noscript>
   </form>
 </section>

@@ -77,14 +77,14 @@ Direct JSON editing is equally valid:
 
 ## Production CMS activation
 
-The committed `git-gateway` backend is a configuration starting point, not a deployed authentication system. Before exposing `/admin/`:
+The committed CMS backend uses GitHub OAuth for `alsabaharnish/impact-sol-website`. Before exposing `/admin/`:
 
-- confirm the production repository and branch;
-- configure a compatible identity and Git Gateway, or replace the backend with an approved OAuth service;
+- confirm the production repository, `main` branch, and branch-protection rules;
+- configure the GitHub OAuth App and Netlify GitHub authentication provider with the real client credentials;
 - restrict allowed editors and require MFA;
 - protect `/admin/` at the edge when possible;
 - review CSP and network allow-lists needed by the editor;
-- test login, logout, password/account recovery, authorisation failure, role removal, draft preview, publish, and rollback;
+- test login, logout, GitHub account recovery, authorisation failure, collaborator removal, draft preview, publish, and rollback;
 - confirm that the CDN-hosted editor meets supply-chain policy, or self-host the exact reviewed bundle and integrity metadata.
 
 The admin page is marked `noindex`, but that is not access control.
