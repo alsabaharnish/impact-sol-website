@@ -1,48 +1,48 @@
 {
-  "slug": "chokro",
-  "name": "Chokro",
-  "tagline": "A working prototype exploring participation in a more circular local economy.",
-  "summary": "Chokro is presented here as a working prototype, not as a publicly available service. Its relationship to Impact Sol, public-use rights and any future launch route must be documented before stronger claims are published.",
-  "stage": "working-prototype",
-  "publicAvailability": false,
-  "ownershipStatus": "unconfirmed",
-  "ownershipNote": "The relationship, ownership and public-use rights must be confirmed and recorded before launch.",
-  "relationshipLabel": "proposed",
-  "intendedUsers": [
-    "3ZERO Champions as a Chokro product-role label",
-    "3ZERO Greenpreneurs as a Chokro product-role label",
-    "3ZERO Admins as a Chokro product-role label"
-  ],
-  "currentCapabilities": [
-    "Registered-bin disposal journeys with proportionate evidence checks",
-    "Human-reviewed self-reported eco-action journeys",
-    "A trusted internal points ledger and initiative contribution categories",
-    "Prototype seller, catalogue, cart and checkout journeys"
-  ],
   "currentLimitations": [
     "Public availability and production app or QR routes are not verified",
     "The endorsed Impact Sol relationship and asset rights are not documented",
     "Physical operations, seller base, inventory and outcome claims are not evidenced",
     "Payment journeys are simulations and move no real money"
   ],
-  "geography": "Designed for Bangladesh, with a focused Dhaka pilot planned rather than claimed as operating.",
-  "lastUpdated": "2026-09-09",
-  "privacyStatus": "Product-specific privacy, processor, retention, location-data and photo-data information requires approval before public use.",
+  "productUrl": null,
+  "ownershipNote": "The relationship, ownership and public-use rights must be confirmed and recorded before launch.",
+  "ownershipStatus": "unconfirmed",
   "supportStatus": "No approved public product-support route or service expectation is published; use the corporate register-interest route.",
+  "publicAvailability": false,
+  "lastUpdated": "2026-09-09",
+  "summary": "Chokro is a working prototype, not a publicly available service. Its relationship to Impact Sol, public-use rights, and any future launch route must be documented before stronger claims are published.",
+  "name": "Chokro",
+  "slug": "chokro",
+  "screenshots": [],
+  "primaryCta": "learn-more",
+  "tagline": "A working prototype exploring participation in a more circular local economy.",
+  "currentCapabilities": [
+    "Registered-bin disposal journeys with proportionate evidence checks",
+    "Human-reviewed self-reported eco-action journeys",
+    "A trusted internal points ledger and initiative contribution categories",
+    "Prototype seller, catalogue, cart and checkout journeys"
+  ],
+  "sortOrder": 1,
+  "evidenceReference": null,
+  "privacyStatus": "Product-specific privacy, processor, retention, location-data and photo-data information requires approval before public use.",
+  "geography": "Designed for Bangladesh, with a focused Dhaka pilot planned rather than claimed as operating.",
+  "relationshipLabel": "proposed",
+  "seo": {
+    "title": "Chokro working prototype",
+    "description": "How the Chokro prototype approaches responsible disposal, reviewed eco-actions, internal rewards and small-seller pathways with explicit evidence limits.",
+    "indexable": false
+  },
+  "intendedUsers": [
+    "3ZERO Champions as a Chokro product-role label",
+    "3ZERO Greenpreneurs as a Chokro product-role label",
+    "3ZERO Admins as a Chokro product-role label"
+  ],
   "representativeVisual": {
     "path": "/assets/brand/chokro-app-icon.svg",
     "alt": "Chokro prototype app icon",
     "caption": "Provisional Chokro prototype icon used only in the product context; final rights confirmation remains a launch gate.",
     "rightsStatus": "provisional"
   },
-  "screenshots": [],
-  "seo": {
-    "title": "Chokro working prototype",
-    "description": "How the Chokro prototype approaches responsible disposal, reviewed eco-actions, internal rewards and small-seller pathways with explicit evidence limits.",
-    "indexable": false
-  },
-  "evidenceReference": null,
-  "primaryCta": "register-interest",
-  "productUrl": null,
-  "sortOrder": 1
+  "stage": "working-prototype"
 }
