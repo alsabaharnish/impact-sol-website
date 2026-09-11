@@ -1,0 +1,20 @@
+{
+  "bio": "Al Sabah Arnish is a student of the School of Data and Computational Sciences at BRAC University, Bangladesh. He has an academic interest in technology, artificial intelligence, and computational approaches for business decision-making, national and global economics, and public policy, specifically in real-world problems and Web3 technologies. ",
+  "name": "AL SABAH ARNISH",
+  "slug": "al-sabah-arnish",
+  "sortOrder": 18,
+  "consentReference": "2026-SEP-ARNISH",
+  "photo": {
+    "path": "/uploads/arnish_23101437.png",
+    "alt": "PORTRAIT OF ARNISH"
+  },
+  "role": "CEO",
+  "links": [
+    {
+      "label": "linkedin",
+      "url": "https://www.linkedin.com/in/alarnish/"
+    }
+  ],
+  "publicationStatus": "approved",
+  "group": "executive"
+}
