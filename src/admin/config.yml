@@ -148,7 +148,7 @@ collections:
         required: false
         default: []
         fields:
-          - { label: File, name: path, widget: image }
+          - { label: File, name: path, widget: image, choose_url: false }
           - { label: Alternative text, name: alt, widget: string }
           - { label: Caption, name: caption, widget: text }
           - { label: Rights reference, name: rightsReference, widget: string }
@@ -262,7 +262,11 @@ collections:
         collapsed: false
         hint: 'Upload only an image you hold usage rights for, with the person’s consent.'
         fields:
-          - { label: Image, name: path, widget: image, required: false, pattern: ['^$|^/\S+$', 'Upload the image file here. A link to Google Drive, Dropbox or another website will not work — the portrait must be stored with the site.'], hint: 'Upload a file. Do not paste an external link: it would break, and the rights could not be tracked.' }
+          # choose_url: false removes the "Insert from URL" button, so an
+          # external link cannot be entered at all. No pattern here: the
+          # widget's own value is not worth regex-guessing, and the build
+          # still rejects a non-site path with a clear message.
+          - { label: Image, name: path, widget: image, required: false, choose_url: false, hint: 'Upload the portrait file from your computer. It is stored with the site so the image cannot break and its rights stay tracked.' }
           - { label: Alternative text, name: alt, widget: string, required: false, pattern: ['^$|^.{5,240}$', 'Leave empty, or use at least 5 characters.'], hint: 'REQUIRED whenever an image is uploaded above — the build will fail without it. Describe the portrait, e.g. “Portrait of Asha Rahman”.' }
       - label: Links
         name: links
@@ -314,7 +318,7 @@ collections:
         required: false
         collapsed: false
         fields:
-          - { label: Image, name: path, widget: image, required: false, pattern: ['^$|^/\S+$', 'Upload the logo file here. An external link will not work.'], hint: 'Upload a file rather than pasting a link.' }
+          - { label: Image, name: path, widget: image, required: false, choose_url: false, hint: 'Upload the logo file from your computer rather than linking to it elsewhere.' }
           - { label: Alternative text, name: alt, widget: string, required: false, pattern: ['^$|^.{5,240}$', 'Leave empty, or use at least 5 characters.'], hint: 'REQUIRED whenever a logo is uploaded above.' }
       - { label: Website, name: url, widget: string, required: false }
       - { label: Permission reference, name: permissionReference, widget: string, pattern: ['^[\s\S]{3,500}$', 'Use at least 3 characters.'], hint: 'Required. The written name and logo permission on record for this organisation.' }
