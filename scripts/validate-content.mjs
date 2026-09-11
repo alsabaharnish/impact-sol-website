@@ -72,11 +72,11 @@ const rules = {
   },
   people: {
     minimum: 0,
-    required: ['slug', 'name', 'role', 'group', 'bio', 'publicationStatus', 'sortOrder'],
+    required: ['name', 'role', 'group', 'bio', 'publicationStatus', 'sortOrder'],
   },
   partners: {
     minimum: 0,
-    required: ['slug', 'name', 'relationship', 'description', 'permissionReference', 'sortOrder'],
+    required: ['name', 'relationship', 'description', 'permissionReference', 'sortOrder'],
   },
   legal: {
     minimum: 3,
@@ -111,6 +111,8 @@ const forbiddenCopy = [
 
 const unsupportedMetric =
   /\b\d+(?:\.\d+)?\s*(?:%|percent|users?|customers?|partners?|projects?|tonnes?|tons?|kilograms?|kg|co2e?|trees?|communities?|countries?|transactions?)\b/i;
+
+const routedCollections = new Set(['offerings', 'products', 'faqs', 'legal']);
 
 const errors = [];
 const loaded = new Map();
@@ -199,7 +201,11 @@ for (const [collection, rule] of Object.entries(rules)) {
       });
     }
 
-    if (value.slug) {
+    // Only collections whose slug addresses something — a route or a lookup
+    // in read.ts — need the filename to match it. People and partners render
+    // as a grid with no per-record route, and the CMS legitimately renames a
+    // file (`-1`) when a slug collides, which would otherwise break the build.
+    if (value.slug && routedCollections.has(collection)) {
       const filename = file.slice(file.lastIndexOf('/') + 1, -5);
       if (filename !== value.slug) {
         errors.push(`${label}: filename must match slug "${value.slug}.json"`);

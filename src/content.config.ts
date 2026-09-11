@@ -241,7 +241,7 @@ const people = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/people' }),
   schema: z
     .object({
-      slug,
+      slug: slug.optional(),
       name: z.string().min(2).max(80),
       role: z.string().min(2).max(90),
       group: z.enum(['executive', 'strategic', 'advisory', 'board']),
@@ -277,7 +277,7 @@ const people = defineCollection({
 const partners = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/partners' }),
   schema: z.object({
-    slug,
+    slug: slug.optional(),
     name: z.string().min(2).max(90),
     relationship: z.enum(['proposed', 'active']),
     description: z.string().min(30).max(400),

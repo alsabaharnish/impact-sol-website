@@ -237,11 +237,10 @@ collections:
     format: json
     extension: json
     identifier_field: name
-    slug: "{{fields.slug}}"
+    slug: "{{name}}"
     summary: "{{name}} — {{role}} ({{publicationStatus}})"
     sortable_fields: [sortOrder, name, group, publicationStatus]
     fields:
-      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens, e.g. asha-rahman.'] }
       - { label: Full name, name: name, widget: string, pattern: ['^.{2,80}$', 'Use between 2 and 80 characters.'] }
       - { label: Role or title, name: role, widget: string, pattern: ['^.{2,90}$', 'Use between 2 and 90 characters.'], hint: 'The current role, for example Chief Executive Officer or Strategic Advisor.' }
       - label: Group
@@ -297,11 +296,10 @@ collections:
     format: json
     extension: json
     identifier_field: name
-    slug: "{{fields.slug}}"
+    slug: "{{name}}"
     summary: "{{name}} — {{relationship}}"
     sortable_fields: [sortOrder, name, relationship]
     fields:
-      - { label: Slug, name: slug, widget: string, pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase words separated by hyphens.'] }
       - { label: Organisation name, name: name, widget: string, pattern: ['^.{2,90}$', 'Use between 2 and 90 characters.'] }
       - label: Relationship
         name: relationship
