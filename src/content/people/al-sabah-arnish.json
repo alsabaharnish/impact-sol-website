@@ -3,11 +3,9 @@
   "name": "AL SABAH ARNISH",
   "slug": "al-sabah-arnish",
   "sortOrder": 1,
-  "photo": {
-    "path": "https://drive.google.com/file/d/15MMKXYIGSmPninfuZtE_faeOXlM4_VKz/view?usp=drive_link"
-  },
+  "photo": null,
   "role": "CEO",
   "links": [],
-  "publicationStatus": "approved",
+  "publicationStatus": "withheld",
   "group": "executive"
 }
