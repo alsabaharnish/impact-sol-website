@@ -5,3 +5,6 @@ dist/
 .env
 runtime-data/
 public/admin/decap-cms.js
+
+# Local Netlify folder
+.netlify

@@ -182,17 +182,36 @@ for (const file of marketingFiles) {
   const relative = file.slice(distRoot.length + 1);
   const html = htmlByFile.get(file);
   const localAssets = new Set();
+  const lazyAssets = new Set();
   for (const tag of html.match(/<(?:script|link|img)\b[^>]*>/giu) ?? []) {
     const reference = attribute(tag, 'src') ?? attribute(tag, 'href');
     if (!reference || !reference.startsWith('/')) continue;
     const asset = destinationFile(new URL(reference, 'https://build.invalid').pathname);
-    if (existsSync(asset) && extname(asset) !== '.html') localAssets.add(asset);
+    if (!existsSync(asset) || extname(asset) === '.html') continue;
+    localAssets.add(asset);
+    if (/\bloading=["']lazy["']/iu.test(tag)) lazyAssets.add(asset);
   }
   let compressedBytes = gzipSync(Buffer.from(html)).length;
-  for (const asset of localAssets) compressedBytes += gzipSync(await readFile(asset)).length;
+  const contributors = [];
+  for (const asset of localAssets) {
+    // A lazy image is not part of the first load by definition. Counting it
+    // made a growing team page fail even when every portrait was small.
+    if (lazyAssets.has(asset)) continue;
+    const size = gzipSync(await readFile(asset)).length;
+    compressedBytes += size;
+    contributors.push({ asset: asset.slice(distRoot.length + 1), size });
+  }
   const limit = relative === 'index.html' ? 1.5 * 1024 * 1024 : 1.0 * 1024 * 1024;
   if (compressedBytes > limit) {
-    errors.push(`${relative}: estimated compressed first load ${compressedBytes} exceeds ${limit} bytes`);
+    const worst = contributors
+      .sort((left, right) => right.size - left.size)
+      .slice(0, 3)
+      .map((entry) => `${entry.asset} (${Math.round(entry.size / 1024)} KB)`)
+      .join(', ');
+    errors.push(
+      `${relative}: compressed first load ${Math.round(compressedBytes / 1024)} KB exceeds ` +
+        `${Math.round(limit / 1024)} KB. Largest: ${worst || 'the HTML itself'}`,
+    );
   }
 }
 
@@ -211,10 +230,22 @@ if (robots && !/Disallow:\s*\//u.test(robots)) {
   errors.push('non-production robots.txt must block crawling');
 }
 
+const imageExtensions = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif', '.gif']);
+
 for (const path of files) {
   const info = await stat(path);
+  const relative = path.slice(distRoot.length + 1);
   if (info.size > 1.5 * 1024 * 1024) {
-    errors.push(`${path.slice(distRoot.length + 1)}: individual file exceeds 1.5 MiB`);
+    errors.push(`${relative}: individual file exceeds 1.5 MiB`);
+    continue;
+  }
+  // Portraits and logos arrive from the CMS at whatever size was uploaded.
+  // A photograph saved as PNG is the usual cause of a huge file.
+  if (imageExtensions.has(extname(path).toLowerCase()) && info.size > 300 * 1024) {
+    errors.push(
+      `${relative}: image is ${Math.round(info.size / 1024)} KB, over the 300 KB limit. ` +
+        `Save photographs as JPEG rather than PNG, and no wider than about 800px.`,
+    );
   }
 }
 
