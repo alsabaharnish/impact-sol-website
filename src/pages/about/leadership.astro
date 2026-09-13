@@ -18,7 +18,7 @@ const hasLeadership = leadership.length > 0;
 /* An empty roster is a real state, not an error, but it should not be indexed
    as if it were content. */
 const description = hasLeadership
-  ? 'The people accountable for Impact Sol., published with each individual’s recorded consent.'
+  ? 'Meet the people contributing executive leadership, strategic direction and advice at Impact Sol.'
   : 'Executive roles, advisors and governance for Impact Sol. are being confirmed. No leadership record is published yet.';
 ---
 
@@ -30,20 +30,22 @@ const description = hasLeadership
 >
   <Breadcrumbs items={[{ label: 'About', href: '/about/' }, { label: 'Leadership' }]} />
   <PageHero
-    eyebrow="Organisation"
+    eyebrow="Our people"
     title="Executive & Strategic Leadership"
+    compact
     intro={
       hasLeadership
-        ? 'Each person listed here has recorded publication consent for their name, role and biography. Decision rights and formal governance are confirmed separately before launch.'
+        ? 'Meet the people contributing to Impact Sol.’s leadership, strategy and advisory work.'
         : 'Roles, biographies, portraits and publication consent are recorded before anyone appears here, so this page stays empty rather than provisional.'
     }
   >
     <div slot="aside">
       <StatusPanel
+        label="Profile publication"
         title={hasLeadership ? 'Published with consent' : 'Not yet published'}
         text={
           hasLeadership
-            ? 'Names, roles and biographies appear only where the individual has consented to publication. Governance and decision rights remain a launch gate.'
+            ? 'Every profile shown here has been approved for publication by the person it describes, including any role and portrait supplied.'
             : 'The organogram, executive roles, advisors and governance structure are still being confirmed.'
         }
       />
@@ -51,7 +53,7 @@ const description = hasLeadership
   </PageHero>
 
   {hasLeadership ? (
-    <section class="section" aria-labelledby="roster-title">
+    <section class="section section--compact" aria-labelledby="roster-title">
       <div class="shell">
         <h2 id="roster-title" class="visually-hidden">Leadership roster</h2>
         <LeadershipGrid people={leadership} />
@@ -63,7 +65,8 @@ const description = hasLeadership
         <div class="reading-width">
           <h2 id="pending-title">What is recorded before a name is published</h2>
           <ul class="check-list" role="list">
-            <li>A current role and the decision rights attached to it.</li>
+            <li>A current role for executive, strategic and governance positions.</li>
+            <li>Advisor profiles may be recorded without a role or title.</li>
             <li>A biography approved by the person it describes.</li>
             <li>A portrait with documented usage rights.</li>
             <li>The individual’s recorded consent to publish all of the above.</li>

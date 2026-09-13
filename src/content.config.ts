@@ -11,6 +11,16 @@ const slug = z
 
 const evidence = z.string().min(3).max(500).nullable().optional();
 
+const personRole = z.string().trim().min(2).max(90);
+
+/* Decap may omit an optional string, save it as null, or save an empty string.
+   Treat those forms as "not supplied" for advisory profiles. */
+const optionalPersonRole = z.preprocess(
+  (value) =>
+    value === null || (typeof value === 'string' && value.trim() === '') ? undefined : value,
+  personRole.optional(),
+);
+
 const httpUrl = z.url().refine(
   (value) => ['http:', 'https:'].includes(new URL(value).protocol),
   'Use a complete http:// or https:// URL.',
@@ -263,25 +273,38 @@ const legal = defineCollection({
 const people = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/people' }),
   schema: z
-    .object({
-      slug: slug.optional(),
-      name: z.string().min(2).max(80),
-      role: z.string().min(2).max(90),
-      group: z.enum(['executive', 'strategic', 'advisory', 'board']),
-      bio: z.string().min(40).max(700),
-      photo: optionalImage,
-      links: optionalLinks,
-      publicationStatus: z.enum(['withheld', 'approved']),
-      consentReference: evidence,
-      sortOrder: z.number().int().min(1).max(99),
-    })
+    .discriminatedUnion('group', [
+      z.object({
+        slug: slug.optional(),
+        name: z.string().min(2).max(80),
+        group: z.literal('advisory'),
+        role: optionalPersonRole,
+        bio: z.string().min(40).max(700),
+        photo: optionalImage,
+        links: optionalLinks,
+        publicationStatus: z.enum(['withheld', 'approved']),
+        consentReference: evidence,
+        sortOrder: z.number().int().min(1).max(99),
+      }),
+      z.object({
+        slug: slug.optional(),
+        name: z.string().min(2).max(80),
+        group: z.enum(['executive', 'strategic', 'board']),
+        role: personRole,
+        bio: z.string().min(40).max(700),
+        photo: optionalImage,
+        links: optionalLinks,
+        publicationStatus: z.enum(['withheld', 'approved']),
+        consentReference: evidence,
+        sortOrder: z.number().int().min(1).max(99),
+      }),
+    ])
     .superRefine((person, context) => {
       if (person.publicationStatus === 'approved' && !person.consentReference) {
         context.addIssue({
           code: 'custom',
           path: ['consentReference'],
-          message:
-            'Publishing a person\u2019s name, role and biography requires a recorded consent reference.',
+          message: 'Publishing a person\u2019s profile requires a recorded consent reference.',
         });
       }
       if (person.publicationStatus === 'approved' && person.photo && !person.photo.alt) {

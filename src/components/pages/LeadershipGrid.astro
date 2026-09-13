@@ -1,5 +1,6 @@
 ---
 import type { PersonRecord } from '../../content/read';
+import SocialIcon from '../icons/SocialIcon.astro';
 
 interface Props {
   people: PersonRecord[];
@@ -7,8 +8,8 @@ interface Props {
 
 const { people } = Astro.props;
 
-/* Keep leadership and advisory roles visually distinct while preserving the
-   content-defined order within each row. */
+/* Placement follows the content's group field only. A title such as
+   "Strategic Advisor" never moves someone between sections. */
 const groupOrder: Record<PersonRecord['group'], number> = {
   executive: 0,
   strategic: 1,
@@ -52,7 +53,10 @@ const initialsOf = (name: string) =>
 <div class="leadership">
   {sections.map((section) => (
     <section class="leadership__section" aria-labelledby={`leadership-${section.id}`}>
-      <h3 id={`leadership-${section.id}`} class="leadership__heading">{section.label}</h3>
+      <div class="leadership__header">
+        <h3 id={`leadership-${section.id}`}>{section.label}</h3>
+      </div>
+
       <ul class="leadership__grid" role="list">
         {section.members.map((person) => (
           <li class="person">
@@ -61,7 +65,7 @@ const initialsOf = (name: string) =>
                 <img
                   src={person.photo.path}
                   alt={person.photo.alt}
-                  width="320"
+                  width="400"
                   height="400"
                   loading="lazy"
                   decoding="async"
@@ -70,24 +74,33 @@ const initialsOf = (name: string) =>
                 <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
               )}
             </div>
-            <div class="person__body">
+
+            <div class="person__identity">
               <h4>{person.name}</h4>
-              <p class="person__role">{person.role}</p>
-              <p class="person__bio">{person.bio}</p>
-              {person.links.length > 0 && (
-                <ul class="person__links" role="list">
-                  {person.links.map((link) => (
-                    <li>
-                      <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
-                        {link.label}
-                        <span class="person__external" aria-hidden="true">↗</span>
-                        <span class="visually-hidden">(opens in a new tab)</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {person.role && <p class="person__role">{person.role}</p>}
             </div>
+
+            <p class="person__bio">{person.bio}</p>
+
+            {person.links.length > 0 && (
+              <ul class="person__links" role="list" aria-label={`${person.name} social links`}>
+                {person.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.url}
+                      rel="noopener noreferrer nofollow"
+                      target="_blank"
+                      title={`${link.label} — ${person.name}`}
+                    >
+                      <SocialIcon url={link.url} />
+                      <span class="visually-hidden">
+                        {link.label} profile for {person.name} (opens in a new tab)
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
@@ -98,14 +111,29 @@ const initialsOf = (name: string) =>
 <style>
   .leadership {
     display: grid;
-    gap: clamp(2.75rem, 6vw, 5rem);
+    gap: clamp(3rem, 6vw, 5rem);
   }
 
-  .leadership__heading {
-    margin: 0 0 var(--space-5);
-    padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--color-line);
-    font-size: var(--step-1);
+  .leadership__header {
+    display: grid;
+    margin-bottom: clamp(1.35rem, 3vw, 2rem);
+    grid-template-columns: auto minmax(2rem, 1fr);
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .leadership__header::after {
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-line-strong), var(--color-line), transparent);
+    content: '';
+  }
+
+  .leadership__header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: var(--tracking-snug);
   }
 
   .leadership__grid {
@@ -119,21 +147,35 @@ const initialsOf = (name: string) =>
 
   .person {
     display: grid;
+    min-width: 0;
+    overflow: hidden;
+    padding-bottom: clamp(1.1rem, 2.2vw, 1.45rem);
     align-content: start;
-    gap: var(--space-4);
+    grid-template-areas:
+      'portrait'
+      'identity'
+      'bio'
+      'links';
+    grid-template-rows: auto auto auto auto;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    border-color: color-mix(in srgb, var(--color-line) 88%, var(--color-forest));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
   }
 
-  /* A fixed portrait ratio keeps the row of faces aligned whatever the source
-     image is, and reserves its space so nothing shifts as photos load. */
+  /* A fixed ratio aligns portraits and reserves space while images load. */
   .person__portrait {
     position: relative;
     display: grid;
-    aspect-ratio: 4 / 5;
+    grid-area: portrait;
+    aspect-ratio: 1;
     place-items: center;
     overflow: hidden;
-    border: 1px solid var(--color-line);
-    background: var(--color-mint-soft);
-    border-radius: var(--radius-md);
+    border-bottom: 1px solid var(--color-line);
+    background:
+      radial-gradient(circle at 75% 18%, var(--color-sun-soft), transparent 32%),
+      var(--color-mint-soft);
   }
 
   .person__portrait img {
@@ -143,20 +185,22 @@ const initialsOf = (name: string) =>
   }
 
   .person__initials {
-    color: color-mix(in srgb, var(--color-forest) 45%, var(--color-mint-soft));
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: color-mix(in srgb, var(--color-forest) 70%, var(--color-mint-soft));
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: var(--weight-bold);
     letter-spacing: var(--tracking-heading);
   }
 
-  .person__body {
+  .person__identity {
     display: grid;
-    gap: 0.3rem;
+    grid-area: identity;
+    margin: var(--space-4) clamp(1rem, 2vw, 1.35rem) 0;
+    gap: 0.32rem;
   }
 
-  .person__body h4 {
+  .person__identity h4 {
     margin: 0;
-    font-size: var(--step-0);
+    font-size: var(--step-1);
   }
 
   .person__role {
@@ -164,40 +208,71 @@ const initialsOf = (name: string) =>
     color: var(--color-forest-bright);
     font-size: 0.86rem;
     font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
   }
 
   .person__bio {
-    margin: 0.35rem 0 0;
+    grid-area: bio;
+    margin: 0.7rem clamp(1rem, 2vw, 1.35rem) 0;
     color: var(--color-ink-soft);
     font-size: 0.9rem;
-    line-height: var(--leading-snug);
+    line-height: 1.55;
   }
 
   .person__links {
     display: flex;
-    margin: 0.5rem 0 0;
+    grid-area: links;
+    margin: 0.9rem clamp(1rem, 2vw, 1.35rem) 0;
     padding: 0;
     flex-wrap: wrap;
-    gap: 0.35rem 0.85rem;
+    align-items: center;
+    gap: 0.45rem;
     list-style: none;
+  }
+
+  .person__links li {
+    display: flex;
   }
 
   .person__links a {
     display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
     align-items: center;
-    gap: 0.25rem;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 0.7rem;
+    color: var(--color-forest);
+    background: transparent;
     font-size: 0.85rem;
     font-weight: var(--weight-semibold);
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
   }
 
-  .person__external {
-    font-size: 0.8em;
+  .person__links a:hover {
+    border-color: var(--color-line);
+    color: var(--color-forest-bright);
+    background: var(--color-mint-soft);
+    box-shadow: 0 3px 10px rgb(16 50 42 / 10%);
+    transform: translateY(-1px);
   }
 
-  /* One card per row on phones. The portrait sits above the text at a fixed
-     small size rather than beside it: a side-by-side split measured only
-     ~24 characters per line at 375px, narrower than at 320px. Stacked, the
-     biography gets the full column and the face is still recognisable. */
+  .person__links a:focus-visible {
+    outline: 3px solid var(--color-sun);
+    outline-offset: 3px;
+  }
+
+  .person__links a:active {
+    transform: translateY(0);
+  }
+
   @media (max-width: 48rem) {
     .leadership__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -205,18 +280,49 @@ const initialsOf = (name: string) =>
   }
 
   @media (max-width: 30rem) {
-    .leadership__grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-    }
-
-    .person {
+    .leadership__header {
+      margin-bottom: var(--space-4);
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-3);
     }
 
-    .person__portrait {
-      width: 5.5rem;
+    .leadership__header::after {
+      width: 100%;
     }
+
+    .leadership__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .person {
+      padding: 1rem;
+      grid-template-columns: 6.25rem minmax(0, 1fr);
+      grid-template-areas:
+        'portrait identity'
+        'bio bio'
+        'links links';
+      grid-template-rows: auto auto auto;
+      align-items: center;
+    }
+
+    .person__portrait {
+      width: 6.25rem;
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-sm);
+    }
+
+    .person__identity {
+      margin: 0 0 0 var(--space-4);
+    }
+
+    .person__bio {
+      margin: var(--space-4) 0 0;
+    }
+
+    .person__links {
+      margin: 0.9rem 0 0;
+    }
+
   }
 </style>

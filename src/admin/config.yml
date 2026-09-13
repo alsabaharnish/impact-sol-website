@@ -238,11 +238,10 @@ collections:
     extension: json
     identifier_field: name
     slug: "{{name}}"
-    summary: "{{name}} — {{role}} ({{publicationStatus}})"
+    summary: "{{name}} — {{group}} ({{publicationStatus}})"
     sortable_fields: [sortOrder, name, group, publicationStatus]
     fields:
       - { label: Full name, name: name, widget: string, pattern: ['^.{2,80}$', 'Use between 2 and 80 characters.'] }
-      - { label: Role or title, name: role, widget: string, pattern: ['^.{2,90}$', 'Use between 2 and 90 characters.'], hint: 'The current role, for example Chief Executive Officer or Strategic Advisor.' }
       - label: Group
         name: group
         widget: select
@@ -252,7 +251,8 @@ collections:
           - { label: Advisor, value: advisory }
           - { label: Board and governance, value: board }
         default: executive
-        hint: 'Controls which tier the person appears under.'
+        hint: 'Controls where the person appears. The role or title does not affect placement.'
+      - { label: Role or title, name: role, widget: string, required: false, pattern: ['^$|^.{2,90}$', 'Leave empty for an advisor, or use between 2 and 90 characters.'], hint: 'Optional only for the Advisor group. Required for Executive leadership, Strategic leadership, and Board and governance.' }
       - { label: Biography, name: bio, widget: text, pattern: ['^[\s\S]{40,700}$', 'Write between 40 and 700 characters.'], hint: 'Factual and approved by the person, 40-700 characters. No awards, superlatives or numerical outcome claims.' }
       - label: Portrait
         name: photo
@@ -273,9 +273,10 @@ collections:
         required: false
         default: []
         max: 3
+        hint: 'The site selects a matching social icon automatically from each URL. Other websites use a generic web icon.'
         fields:
-          - { label: Label, name: label, widget: string }
-          - { label: URL, name: url, widget: string, pattern: ['^https?://.+$', 'Use a complete http:// or https:// URL.'] }
+          - { label: Label, name: label, widget: string, hint: 'For example LinkedIn, Facebook, Instagram, or Website. Used for accessibility and hover text; it is not displayed beside the icon.' }
+          - { label: URL, name: url, widget: string, pattern: ['^https?://.+$', 'Use a complete http:// or https:// URL.'], hint: 'The URL determines which icon appears.' }
       - label: Publication status
         name: publicationStatus
         widget: select
@@ -283,7 +284,7 @@ collections:
           - { label: Withheld — not shown on the site, value: withheld }
           - { label: Approved — published (requires Consent reference below), value: approved }
         default: withheld
-        hint: 'Approved requires the person’s recorded consent to publish their name, role, biography and portrait.'
+        hint: 'Approved requires the person’s recorded consent to publish their profile, including any role and portrait supplied.'
       - { label: Consent reference, name: consentReference, widget: string, required: false, pattern: ['^$|^[\s\S]{3,500}$', 'Leave empty, or use at least 3 characters.'], hint: 'Required before Publication status can be Approved. A durable ticket, document path or approval record — never the consent text itself.' }
       - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99, hint: 'Order within the group. Must be unique across all people.' }
 

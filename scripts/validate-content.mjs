@@ -72,7 +72,7 @@ const rules = {
   },
   people: {
     minimum: 0,
-    required: ['name', 'role', 'group', 'bio', 'publicationStatus', 'sortOrder'],
+    required: ['name', 'group', 'bio', 'publicationStatus', 'sortOrder'],
   },
   partners: {
     minimum: 0,
@@ -255,6 +255,15 @@ for (const { file, value: product } of loaded.get('products') ?? []) {
 }
 
 for (const { file, value: person } of loaded.get('people') ?? []) {
+  const role = typeof person.role === 'string' ? person.role.trim() : '';
+  if (person.group !== 'advisory' && !role) {
+    errors.push(`${file}: role is required unless group is "advisory"`);
+  }
+  if (person.role !== undefined && person.role !== null && typeof person.role !== 'string') {
+    errors.push(`${file}: role must be text when supplied`);
+  } else if (role && (role.length < 2 || role.length > 90)) {
+    errors.push(`${file}: role must contain between 2 and 90 characters when supplied`);
+  }
   if (person.publicationStatus === 'approved' && !person.consentReference) {
     errors.push(`${file}: publishing a person requires a recorded consentReference`);
   }
