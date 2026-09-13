@@ -7,7 +7,8 @@ interface Props {
 
 const { people } = Astro.props;
 
-/* Keep the former tier order, but present everyone as one leadership team. */
+/* Keep leadership and advisory roles visually distinct while preserving the
+   content-defined order within each row. */
 const groupOrder: Record<PersonRecord['group'], number> = {
   executive: 0,
   strategic: 1,
@@ -19,6 +20,26 @@ const roster = [...people].sort(
   (a, b) => groupOrder[a.group] - groupOrder[b.group] || a.sortOrder - b.sortOrder,
 );
 
+const sections = [
+  {
+    id: 'leaders',
+    label: 'Executive & Strategic Leaders',
+    members: roster.filter(
+      (person) => person.group === 'executive' || person.group === 'strategic',
+    ),
+  },
+  {
+    id: 'advisors',
+    label: 'Advisors',
+    members: roster.filter((person) => person.group === 'advisory'),
+  },
+  {
+    id: 'governance',
+    label: 'Board & Governance',
+    members: roster.filter((person) => person.group === 'board'),
+  },
+].filter((section) => section.members.length > 0);
+
 const initialsOf = (name: string) =>
   name
     .split(/\s+/)
@@ -28,51 +49,70 @@ const initialsOf = (name: string) =>
     .join('');
 ---
 
-<ul class="leadership__grid" role="list">
-  {roster.map((person) => (
-    <li class="person">
-      <div class="person__portrait">
-        {person.photo ? (
-          <img
-            src={person.photo.path}
-            alt={person.photo.alt}
-            width="320"
-            height="400"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
-        )}
-      </div>
-      <div class="person__body">
-        <h3>{person.name}</h3>
-        <p class="person__role">{person.role}</p>
-        <p class="person__bio">{person.bio}</p>
-        {person.links.length > 0 && (
-          <ul class="person__links" role="list">
-            {person.links.map((link) => (
-              <li>
-                <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
-                  {link.label}
-                  <span class="person__external" aria-hidden="true">↗</span>
-                  <span class="visually-hidden">(opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </li>
+<div class="leadership">
+  {sections.map((section) => (
+    <section class="leadership__section" aria-labelledby={`leadership-${section.id}`}>
+      <h3 id={`leadership-${section.id}`} class="leadership__heading">{section.label}</h3>
+      <ul class="leadership__grid" role="list">
+        {section.members.map((person) => (
+          <li class="person">
+            <div class="person__portrait">
+              {person.photo ? (
+                <img
+                  src={person.photo.path}
+                  alt={person.photo.alt}
+                  width="320"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
+              )}
+            </div>
+            <div class="person__body">
+              <h4>{person.name}</h4>
+              <p class="person__role">{person.role}</p>
+              <p class="person__bio">{person.bio}</p>
+              {person.links.length > 0 && (
+                <ul class="person__links" role="list">
+                  {person.links.map((link) => (
+                    <li>
+                      <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
+                        {link.label}
+                        <span class="person__external" aria-hidden="true">↗</span>
+                        <span class="visually-hidden">(opens in a new tab)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   ))}
-</ul>
+</div>
 
 <style>
+  .leadership {
+    display: grid;
+    gap: clamp(2.75rem, 6vw, 5rem);
+  }
+
+  .leadership__heading {
+    margin: 0 0 var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+    font-size: var(--step-1);
+  }
+
   .leadership__grid {
     display: grid;
     margin: 0;
     padding: 0;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(1.25rem, 2.5vw, 2rem);
     list-style: none;
   }
@@ -114,7 +154,7 @@ const initialsOf = (name: string) =>
     gap: 0.3rem;
   }
 
-  .person__body h3 {
+  .person__body h4 {
     margin: 0;
     font-size: var(--step-0);
   }
@@ -158,6 +198,12 @@ const initialsOf = (name: string) =>
      small size rather than beside it: a side-by-side split measured only
      ~24 characters per line at 375px, narrower than at 320px. Stacked, the
      biography gets the full column and the face is still recognisable. */
+  @media (max-width: 48rem) {
+    .leadership__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 30rem) {
     .leadership__grid {
       grid-template-columns: 1fr;
