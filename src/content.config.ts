@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { isPublicProductionOrigin } from './lib/site-origin.mjs';
 
 const slug = z
   .string()
@@ -9,6 +10,28 @@ const slug = z
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a lowercase, hyphenated slug.');
 
 const evidence = z.string().min(3).max(500).nullable().optional();
+
+const httpUrl = z.url().refine(
+  (value) => ['http:', 'https:'].includes(new URL(value).protocol),
+  'Use a complete http:// or https:// URL.',
+);
+
+const httpsOrigin = z.url().refine(
+  (value) => {
+    const origin = new URL(value);
+    return (
+      isPublicProductionOrigin(origin) &&
+      origin.pathname === '/' &&
+      !origin.search &&
+      !origin.hash
+    );
+  },
+  'Use a public HTTPS origin without a path, query or fragment.',
+);
+
+const siteAssetPath = z
+  .string()
+  .regex(/^\/(?!\/)[^\s]+$/u, 'Use a site-absolute path beginning with one slash.');
 
 /**
  * Decap writes an untouched optional object widget as `{}`, or with its
@@ -28,7 +51,7 @@ const optionalImage = z.preprocess(
   },
   z
     .object({
-      path: z.string().startsWith('/'),
+      path: siteAssetPath,
       alt: z.string().min(5).max(240),
     })
     .nullable(),
@@ -51,7 +74,7 @@ const optionalLinks = z.preprocess(
     .array(
       z.object({
         label: z.string().min(2).max(40),
-        url: z.url(),
+        url: httpUrl,
       }),
     )
     .max(3)
@@ -109,7 +132,7 @@ const products = defineCollection({
       privacyStatus: z.string().min(20).max(300),
       supportStatus: z.string().min(20).max(300),
       representativeVisual: z.object({
-        path: z.string().startsWith('/'),
+        path: siteAssetPath,
         alt: z.string().max(240),
         caption: z.string().min(20).max(400),
         rightsStatus: z.enum(['provisional', 'approved']),
@@ -117,7 +140,7 @@ const products = defineCollection({
       screenshots: z
         .array(
           z.object({
-            path: z.string().startsWith('/'),
+            path: siteAssetPath,
             alt: z.string().min(5).max(240),
             caption: z.string().min(10).max(400),
             rightsReference: z.string().min(3).max(300),
@@ -131,7 +154,7 @@ const products = defineCollection({
       }),
       evidenceReference: evidence,
       primaryCta: z.enum(['register-interest', 'learn-more']),
-      productUrl: z.url().nullable().optional(),
+      productUrl: httpUrl.nullable().optional(),
       sortOrder: z.number().int().min(1).max(99),
     })
     .superRefine((product, context) => {
@@ -188,13 +211,13 @@ const global = defineCollection({
       banglaReady: z.boolean(),
       contactEmailFallback: z.email(),
       contactEmailNote: z.string().min(20).max(300),
-      approvedDomain: z.url().nullable().optional(),
+      approvedDomain: httpsOrigin.nullable().optional(),
       evidenceReference: evidence,
       socialLinks: z
         .array(
           z.object({
             label: z.string().min(2).max(40),
-            url: z.url(),
+            url: httpUrl,
           }),
         )
         .max(8)
@@ -282,7 +305,7 @@ const partners = defineCollection({
     relationship: z.enum(['proposed', 'active']),
     description: z.string().min(30).max(400),
     logo: optionalImage,
-    url: z.url().nullable().optional(),
+    url: httpUrl.nullable().optional(),
     permissionReference: z.string().min(3).max(500),
     sortOrder: z.number().int().min(1).max(99),
   }),

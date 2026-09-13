@@ -4,8 +4,8 @@
   "description": "Practical technology and partnership for responsible enterprise.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fbfaf4",
-  "theme_color": "#123c34",
+  "background_color": "#f7f5ef",
+  "theme_color": "#183e34",
   "icons": [
     {
       "src": "/favicon.svg",

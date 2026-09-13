@@ -69,7 +69,7 @@ Start local development from `.env.example`. Do not commit `.env`.
 
 | Variable | Guidance |
 | --- | --- |
-| `IMPACT_SOL_SITE_URL` | Optional canonical-origin override. Netlify’s primary production `URL` is used automatically when this is absent. |
+| `IMPACT_SOL_SITE_URL` | Optional canonical-origin override. Uncomment it in `.env` only after replacing the example domain; Netlify’s primary production `URL` is used automatically when this is absent. |
 | `PUBLIC_CONTACT_EMAIL` | Approved, monitored public mailbox. The repository fallback is provisional. |
 
 When a custom domain becomes the Netlify project’s primary domain, redeploy and verify canonical URLs, the sitemap, robots rules, social metadata, redirects, and the GitHub OAuth App homepage. No form-code change is needed.
@@ -100,7 +100,7 @@ Editable records live in `src/content/`:
 
 `src/content.config.ts` supplies typed schemas. `scripts/validate-content.mjs` blocks missing required fields, common placeholders, several unsafe absolute claims, numerical marketing outcomes, and status changes without evidence. It is a guardrail, not a substitute for editorial, legal, or evidence review.
 
-The editor configuration is `src/admin/config.yml`, served at `/admin/config.yml` by `src/pages/admin/config.yml.ts`. That route adds `local_backend: true` for local origins only, so production never advertises a developer proxy. For local CMS editing, start Astro and a trusted, pinned Decap local proxy in separate terminals, then visit `/admin/`. If no approved proxy is installed, edit the JSON files directly and run `npm run verify`.
+The editor configuration is `src/admin/config.yml`, served at `/admin/config.yml` by `src/pages/admin/config.yml.ts`. That route adds `local_backend: true` only through Astro’s development server; static production and preview builds never advertise a developer proxy. For local CMS editing, start Astro and a trusted, pinned Decap local proxy in separate terminals, then visit `/admin/`. If no approved proxy is installed, edit the JSON files directly and run `npm run verify`.
 
 Production CMS sign-in uses the GitHub backend for `alsabaharnish/impact-sol-website`. The GitHub OAuth App and Netlify authentication provider must contain the real Client ID and secret. Each editor needs appropriate repository access and MFA. Protect `main`, require review and a successful `npm run verify`, test recovery and offboarding, and keep the secret outside this repository. See [Content and CMS](docs/content-and-cms.md).
 

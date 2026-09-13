@@ -19,7 +19,7 @@ const isSection = (href: string) =>
     </a>
 
     <nav class="desktop-nav" aria-label="Primary navigation">
-      <ul>
+      <ul role="list">
         {
           primaryNavigation.map((item) =>
             item.children ? (
@@ -57,12 +57,13 @@ const isSection = (href: string) =>
                   class="nav-menu"
                   id={`nav-menu-${item.label.toLowerCase().replace(/\W+/g, '-')}`}
                   data-nav-menu
+                  role="list"
                 >
                   {item.children.map((child) => (
                     <li>
                       <a
                         href={child.href}
-                        aria-current={isPage(child.href) ? 'page' : undefined}
+                        aria-current={child.href !== item.href && isPage(child.href) ? 'page' : undefined}
                       >
                         {child.label}
                       </a>
@@ -86,15 +87,15 @@ const isSection = (href: string) =>
       </ul>
     </nav>
 
-    <a class="button button--small header-cta" href="/get-involved/">Work with us</a>
+    <a class="button button--small header-cta" href="/get-involved/" aria-current={isPage('/get-involved/') ? 'page' : undefined}>Get involved</a>
 
     <details class="mobile-nav">
-      <summary aria-label="Open navigation">
+      <summary>
         <span aria-hidden="true" class="mobile-nav__lines"></span>
         <span>Menu</span>
       </summary>
       <nav aria-label="Mobile navigation">
-        <ul>
+        <ul role="list">
           {
             primaryNavigation.map((item) => (
               <li>
@@ -105,12 +106,12 @@ const isSection = (href: string) =>
                   </svg>
                 </a>
                 {item.children && (
-                  <ul class="mobile-nav__sub">
+                  <ul class="mobile-nav__sub" role="list">
                     {item.children.map((child) => (
                       <li>
                         <a
                           href={child.href}
-                          aria-current={isPage(child.href) ? 'page' : undefined}
+                          aria-current={child.href !== item.href && isPage(child.href) ? 'page' : undefined}
                         >
                           <span>{child.label}</span>
                           <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" focusable="false">
@@ -124,7 +125,7 @@ const isSection = (href: string) =>
               </li>
             ))
           }
-          <li><a class="button" href="/get-involved/">Work with us</a></li>
+          <li class="mobile-nav__cta"><a class="button" href="/get-involved/" aria-current={isPage('/get-involved/') ? 'page' : undefined}>Get involved</a></li>
         </ul>
       </nav>
     </details>
@@ -136,14 +137,14 @@ const isSection = (href: string) =>
     position: sticky;
     z-index: 50;
     top: 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-line) 76%, transparent);
-    background: color-mix(in srgb, var(--color-paper) 92%, transparent);
-    backdrop-filter: blur(14px);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-line) 72%, transparent);
+    background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+    backdrop-filter: blur(18px) saturate(110%);
   }
 
   .site-header__inner {
     display: grid;
-    min-height: 4.75rem;
+    min-height: 4.5rem;
     align-items: center;
     grid-template-columns: auto 1fr auto;
     gap: var(--space-5);
@@ -151,8 +152,10 @@ const isSection = (href: string) =>
 
   .brand-link {
     display: inline-flex;
+    width: fit-content;
     min-height: 44px;
     align-items: center;
+    justify-self: start;
     text-decoration: none;
   }
 
@@ -166,7 +169,7 @@ const isSection = (href: string) =>
     margin: 0;
     padding: 0;
     align-items: center;
-    gap: clamp(0.15rem, 0.1rem + 0.75vw, 1.1rem);
+    gap: clamp(0.1rem, 0.05rem + 0.5vw, 0.75rem);
     list-style: none;
   }
 
@@ -190,27 +193,27 @@ const isSection = (href: string) =>
 
   .desktop-nav a:hover {
     color: var(--color-forest);
-    background: var(--color-mint-soft);
+    background: color-mix(in srgb, var(--color-mint-soft) 68%, transparent);
   }
 
   .desktop-nav a[aria-current='page'],
   .desktop-nav a[data-nav-section='true'] {
     color: var(--color-forest);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
   }
 
-  /* Solid rule marks the exact page; a lighter rule marks the section the
-     visitor is inside, so a child page still shows where it belongs. */
+  /* A quiet dot locates the visitor without adding another horizontal rule. */
   .desktop-nav a[aria-current='page']::after,
   .desktop-nav a[data-nav-section='true']::after {
     position: absolute;
-    right: 0.6rem;
-    bottom: 0.28rem;
-    left: 0.6rem;
-    height: 2px;
+    bottom: 0.22rem;
+    left: 50%;
+    width: 0.3rem;
+    height: 0.3rem;
     background: var(--color-forest);
-    border-radius: 2px;
+    border-radius: 50%;
     content: '';
+    transform: translateX(-50%);
   }
 
   .desktop-nav a[data-nav-section='true']:not([aria-current='page'])::after {
@@ -232,11 +235,11 @@ const isSection = (href: string) =>
 
   .nav-group > a[aria-current='page']::after,
   .nav-group > a[data-nav-section='true']::after {
-    right: 0.15rem;
+    left: calc(50% + 0.1rem);
   }
 
   .nav-group__toggle {
-    display: inline-grid;
+    display: none;
     width: 1.9rem;
     min-height: 44px;
     padding: 0;
@@ -251,13 +254,17 @@ const isSection = (href: string) =>
       background-color var(--duration-fast) var(--ease-out);
   }
 
+  :global(html.has-js) .nav-group__toggle {
+    display: inline-grid;
+  }
+
   .nav-group__toggle svg {
     transition: transform var(--duration-base) var(--ease-out);
   }
 
   .nav-group__toggle:hover {
     color: var(--color-forest);
-    background: var(--color-mint-soft);
+    background: color-mix(in srgb, var(--color-mint-soft) 68%, transparent);
   }
 
   .nav-group[data-open='true'] .nav-group__toggle {
@@ -282,9 +289,10 @@ const isSection = (href: string) =>
     align-items: stretch;
     flex-direction: column;
     gap: 0.1rem;
+    border: 1px solid var(--color-line);
     background: var(--color-surface);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     opacity: 0;
     transform: translateY(-0.35rem);
     transition:
@@ -295,6 +303,13 @@ const isSection = (href: string) =>
   }
 
   .nav-group[data-open='true'] .nav-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  :global(html:not(.has-js)) .nav-group:hover .nav-menu,
+  :global(html:not(.has-js)) .nav-group:focus-within .nav-menu {
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
@@ -329,7 +344,7 @@ const isSection = (href: string) =>
   .nav-menu a[aria-current='page'] {
     color: var(--color-forest);
     background: var(--color-mint-soft);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
   }
 
   /* Hover is handled in site.js rather than with :hover, so `data-open` is the
@@ -402,12 +417,13 @@ const isSection = (href: string) =>
     top: calc(100% + 1px);
     right: 0;
     left: 0;
-    max-height: calc(100dvh - 5.5rem);
+    height: calc(100dvh - 4.5rem);
     padding: var(--space-4) var(--gutter) var(--space-5);
     overflow-y: auto;
     overscroll-behavior: contain;
-    background: var(--color-paper);
-    box-shadow: var(--shadow-lg);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
   }
 
   .mobile-nav[open] nav {
@@ -464,6 +480,10 @@ const isSection = (href: string) =>
     margin-top: var(--space-4);
   }
 
+  .mobile-nav__cta {
+    display: none;
+  }
+
   /* No hover on touch, and the panel already scrolls, so children are simply
      shown indented rather than hidden behind another tap. */
   .mobile-nav__sub {
@@ -508,6 +528,10 @@ const isSection = (href: string) =>
 
     .header-cta {
       display: none;
+    }
+
+    .mobile-nav__cta {
+      display: list-item;
     }
   }
 

@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/site';
+import { isPublicProductionOrigin } from '../lib/site-origin.mjs';
 import '../styles/global.css';
 
 interface Props {
@@ -32,8 +33,7 @@ const selfHostedInter =
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
 const fullTitle = title === siteConfig.name ? title : `${title} | ${siteConfig.name}`;
-const isProductionOrigin = canonical.protocol === 'https:' && !canonical.hostname.endsWith('.example');
-const shouldIndex = !noindex && isProductionOrigin;
+const shouldIndex = !noindex && isPublicProductionOrigin(canonical);
 
 const graph: Record<string, unknown>[] = [
   {
@@ -78,7 +78,7 @@ if (breadcrumbs.length > 0) {
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@graph': graph,
-});
+}).replaceAll('<', '\\u003c');
 ---
 
 <!doctype html>
@@ -86,7 +86,7 @@ const jsonLd = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#123c34" />
+    <meta name="theme-color" content="#183e34" />
     {selfHostedInter && (
       <>
         <link

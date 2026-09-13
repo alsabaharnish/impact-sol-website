@@ -9,15 +9,14 @@ export const prerender = true;
  * admin CSP blocks the request as a `connect-src` violation, and the editor
  * stalls on "Loading configuration…" before recovering.
  *
- * The flag therefore belongs only to local origins, so it is added here rather
- * than committed into the config the CMS ships.
+ * The flag therefore belongs only to Astro's development server. A static
+ * build may use a localhost canonical origin for a remote deploy preview, so
+ * the configured site URL is not a reliable development-mode signal.
  */
-export const GET: APIRoute = ({ site }) => {
-  const origin = site ?? new URL('http://localhost:4321');
-  const isProduction = origin.protocol === 'https:' && !origin.hostname.endsWith('.example');
-  const body = isProduction
-    ? configSource
-    : `# Added for local origins only. Requires a trusted, pinned Decap proxy.\nlocal_backend: true\n\n${configSource}`;
+export const GET: APIRoute = () => {
+  const body = import.meta.env.DEV
+    ? `# Added by Astro's development server only. Requires a trusted, pinned Decap proxy.\nlocal_backend: true\n\n${configSource}`
+    : configSource;
 
   return new Response(body, {
     headers: {

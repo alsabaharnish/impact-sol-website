@@ -7,34 +7,17 @@ interface Props {
 
 const { people } = Astro.props;
 
-/* Tier order is fixed so the structure reads the same however records are
-   sorted, and a tier with nobody in it simply does not appear. */
-const tiers = [
-  {
-    id: 'executive',
-    label: 'Executive leadership',
-    note: 'Accountable for day-to-day decisions and delivery.',
-  },
-  {
-    id: 'strategic',
-    label: 'Strategic leadership',
-    note: 'Shapes direction, partnerships and long-term priorities.',
-  },
-  {
-    id: 'advisory',
-    label: 'Advisors',
-    note: 'Contribute expertise without executive authority.',
-  },
-  {
-    id: 'board',
-    label: 'Board and governance',
-    note: 'Holds oversight and formal decision rights.',
-  },
-] as const;
+/* Keep the former tier order, but present everyone as one leadership team. */
+const groupOrder: Record<PersonRecord['group'], number> = {
+  executive: 0,
+  strategic: 1,
+  advisory: 2,
+  board: 3,
+};
 
-const groups = tiers
-  .map((tier) => ({ ...tier, members: people.filter((person) => person.group === tier.id) }))
-  .filter((tier) => tier.members.length > 0);
+const roster = [...people].sort(
+  (a, b) => groupOrder[a.group] - groupOrder[b.group] || a.sortOrder - b.sortOrder,
+);
 
 const initialsOf = (name: string) =>
   name
@@ -45,85 +28,51 @@ const initialsOf = (name: string) =>
     .join('');
 ---
 
-<div class="leadership">
-  {groups.map((tier) => (
-    <section class="leadership__tier" aria-labelledby={`tier-${tier.id}`}>
-      <div class="leadership__tier-head">
-        <h3 id={`tier-${tier.id}`}>{tier.label}</h3>
-        <p>{tier.note}</p>
+<ul class="leadership__grid" role="list">
+  {roster.map((person) => (
+    <li class="person">
+      <div class="person__portrait">
+        {person.photo ? (
+          <img
+            src={person.photo.path}
+            alt={person.photo.alt}
+            width="320"
+            height="400"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
+        )}
       </div>
-      <ul class="leadership__grid">
-        {tier.members.map((person) => (
-          <li class="person">
-            <div class="person__portrait">
-              {person.photo ? (
-                <img
-                  src={person.photo.path}
-                  alt={person.photo.alt}
-                  width="320"
-                  height="400"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <span class="person__initials" aria-hidden="true">{initialsOf(person.name)}</span>
-              )}
-            </div>
-            <div class="person__body">
-              <h4>{person.name}</h4>
-              <p class="person__role">{person.role}</p>
-              <p class="person__bio">{person.bio}</p>
-              {person.links.length > 0 && (
-                <ul class="person__links">
-                  {person.links.map((link) => (
-                    <li>
-                      <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
-                        {link.label}
-                        <span class="person__external" aria-hidden="true">↗</span>
-                        <span class="visually-hidden">(opens in a new tab)</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
+      <div class="person__body">
+        <h3>{person.name}</h3>
+        <p class="person__role">{person.role}</p>
+        <p class="person__bio">{person.bio}</p>
+        {person.links.length > 0 && (
+          <ul class="person__links" role="list">
+            {person.links.map((link) => (
+              <li>
+                <a href={link.url} rel="noopener noreferrer nofollow" target="_blank">
+                  {link.label}
+                  <span class="person__external" aria-hidden="true">↗</span>
+                  <span class="visually-hidden">(opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </li>
   ))}
-</div>
+</ul>
 
 <style>
-  .leadership {
-    display: grid;
-    gap: clamp(2.5rem, 5vw, 4.25rem);
-  }
-
-  .leadership__tier-head {
-    display: grid;
-    margin-bottom: var(--space-5);
-    padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--color-line);
-    gap: 0.3rem;
-  }
-
-  .leadership__tier-head h3 {
-    margin: 0;
-    font-size: var(--step-1);
-  }
-
-  .leadership__tier-head p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
   .leadership__grid {
     display: grid;
     margin: 0;
     padding: 0;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: clamp(1.25rem, 2.5vw, 2rem);
     list-style: none;
   }
@@ -165,7 +114,7 @@ const initialsOf = (name: string) =>
     gap: 0.3rem;
   }
 
-  .person__body h4 {
+  .person__body h3 {
     margin: 0;
     font-size: var(--step-0);
   }

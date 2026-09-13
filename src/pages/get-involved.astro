@@ -169,7 +169,6 @@ const pathways = [
   .pathways article,
   .pathways aside {
     display: flex;
-    min-height: 20rem;
     padding: clamp(1.4rem, 4vw, 2.5rem);
     flex-direction: column;
     align-items: flex-start;
@@ -183,7 +182,7 @@ const pathways = [
   }
 
   .pathways__index {
-    margin-bottom: auto;
+    margin-bottom: var(--space-5);
     color: var(--color-teal);
     font-size: 0.78rem;
     font-weight: var(--weight-black);
@@ -191,7 +190,7 @@ const pathways = [
 
   .pathways h3 { max-width: var(--measure-heading); margin-top: var(--space-3); }
   .pathways article > p:not(.eyebrow) { color: var(--color-muted); }
-  .pathways .text-link { margin-top: auto; }
+  .pathways .text-link { margin-top: var(--space-3); }
 
   .pathways details {
     width: 100%;

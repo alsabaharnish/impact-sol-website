@@ -37,9 +37,23 @@ const faqs = [
     eyebrow="Contact"
     title="Tell us what you are trying to move forward."
     intro="Use this route for general questions, website feedback, media enquiries or anything that does not fit the partnership and maker forms."
+    compact
   />
 
-  <section class="section">
+  <section class="section section--tint" id="general-enquiry" tabindex="-1">
+    <div class="shell">
+      <InquiryForm
+        inquiryType="general"
+        title="Send a general enquiry"
+        intro="Give us a short, non-sensitive summary and tell us what kind of response would be useful."
+        messageLabel="Your message"
+        submitLabel="Send enquiry"
+        includeOrganisation
+      />
+    </div>
+  </section>
+
+  <section class="section section--compact">
     <div class="shell contact-options">
       <div>
         <p class="eyebrow">Direct route</p>
@@ -56,21 +70,6 @@ const faqs = [
         <div><dt>Phone, visits and social accounts</dt><dd>No monitored phone or WhatsApp number, public-visit address, or verified social profile is published in this build.</dd></div>
         <div><dt>Urgent or emergency matters</dt><dd>This website does not provide an emergency, safeguarding or crisis-response service.</dd></div>
       </dl>
-    </div>
-  </section>
-
-  <section class="section section--tint" id="general-enquiry" tabindex="-1">
-    <div class="shell">
-      <InquiryForm
-        inquiryType="general"
-        title="Send a general enquiry"
-        intro="Give us a short, non-sensitive summary and tell us what kind of response would be useful."
-        messageLabel="Your message"
-        submitLabel="Send enquiry"
-        includeOrganisation
-        includePhone
-        includeCountry
-      />
     </div>
   </section>
 

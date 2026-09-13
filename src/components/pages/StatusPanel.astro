@@ -23,18 +23,16 @@ const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
     padding: clamp(1.4rem, 3vw, 2rem);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-large);
-    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
-    box-shadow: var(--shadow-soft);
+    background: color-mix(in srgb, var(--color-surface) 78%, transparent);
   }
 
   .status-panel::after {
     position: absolute;
-    right: -3rem;
-    bottom: -3rem;
-    width: 8rem;
-    height: 8rem;
-    border: 1px solid color-mix(in srgb, var(--color-teal) 24%, transparent);
-    border-radius: 50%;
+    top: 0;
+    left: clamp(1.4rem, 3vw, 2rem);
+    width: 3.75rem;
+    height: 3px;
+    background: var(--color-sun);
     content: '';
   }
 
@@ -45,9 +43,8 @@ const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
     gap: 0.55rem;
     color: var(--color-forest);
     font-size: 0.76rem;
-    font-weight: var(--weight-black);
+    font-weight: var(--weight-semibold);
     letter-spacing: var(--tracking-caps);
-    text-transform: uppercase;
   }
 
   .status-panel__label span {
@@ -60,7 +57,9 @@ const { label = 'Current status', title, text, tone = 'light' } = Astro.props;
   .status-panel h2 {
     max-width: 18ch;
     margin: 0;
+    font-family: var(--font-display);
     font-size: var(--step-2);
+    font-weight: 600;
     letter-spacing: var(--tracking-snug);
   }
 

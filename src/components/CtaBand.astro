@@ -15,37 +15,53 @@ const { eyebrow, title, text, href, label, secondaryHref, secondaryLabel } = Ast
 <section class="cta-band">
   <div class="shell cta-band__inner">
     <div>
-      {eyebrow && <p class="eyebrow eyebrow--light">{eyebrow}</p>}
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h2>{title}</h2>
       <p>{text}</p>
     </div>
     <div class="button-row">
-      <a class="button button--sun" href={href}>{label}</a>
-      {secondaryHref && secondaryLabel && <a class="text-link text-link--light" href={secondaryHref}>{secondaryLabel}<span aria-hidden="true">→</span></a>}
+      <a class="button" href={href}>{label}</a>
+      {secondaryHref && secondaryLabel && <a class="text-link" href={secondaryHref}>{secondaryLabel}<span aria-hidden="true">→</span></a>}
     </div>
   </div>
 </section>
 
 <style>
   .cta-band {
-    padding: clamp(3rem, 7vw, 6rem) 0;
-    color: var(--color-paper);
-    background:
-      radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-teal) 75%, transparent), transparent 38%),
-      var(--color-forest);
+    padding: clamp(2rem, 5vw, 4rem) 0 clamp(3rem, 7vw, 6rem);
+    color: var(--color-ink);
+    background: var(--color-paper);
   }
 
   .cta-band__inner {
+    position: relative;
     display: grid;
+    padding: clamp(2rem, 5vw, 4rem);
     grid-template-columns: minmax(0, 1.3fr) auto;
     align-items: end;
     gap: clamp(2rem, 7vw, 8rem);
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background:
+      radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--color-sun-soft) 46%, transparent), transparent 18rem),
+      color-mix(in srgb, var(--color-mint-soft) 62%, var(--color-surface));
+    border-radius: var(--radius-lg);
+  }
+
+  .cta-band__inner::before {
+    position: absolute;
+    top: 0;
+    left: clamp(2rem, 5vw, 4rem);
+    width: clamp(3.5rem, 8vw, 6rem);
+    height: 3px;
+    background: var(--color-sun);
+    content: '';
   }
 
   h2 {
     max-width: 18ch;
     margin: 0;
-    color: inherit;
+    color: var(--color-ink);
     font-size: var(--step-4);
     letter-spacing: var(--tracking-heading);
     line-height: var(--leading-display);
@@ -55,7 +71,7 @@ const { eyebrow, title, text, href, label, secondaryHref, secondaryLabel } = Ast
   p:not(.eyebrow) {
     max-width: 44rem;
     margin-top: var(--space-4);
-    color: var(--color-paper-muted);
+    color: var(--color-ink-soft);
   }
 
   .button-row {
@@ -70,6 +86,10 @@ const { eyebrow, title, text, href, label, secondaryHref, secondaryLabel } = Ast
 
     .button-row {
       justify-content: flex-start;
+    }
+
+    .button-row :global(.button) {
+      width: auto;
     }
   }
 </style>

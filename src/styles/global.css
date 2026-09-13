@@ -9,29 +9,29 @@
    because every step below is a standard weight. Run `npm run fonts`. */
 
 :root {
-  /* Palette — unchanged brand values */
-  --color-ink: #10201c;
-  --color-ink-soft: #304a42;
-  --color-muted: #5d716a;
-  --color-forest: #123c34;
-  --color-forest-bright: #1d6a55;
-  --color-teal: #1f6f78;
-  --color-paper: #fbfaf4;
-  --color-paper-muted: #e7eee9;
-  --color-surface: #ffffff;
-  --color-mint: #bde7d2;
-  --color-mint-soft: #e8f3ed;
-  --color-sun: #f2b441;
-  --color-sun-soft: #ffd47a;
-  --color-sun-deep: #9a5d00;
+  /* Quiet ecological palette — warm, low-glare and deliberately restrained. */
+  --color-ink: #17231f;
+  --color-ink-soft: #40514b;
+  --color-muted: #5b6b65;
+  --color-forest: #183e34;
+  --color-forest-bright: #255a4b;
+  --color-teal: #3f7065;
+  --color-paper: #f7f5ef;
+  --color-paper-muted: #edf1ec;
+  --color-surface: #fffefa;
+  --color-mint: #b8ccbe;
+  --color-mint-soft: #e8eee8;
+  --color-sun: #d8aa52;
+  --color-sun-soft: #f2dcae;
+  --color-sun-deep: #7b5517;
   --color-error: #a72d2d;
   --color-success: #176448;
 
   /* Lines. `line` is a hairline for grouping; `line-strong` draws
      interactive borders and clears 3:1 against white for SC 1.4.11. */
-  --color-line: #cfddd5;
-  --color-line-strong: #6d8880;
-  --color-line-hover: #4b6a61;
+  --color-line: #d5ddd6;
+  --color-line-strong: #71857b;
+  --color-line-hover: #4f675d;
 
   /* Tinted surfaces for status treatments */
   --color-error-surface: #fdf3f2;
@@ -45,6 +45,9 @@
   --font-sans:
     "Inter var", Inter, "Noto Sans Bengali", "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+  --font-display:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino,
+    "Noto Serif Bengali", Georgia, serif;
 
   /* Five real steps. Standard values so the hierarchy survives intact
      in every fallback face instead of collapsing to regular + bold. */
@@ -55,32 +58,32 @@
   --weight-black: 800;
 
   /* Tracking scales with size: display tightens, small caps open up. */
-  --tracking-display: -0.032em;
-  --tracking-heading: -0.022em;
-  --tracking-snug: -0.012em;
-  --tracking-caps: 0.09em;
+  --tracking-display: -0.026em;
+  --tracking-heading: -0.016em;
+  --tracking-snug: -0.008em;
+  --tracking-caps: 0.055em;
 
   /* Leading by role, not one value for every heading. */
-  --leading-display: 1.03;
-  --leading-heading: 1.14;
+  --leading-display: 1.04;
+  --leading-heading: 1.18;
   --leading-snug: 1.32;
-  --leading-body: 1.6;
+  --leading-body: 1.65;
   --leading-relaxed: 1.68;
 
   --step--1: clamp(0.78rem, 0.76rem + 0.08vw, 0.84rem);
-  --step-0: clamp(1rem, 0.96rem + 0.18vw, 1.1rem);
-  --step-1: clamp(1.2rem, 1.1rem + 0.42vw, 1.48rem);
-  --step-2: clamp(1.48rem, 1.26rem + 0.92vw, 2.08rem);
-  --step-3: clamp(1.85rem, 1.48rem + 1.45vw, 2.8rem);
-  --step-4: clamp(2.25rem, 1.72rem + 2.15vw, 3.7rem);
-  --step-5: clamp(2.7rem, 1.9rem + 3.15vw, 4.9rem);
-  --step-6: clamp(3.15rem, 2.05rem + 4.55vw, 6.25rem);
+  --step-0: clamp(1rem, 0.97rem + 0.14vw, 1.075rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.32vw, 1.34rem);
+  --step-2: clamp(1.42rem, 1.27rem + 0.66vw, 1.84rem);
+  --step-3: clamp(1.78rem, 1.52rem + 1.12vw, 2.48rem);
+  --step-4: clamp(2.16rem, 1.78rem + 1.7vw, 3.2rem);
+  --step-5: clamp(2.6rem, 2.05rem + 2.35vw, 4.05rem);
+  --step-6: clamp(3rem, 2.25rem + 3.15vw, 4.85rem);
 
   /* Measure */
   --shell: 76rem;
   --reading: 44rem;
-  --measure-body: 68ch;
-  --measure-display: 17ch;
+  --measure-body: 64ch;
+  --measure-display: 13ch;
   --measure-heading: 22ch;
   --gutter: clamp(1.1rem, 0.45rem + 2.8vw, 3.75rem);
 
@@ -95,27 +98,27 @@
   --space-8: 5.5rem;
 
   /* Radius — cards land in the 12–16px band, pills stay for controls */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.25rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
   --radius-pill: 999px;
   --radius-small: var(--radius-sm);
   --radius-medium: var(--radius-md);
   --radius-large: var(--radius-lg);
 
   /* Elevation — every level carries offset and blur */
-  --shadow-xs: 0 1px 2px rgb(16 32 28 / 6%);
-  --shadow-sm: 0 2px 4px rgb(16 32 28 / 4%), 0 6px 16px -6px rgb(16 32 28 / 10%);
-  --shadow-md: 0 4px 8px rgb(16 32 28 / 5%), 0 16px 32px -12px rgb(16 32 28 / 13%);
-  --shadow-lg: 0 8px 16px rgb(16 32 28 / 6%), 0 32px 64px -20px rgb(16 32 28 / 18%);
+  --shadow-xs: 0 1px 2px rgb(23 35 31 / 4%);
+  --shadow-sm: 0 8px 24px -16px rgb(23 35 31 / 20%);
+  --shadow-md: 0 14px 36px -22px rgb(23 35 31 / 24%);
+  --shadow-lg: 0 22px 54px -28px rgb(23 35 31 / 30%);
   --shadow-soft: var(--shadow-sm);
 
   /* Motion — one curve, three durations */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 120ms;
-  --duration-base: 180ms;
-  --duration-slow: 320ms;
+  --duration-fast: 140ms;
+  --duration-base: 200ms;
+  --duration-slow: 360ms;
 
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -187,7 +190,7 @@ button:disabled {
 a {
   color: var(--color-forest-bright);
   text-decoration-thickness: from-font;
-  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-decoration-color: currentColor;
   text-underline-offset: 0.19em;
   transition:
     color var(--duration-fast) var(--ease-out),
@@ -206,7 +209,7 @@ a:hover {
   box-shadow: 0 0 0 1px var(--color-sun-soft);
 }
 
-:where(.section--dark, .site-footer, .card--dark, .cta-band, .stage-band)
+:where(.section--dark, .site-footer, .card--dark, .principle-section__inner, .product-feature__inner)
   :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline-color: var(--color-sun);
   box-shadow: 0 0 0 1px var(--color-forest);
@@ -227,14 +230,19 @@ h2,
 h3,
 h4 {
   color: var(--color-ink);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-heading);
   line-height: var(--leading-heading);
   text-wrap: balance;
 }
 
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
 h1 {
-  font-weight: var(--weight-black);
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
 }
@@ -295,11 +303,11 @@ main:focus {
 }
 
 .section {
-  padding-block: clamp(4rem, 8vw, 8rem);
+  padding-block: clamp(3.5rem, 7vw, 6.5rem);
 }
 
 .section--compact {
-  padding-block: clamp(2.8rem, 5vw, 4.75rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
 }
 
 .section--surface {
@@ -308,7 +316,7 @@ main:focus {
 
 .section--mint,
 .section--tint {
-  background: var(--color-mint-soft);
+  background: color-mix(in srgb, var(--color-mint-soft) 72%, var(--color-paper));
 }
 
 .section--bordered {
@@ -359,12 +367,11 @@ main:focus {
 .section-kicker,
 .eyebrow {
   margin-bottom: var(--space-2);
-  color: color-mix(in srgb, currentcolor 66%, transparent);
+  color: var(--color-forest-bright);
   font-size: var(--step--1);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-caps);
   line-height: var(--leading-snug);
-  text-transform: uppercase;
 }
 
 .eyebrow--light {
@@ -453,7 +460,7 @@ main:focus {
   border: 1.5px solid var(--color-forest);
   color: var(--color-paper);
   background: var(--color-forest);
-  border-radius: var(--radius-pill);
+  border-radius: 0.75rem;
   box-shadow: var(--shadow-xs);
   font-size: 0.94rem;
   font-weight: var(--weight-bold);
@@ -566,7 +573,7 @@ main:focus {
   gap: 0.45rem;
   color: var(--color-forest);
   font-weight: var(--weight-semibold);
-  text-decoration-color: color-mix(in srgb, currentColor 32%, transparent);
+  text-decoration-color: currentColor;
 }
 
 .text-link span {
@@ -603,7 +610,7 @@ main:focus {
 .pathway-card:has(a:hover) {
   border-color: color-mix(in srgb, var(--color-forest) 34%, var(--color-line));
   box-shadow: var(--shadow-sm);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .card--soft {
@@ -1295,8 +1302,14 @@ tbody th {
   }
 
   .button[data-loading="true"]::after {
-    animation-duration: 900ms !important;
-    animation-iteration-count: infinite !important;
+    border-color: color-mix(in srgb, var(--color-paper) 36%, transparent) !important;
+    border-top-color: var(--color-paper) !important;
+    animation: none !important;
+  }
+
+  .button--sun[data-loading="true"]::after {
+    border-color: color-mix(in srgb, var(--color-ink) 36%, transparent) !important;
+    border-top-color: var(--color-ink) !important;
   }
 }
 

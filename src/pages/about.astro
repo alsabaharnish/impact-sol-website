@@ -93,7 +93,7 @@ const hasPartners = partners.length > 0;
           organisation with written permission to use its name.
         </p>
       </div>
-      <ul class="link-list">
+      <ul class="link-list" role="list">
         <li>
           <a href="/about/leadership/">
             <span>
@@ -159,7 +159,7 @@ const hasPartners = partners.length > 0;
         <h2 id="principles-title">Principles before promises.</h2>
         <p>These are working commitments for how ideas should be selected, developed and communicated.</p>
       </div>
-      <ol class="principle-grid">
+      <ol class="principle-grid" role="list">
         <li>
           <span>01</span>
           <h3>Start with people and context</h3>
@@ -241,22 +241,20 @@ const hasPartners = partners.length > 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin: var(--space-7) 0 0;
     padding: 0;
-    border-top: 1px solid var(--color-line);
-    border-left: 1px solid var(--color-line);
+    gap: var(--space-4);
     list-style: none;
   }
 
   .principle-grid li {
-    min-height: 18rem;
     padding: clamp(1.4rem, 4vw, 2.5rem);
-    border-right: 1px solid var(--color-line);
-    border-bottom: 1px solid var(--color-line);
+    border: 1px solid var(--color-line);
     background: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    border-radius: var(--radius-md);
   }
 
   .principle-grid span {
     display: block;
-    margin-bottom: clamp(2rem, 5vw, 4.5rem);
+    margin-bottom: var(--space-5);
     color: var(--color-teal);
     font-size: 0.82rem;
     font-weight: var(--weight-black);
@@ -313,7 +311,6 @@ const hasPartners = partners.length > 0;
   }
 
   .direction-grid article {
-    min-height: 18rem;
     padding: clamp(1.4rem, 3vw, 2.2rem);
     border: 1px solid var(--color-line);
     background: var(--color-surface);
@@ -335,7 +332,7 @@ const hasPartners = partners.length > 0;
   }
 
   .direction-grid p {
-    margin-top: clamp(3rem, 7vw, 6rem);
+    margin-top: var(--space-6);
     font-size: var(--step-1);
   }
 

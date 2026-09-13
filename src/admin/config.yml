@@ -166,7 +166,7 @@ collections:
         options:
           - { label: Register interest, value: register-interest }
           - { label: Learn more, value: learn-more }
-      - { label: Product URL, name: productUrl, widget: string, required: false }
+      - { label: Product URL, name: productUrl, widget: string, required: false, pattern: ['^$|^https?://.+$', 'Leave empty, or use a complete http:// or https:// URL.'] }
       - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
 
   - name: faqs
@@ -217,7 +217,7 @@ collections:
           - { label: Bangla-ready structure, name: banglaReady, widget: boolean, default: true }
           - { label: Provisional contact email, name: contactEmailFallback, widget: string }
           - { label: Contact email note, name: contactEmailNote, widget: text }
-          - { label: Approved public domain, name: approvedDomain, widget: string, required: false }
+          - { label: Approved public domain, name: approvedDomain, widget: string, required: false, pattern: ['^$|^https://[^/?#]+/?$', 'Leave empty, or use a public HTTPS origin without a path, query or fragment.'] }
           - { label: Evidence or approval reference, name: evidenceReference, widget: string, required: false, hint: 'Required for operating status or an approved domain.' }
           - label: Approved social links
             name: socialLinks
@@ -226,7 +226,7 @@ collections:
             default: []
             fields:
               - { label: Label, name: label, widget: string }
-              - { label: URL, name: url, widget: string }
+              - { label: URL, name: url, widget: string, pattern: ['^https?://.+$', 'Use a complete http:// or https:// URL.'] }
 
   - name: people
     label: Leadership and advisors
@@ -275,7 +275,7 @@ collections:
         max: 3
         fields:
           - { label: Label, name: label, widget: string }
-          - { label: URL, name: url, widget: string }
+          - { label: URL, name: url, widget: string, pattern: ['^https?://.+$', 'Use a complete http:// or https:// URL.'] }
       - label: Publication status
         name: publicationStatus
         widget: select
@@ -318,7 +318,7 @@ collections:
         fields:
           - { label: Image, name: path, widget: image, required: false, choose_url: false, hint: 'Upload the logo file from your computer rather than linking to it elsewhere.' }
           - { label: Alternative text, name: alt, widget: string, required: false, pattern: ['^$|^.{5,240}$', 'Leave empty, or use at least 5 characters.'], hint: 'REQUIRED whenever a logo is uploaded above.' }
-      - { label: Website, name: url, widget: string, required: false }
+      - { label: Website, name: url, widget: string, required: false, pattern: ['^$|^https?://.+$', 'Leave empty, or use a complete http:// or https:// URL.'] }
       - { label: Permission reference, name: permissionReference, widget: string, pattern: ['^[\s\S]{3,500}$', 'Use at least 3 characters.'], hint: 'Required. The written name and logo permission on record for this organisation.' }
       - { label: Sort order, name: sortOrder, widget: number, value_type: int, min: 1, max: 99 }
 

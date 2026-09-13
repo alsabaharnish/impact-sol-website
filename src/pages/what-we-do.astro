@@ -49,7 +49,7 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
             <div>
               <p class="eyebrow">{offering.status}</p>
               <h3>{offering.title}</h3>
-              <ul class="audience-list" aria-label={`Intended for ${offering.title}`}>
+              <ul class="audience-list" aria-label={`Intended for ${offering.title}`} role="list">
                 {offering.intendedFor.map((audience) => <li>{audience}</li>)}
               </ul>
             </div>
@@ -95,7 +95,7 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
         <h2 id="process-title">Small enough to learn. Clear enough to question.</h2>
         <p>This is the intended development rhythm. A project may stop at any stage if the need, safety case or value is not strong enough.</p>
       </div>
-      <ol>
+      <ol role="list">
         <li><span>Listen</span><p>Understand the context, constraints and people affected before settling on a solution.</p></li>
         <li><span>Frame</span><p>Agree the problem, intended outcome, risks and what would count as useful evidence.</p></li>
         <li><span>Prototype</span><p>Create the smallest responsible version that can answer an important question.</p></li>
@@ -111,7 +111,7 @@ const [offerings, faqs] = await Promise.all([getOfferings(), getFaqs('work')]);
         <p class="eyebrow">Decision guardrails</p>
         <h2 id="guardrails-title">What every piece of work should make clear.</h2>
       </div>
-      <ul>
+      <ul role="list">
         <li><strong>The need</strong><span>Whose problem is being addressed, and how do we know it matters?</span></li>
         <li><strong>The role</strong><span>What can a digital product or partnership reasonably contribute?</span></li>
         <li><strong>The power</strong><span>Who can decide, participate, challenge and leave?</span></li>

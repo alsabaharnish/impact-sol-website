@@ -1,13 +1,21 @@
 import globalSettings from '../content/global/site.json';
 
+const configuredContactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL?.trim();
+if (
+  configuredContactEmail &&
+  (configuredContactEmail.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(configuredContactEmail))
+) {
+  throw new Error('PUBLIC_CONTACT_EMAIL must be a valid email address.');
+}
+
 export const siteConfig = {
   name: globalSettings.workingName,
   shortName: globalSettings.shortName,
   locale: globalSettings.launchLocale,
   defaultDescription:
     'Impact Sol. is building practical products and partnerships for eco-conscious enterprise and a greener, more inclusive economy.',
-  contactEmail:
-    import.meta.env.PUBLIC_CONTACT_EMAIL?.trim() || globalSettings.contactEmailFallback,
+  contactEmail: configuredContactEmail || globalSettings.contactEmailFallback,
   status: globalSettings.status === 'being-established' ? 'Being established' : 'Operating',
   statusDisclosure: globalSettings.statusDisclosure,
   banglaReady: globalSettings.banglaReady,
@@ -44,15 +52,6 @@ export const primaryNavigation: readonly NavItem[] = [
     ],
   },
   { href: '/impact/', label: 'Purpose & approach' },
-  {
-    href: '/get-involved/',
-    label: 'Get involved',
-    children: [
-      { href: '/get-involved/', label: 'Choose a pathway' },
-      { href: '/get-involved/partnership/', label: 'Propose a partnership' },
-      { href: '/get-involved/maker/', label: 'Register maker or initiative interest' },
-    ],
-  },
   { href: '/contact/', label: 'Contact' },
 ];
 

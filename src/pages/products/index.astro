@@ -117,11 +117,12 @@ const faqs = [
 
   .product-feature__visual {
     position: relative;
-    min-height: min(34rem, 70vw);
+    min-height: min(30rem, 66vw);
     overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-paper) 12%, transparent);
     border-radius: var(--radius-large);
     background:
-      radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--color-sun) 30%, transparent), transparent 22%),
+      radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--color-sun) 20%, transparent), transparent 24%),
       var(--color-forest);
   }
 
@@ -156,11 +157,11 @@ const faqs = [
     position: absolute;
     padding: 0.55rem 0.8rem;
     border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
-    border-radius: 999px;
+    border-radius: 0.7rem;
     color: var(--color-paper);
     background: color-mix(in srgb, var(--color-forest) 84%, transparent);
     font-size: 0.78rem;
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
   }
 
   .node--makers { top: 17%; left: 12%; }
@@ -228,7 +229,7 @@ const faqs = [
     }
 
     .product-feature__visual {
-      min-height: 28rem;
+      min-height: 24rem;
     }
   }
 

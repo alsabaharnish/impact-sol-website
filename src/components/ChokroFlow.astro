@@ -1,4 +1,4 @@
-<figure class="chokro-flow" aria-labelledby="chokro-flow-title chokro-flow-caption">
+<figure class="chokro-flow" aria-labelledby="chokro-flow-title" aria-describedby="chokro-flow-caption">
   <div class="chokro-flow__head">
     <img src="/assets/brand/chokro-app-icon.svg" width="72" height="72" alt="" />
     <div>
@@ -6,7 +6,7 @@
       <strong id="chokro-flow-title">One cycle, multiple actions</strong>
     </div>
   </div>
-  <ol>
+  <ol role="list">
     <li>
       <span class="chokro-flow__icon" aria-hidden="true">↗</span>
       <div><strong>Take an eco-action</strong><small>Follow the relevant evidence path</small></div>
@@ -31,10 +31,11 @@
     padding: clamp(1.25rem, 3vw, 2rem);
     color: #f7faf8;
     background:
-      radial-gradient(circle at 88% 4%, rgb(255 255 255 / 10%), transparent 32%),
-      linear-gradient(145deg, #087f5b, #006c4c 62%, #075e68);
+      radial-gradient(circle at 88% 4%, rgb(255 255 255 / 8%), transparent 32%),
+      color-mix(in srgb, var(--color-forest) 84%, #315f52);
+    border: 1px solid rgb(255 255 255 / 14%);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 18px 42px -28px rgb(0 0 0 / 58%);
   }
 
   .chokro-flow__head {
@@ -54,7 +55,7 @@
 
   .chokro-flow__head p {
     margin: 0 0 0.25rem;
-    color: #d8fff0;
+    color: var(--color-mint);
     font-size: 0.7rem;
     font-weight: var(--weight-black);
     letter-spacing: var(--tracking-caps);
@@ -63,7 +64,9 @@
 
   .chokro-flow__head strong {
     display: block;
+    font-family: var(--font-display);
     font-size: var(--step-1);
+    font-weight: 600;
     line-height: 1.15;
   }
 
@@ -91,8 +94,8 @@
     width: 2.4rem;
     height: 2.4rem;
     place-items: center;
-    color: #006c4c;
-    background: #d8fff0;
+    color: var(--color-forest);
+    background: color-mix(in srgb, var(--color-mint) 82%, white);
     border-radius: 50%;
     font-weight: var(--weight-black);
   }
@@ -108,15 +111,43 @@
 
   li small {
     margin-top: 0.2rem;
-    color: #d8eee6;
+    color: var(--color-paper-muted);
     font-size: 0.77rem;
     line-height: 1.45;
   }
 
   figcaption {
     margin-top: var(--space-4);
-    color: #d8eee6;
+    color: var(--color-paper-muted);
     font-size: 0.72rem;
     line-height: 1.5;
+  }
+
+  @media (max-width: 28rem) {
+    .chokro-flow {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+    }
+
+    .chokro-flow__head {
+      padding-bottom: var(--space-4);
+      gap: 0.75rem;
+    }
+
+    .chokro-flow__head img {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 0.8rem;
+    }
+
+    li {
+      padding-block: 1rem;
+      gap: 0.7rem;
+    }
+
+    .chokro-flow__icon {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
   }
 </style>

@@ -277,9 +277,9 @@ const currentStatus =
   }
 
   .problem-layout h2, .epr-layout h2, .stage-map h2, .alignment-layout h2, .release-grid h2 { max-width: var(--measure-heading); font-size: var(--step-4); }
-  .problem-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--color-line); border-left: 1px solid var(--color-line); }
-  .problem-cards article { min-height: 22rem; padding: clamp(1.4rem, 3vw, 2.2rem); border-right: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
-  .problem-cards span { display: block; margin-bottom: clamp(4rem, 8vw, 7rem); color: var(--color-teal); font-size: 0.74rem; font-weight: var(--weight-black); }
+  .problem-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+  .problem-cards article { padding: clamp(1.4rem, 3vw, 2.2rem); border: 1px solid var(--color-line); background: var(--color-surface); border-radius: var(--radius-md); }
+  .problem-cards span { display: block; margin-bottom: var(--space-6); color: var(--color-teal); font-size: 0.74rem; font-weight: var(--weight-semibold); }
   .problem-cards h3 { font-size: var(--step-1); }
   .problem-cards p { color: var(--color-muted); }
 
@@ -345,7 +345,6 @@ const currentStatus =
   @media (max-width: 40rem) {
     .status-strip > div, .problem-cards, .roles-grid { grid-template-columns: 1fr; }
     .status-strip > div { gap: 0.4rem; }
-    .problem-cards article { min-height: 18rem; }
     .product-status dl div { grid-template-columns: 1fr; gap: 0.2rem; }
   }
 </style>

@@ -12,7 +12,7 @@ const { items } = Astro.props;
 ---
 
 <nav class="breadcrumbs shell" aria-label="Breadcrumb">
-  <ol>
+  <ol role="list">
     <li><a href="/">Home</a></li>
     {
       items.map((item, index) => (

@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isPublicProductionOrigin } from '../src/lib/site-origin.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = join(projectRoot, 'dist');
@@ -28,6 +29,8 @@ const requiredPages = [
   '404.html',
   '500.html',
   'maintenance/index.html',
+  'admin/index.html',
+  'admin/config.yml',
   'assets/brand/impact-sol-social-card.png',
   'robots.txt',
   'sitemap.xml',
@@ -80,11 +83,24 @@ for (const file of htmlFiles) {
   const description = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/iu)?.[1]?.trim();
   const h1Count = (html.match(/<h1(?:\s|>)/giu) ?? []).length;
   const canonicalCount = (html.match(/<link\s+rel=["']canonical["']/giu) ?? []).length;
+  const allIds = [...html.matchAll(/\sid=["']([^"']+)["']/giu)].map((match) => match[1]);
+  const currentIds = new Set(allIds);
+  const duplicateIds = [...new Set(allIds.filter((id, index) => allIds.indexOf(id) !== index))];
 
   if (!title) errors.push(`${relative}: missing page title`);
   if (!description) errors.push(`${relative}: missing meta description`);
   if (h1Count !== 1) errors.push(`${relative}: expected one h1, found ${h1Count}`);
   if (canonicalCount !== 1) errors.push(`${relative}: expected one canonical link, found ${canonicalCount}`);
+  for (const id of duplicateIds) errors.push(`${relative}: duplicate id ${id}`);
+  for (const match of html.matchAll(
+    /\s(aria-(?:controls|describedby|labelledby))=["']([^"']+)["']/giu,
+  )) {
+    for (const referencedId of match[2].trim().split(/\s+/u)) {
+      if (!currentIds.has(referencedId)) {
+        errors.push(`${relative}: ${match[1]} references missing id ${referencedId}`);
+      }
+    }
+  }
   if (title) {
     if (titles.has(title)) errors.push(`${relative}: duplicate title also used by ${titles.get(title)}`);
     titles.set(title, relative);
@@ -145,6 +161,33 @@ for (const [relative, expectedNames] of expectedForms) {
     if (!/<input\b(?=[^>]*\bname=["']companyWebsite["'])[^>]*>/iu.test(html)) {
       errors.push(`${relative}: ${formName} is missing its honeypot field`);
     }
+
+    const formHtml = html.match(
+      new RegExp(`<form\\b(?=[^>]*\\bname=["']${escapedName}["'])[^>]*>[\\s\\S]*?<\\/form>`, 'iu'),
+    )?.[0];
+    if (!formHtml) continue;
+
+    for (const control of formHtml.match(/<(?:input|select|textarea)\b[^>]*>/giu) ?? []) {
+      const name = attribute(control, 'name');
+      if (!name || name === 'companyWebsite' || attribute(control, 'type') === 'hidden') continue;
+
+      const escapedFieldName = name.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+      const errorTags = formHtml.match(
+        new RegExp(`<[^>]+\\bdata-error-for=["']${escapedFieldName}["'][^>]*>`, 'giu'),
+      ) ?? [];
+      if (errorTags.length !== 1) {
+        errors.push(
+          `${relative}: ${formName} field ${name} needs one static error element; found ${errorTags.length}`,
+        );
+        continue;
+      }
+
+      const errorId = attribute(errorTags[0], 'id');
+      const describedBy = (attribute(control, 'aria-describedby') ?? '').split(/\s+/u);
+      if (!errorId || !describedBy.includes(errorId)) {
+        errors.push(`${relative}: ${formName} field ${name} is not associated with its error element`);
+      }
+    }
   }
 }
 
@@ -158,8 +201,27 @@ for (const [file, html] of htmlByFile) {
   const currentIds = idsIn(html);
   for (const tag of html.match(/<a\b[^>]*>/giu) ?? []) {
     const href = attribute(tag, 'href');
-    if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) continue;
-    const parsed = new URL(href, 'https://build.invalid/');
+    if (!href) continue;
+    if (href.startsWith('//')) {
+      errors.push(`${relative}: protocol-relative external link ${href}`);
+      continue;
+    }
+
+    let parsed;
+    try {
+      parsed = new URL(href, 'https://build.invalid/');
+    } catch {
+      errors.push(`${relative}: invalid link ${href}`);
+      continue;
+    }
+
+    if (parsed.protocol === 'mailto:' || parsed.protocol === 'tel:') continue;
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      errors.push(`${relative}: unsafe link scheme in ${href}`);
+      continue;
+    }
+    if (parsed.origin !== 'https://build.invalid') continue;
+
     let targetFile = file;
     if (parsed.pathname !== '/') targetFile = destinationFile(parsed.pathname);
     else if (!href.startsWith('#')) targetFile = destinationFile('/');
@@ -185,6 +247,10 @@ for (const file of marketingFiles) {
   const lazyAssets = new Set();
   for (const tag of html.match(/<(?:script|link|img)\b[^>]*>/giu) ?? []) {
     const reference = attribute(tag, 'src') ?? attribute(tag, 'href');
+    if (reference?.startsWith('//')) {
+      errors.push(`${relative}: protocol-relative asset ${reference}`);
+      continue;
+    }
     if (!reference || !reference.startsWith('/')) continue;
     const asset = destinationFile(new URL(reference, 'https://build.invalid').pathname);
     if (!existsSync(asset) || extname(asset) === '.html') continue;
@@ -226,8 +292,39 @@ if (existsSync(scriptPath)) {
 const robots = existsSync(join(distRoot, 'robots.txt'))
   ? await readFile(join(distRoot, 'robots.txt'), 'utf8')
   : '';
-if (robots && !/Disallow:\s*\//u.test(robots)) {
-  errors.push('non-production robots.txt must block crawling');
+const homepage = htmlByFile.get(join(distRoot, 'index.html')) ?? '';
+const canonicalTag = homepage.match(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/iu)?.[0];
+const canonicalHref = canonicalTag ? attribute(canonicalTag, 'href') : null;
+let canonicalOrigin;
+try {
+  canonicalOrigin = canonicalHref ? new URL(canonicalHref) : null;
+} catch {
+  errors.push(`index.html: invalid canonical URL ${canonicalHref}`);
+}
+
+if (robots && canonicalOrigin) {
+  const lines = new Set(robots.split(/\r?\n/u).map((line) => line.trim()).filter(Boolean));
+  if (isPublicProductionOrigin(canonicalOrigin)) {
+    if (!lines.has('Allow: /')) errors.push('production robots.txt must allow public routes');
+    if (!lines.has('Disallow: /admin/')) errors.push('production robots.txt must block /admin/');
+    if (lines.has('Disallow: /')) errors.push('production robots.txt must not block the whole site');
+    if (!lines.has(`Sitemap: ${canonicalOrigin.origin}/sitemap.xml`)) {
+      errors.push('production robots.txt must advertise the canonical sitemap');
+    }
+  } else {
+    if (!lines.has('Disallow: /')) errors.push('non-production robots.txt must block crawling');
+    if ([...lines].some((line) => line.startsWith('Sitemap:'))) {
+      errors.push('non-production robots.txt must not advertise a sitemap');
+    }
+  }
+}
+
+const adminConfigPath = join(distRoot, 'admin', 'config.yml');
+if (existsSync(adminConfigPath)) {
+  const adminConfig = await readFile(adminConfigPath, 'utf8');
+  if (/^local_backend\s*:/mu.test(adminConfig)) {
+    errors.push('static admin/config.yml must not advertise Decap local_backend');
+  }
 }
 
 const imageExtensions = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif', '.gif']);

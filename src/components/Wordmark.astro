@@ -6,9 +6,7 @@ interface Props {
 const { inverse = false } = Astro.props;
 ---
 
-<span class:list={['wordmark', { 'wordmark--inverse': inverse }]} aria-label="Impact Sol.">
-  <span aria-hidden="true">impact&nbsp;sol<span class="wordmark__period">.</span></span>
-</span>
+<span class:list={['wordmark', { 'wordmark--inverse': inverse }]}>impact&nbsp;sol<span class="wordmark__period">.</span></span>
 
 <style>
   .wordmark {

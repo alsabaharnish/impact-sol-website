@@ -1,27 +1,36 @@
-<figure class="system-map" aria-labelledby="system-map-title system-map-caption">
+<figure
+  class="system-map"
+  data-system-map
+  aria-labelledby="system-map-title"
+  aria-describedby="system-map-caption"
+>
   <div class="system-map__canvas">
-    <div class="system-map__orbit system-map__orbit--outer" aria-hidden="true"></div>
-    <div class="system-map__orbit system-map__orbit--inner" aria-hidden="true"></div>
-    <div class="system-map__core">
-      <span>Impact Sol.</span>
-      <strong id="system-map-title">Useful change</strong>
-      <small>built with people</small>
+    <div class="system-map__scene">
+      <div class="system-map__orbit system-map__orbit--outer" aria-hidden="true"></div>
+      <div class="system-map__orbit system-map__orbit--inner" aria-hidden="true"></div>
+      <div class="system-map__core">
+        <span>Impact Sol.</span>
+        <strong id="system-map-title">Useful change</strong>
+        <small>built with people</small>
+      </div>
     </div>
-    <div class="system-map__node system-map__node--one">
-      <span aria-hidden="true">01</span>
-      Understand
-    </div>
-    <div class="system-map__node system-map__node--two">
-      <span aria-hidden="true">02</span>
-      Co-design
-    </div>
-    <div class="system-map__node system-map__node--three">
-      <span aria-hidden="true">03</span>
-      Implement
-    </div>
-    <div class="system-map__node system-map__node--four">
-      <span aria-hidden="true">04</span>
-      Improve
+    <div class="system-map__labels">
+      <div class="system-map__node system-map__node--one">
+        <span aria-hidden="true">01</span>
+        Understand
+      </div>
+      <div class="system-map__node system-map__node--two">
+        <span aria-hidden="true">02</span>
+        Co-design
+      </div>
+      <div class="system-map__node system-map__node--three">
+        <span aria-hidden="true">03</span>
+        Implement
+      </div>
+      <div class="system-map__node system-map__node--four">
+        <span aria-hidden="true">04</span>
+        Improve
+      </div>
     </div>
   </div>
   <figcaption id="system-map-caption">
@@ -39,39 +48,70 @@
     position: relative;
     min-height: clamp(23rem, 42vw, 34rem);
     isolation: isolate;
+    perspective: 84rem;
+    perspective-origin: 50% 44%;
+  }
+
+  .system-map__scene {
+    --light-x: 34%;
+    --light-y: 25%;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    position: absolute;
+    inset: 0;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transform-style: preserve-3d;
+    transition: transform 640ms var(--ease-out);
+  }
+
+  .system-map__scene.is-interacting {
+    transition-duration: 180ms;
+    will-change: transform;
   }
 
   .system-map__canvas::before {
     position: absolute;
-    inset: 5% 8%;
+    inset: 7% 10%;
     z-index: -2;
     background:
-      radial-gradient(circle at 52% 46%, rgb(242 180 65 / 22%), transparent 24%),
-      radial-gradient(circle at 50% 50%, var(--color-mint-soft), transparent 70%);
+      radial-gradient(circle at 51% 47%, color-mix(in srgb, var(--color-sun-soft) 30%, transparent), transparent 27%),
+      radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-mint-soft) 76%, transparent), transparent 72%);
     border-radius: 50%;
     content: '';
-    filter: blur(3px);
+    filter: blur(7px);
+    pointer-events: none;
+    transform: translateZ(-3rem);
   }
 
   .system-map__orbit {
     position: absolute;
     inset: 11%;
-    z-index: -1;
-    border: 1px solid color-mix(in srgb, var(--color-forest) 26%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-forest) 18%, transparent);
     border-radius: 50%;
-    transform: rotate(-12deg);
+    box-shadow: none;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .system-map__orbit--outer {
+    z-index: 0;
+    transform: translateZ(-0.55rem) rotateX(50deg) rotateZ(-12deg);
   }
 
   .system-map__orbit--outer::before,
   .system-map__orbit--outer::after {
     position: absolute;
-    width: 0.64rem;
-    height: 0.64rem;
+    width: 0.5rem;
+    height: 0.5rem;
     background: var(--color-sun);
-    border: 0.25rem solid var(--color-paper);
+    border: 0.16rem solid color-mix(in srgb, var(--color-paper) 82%, transparent);
     border-radius: 50%;
     box-sizing: content-box;
+    box-shadow:
+      0 0.25rem 0.7rem rgb(123 85 23 / 14%),
+      0 0 0 0.14rem color-mix(in srgb, var(--color-sun-soft) 22%, transparent);
     content: '';
+    transform: translateZ(0.2rem);
   }
 
   .system-map__orbit--outer::before {
@@ -86,45 +126,118 @@
 
   .system-map__orbit--inner {
     inset: 25%;
+    z-index: 1;
     border-style: dashed;
-    border-color: color-mix(in srgb, var(--color-teal) 33%, transparent);
-    transform: rotate(24deg);
+    border-color: color-mix(in srgb, var(--color-teal) 22%, transparent);
+    box-shadow: none;
+    transform: translateZ(-0.2rem) rotateX(58deg) rotateZ(24deg);
+  }
+
+  .system-map__orbit--inner::after {
+    position: absolute;
+    top: 10%;
+    left: 13%;
+    width: 0.4rem;
+    height: 0.4rem;
+    background: color-mix(in srgb, var(--color-mint) 72%, var(--color-surface));
+    border: 0.13rem solid color-mix(in srgb, var(--color-surface) 82%, transparent);
+    border-radius: 50%;
+    box-sizing: content-box;
+    box-shadow: 0 0.25rem 0.7rem rgb(24 62 52 / 13%);
+    content: '';
   }
 
   .system-map__core {
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 2;
     display: flex;
-    width: clamp(10.5rem, 18vw, 13.5rem);
+    width: clamp(10.25rem, 17vw, 12.5rem);
     aspect-ratio: 1;
     padding: 1rem;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: var(--color-paper);
-    background: var(--color-forest);
+    color: var(--color-forest);
+    border: 1px solid color-mix(in srgb, var(--color-forest) 18%, var(--color-sun-soft));
+    background:
+      radial-gradient(
+        circle at var(--light-x) var(--light-y),
+        rgb(255 254 250 / 34%) 0 4%,
+        rgb(255 254 250 / 10%) 13%,
+        transparent 27%
+      ),
+      radial-gradient(
+        circle at 38% 30%,
+        color-mix(in srgb, var(--color-sun-soft) 78%, var(--color-surface)) 0%,
+        color-mix(in srgb, var(--color-sun) 58%, var(--color-sun-soft)) 44%,
+        var(--color-sun) 76%,
+        color-mix(in srgb, var(--color-sun) 82%, var(--color-sun-deep)) 100%
+      );
     border-radius: 50%;
-    box-shadow: 0 2rem 4rem rgb(18 60 52 / 22%);
+    box-shadow:
+      inset 0.42rem 0.36rem 0.9rem rgb(255 254 250 / 18%),
+      inset -0.68rem -0.72rem 1.45rem rgb(123 85 23 / 10%),
+      0 1.1rem 2.35rem -1.2rem rgb(24 62 52 / 20%);
     text-align: center;
-    transform: translate(-50%, -50%);
+    backface-visibility: hidden;
+    transform: translate3d(-50%, -50%, 1.2rem);
+    transition:
+      box-shadow var(--duration-slow) var(--ease-out),
+      transform var(--duration-slow) var(--ease-out);
+    transform-style: preserve-3d;
+  }
+
+  .system-map__core::after {
+    position: absolute;
+    inset: -0.45rem;
+    border: 1px solid color-mix(in srgb, var(--color-forest) 13%, var(--color-sun-soft));
+    border-radius: 50%;
+    content: '';
+    box-shadow: 0 0 0 0.24rem color-mix(in srgb, var(--color-sun-soft) 18%, transparent);
+    pointer-events: none;
+    transform: translateZ(-0.2rem);
+  }
+
+  .system-map__core > * {
+    position: relative;
+    z-index: 1;
+    transform: translateZ(0.3rem);
   }
 
   .system-map__core span,
   .system-map__core small {
-    color: var(--color-mint);
     font-size: 0.7rem;
     font-weight: var(--weight-bold);
     letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
   }
 
+  .system-map__core span {
+    color: var(--color-forest);
+  }
+
+  .system-map__core small {
+    color: color-mix(in srgb, var(--color-forest) 82%, var(--color-sun-deep));
+  }
+
   .system-map__core strong {
     max-width: 7ch;
     margin-block: 0.5rem;
-    font-size: clamp(1.45rem, 1rem + 1.4vw, 2.2rem);
-    letter-spacing: var(--tracking-heading);
+    color: var(--color-forest);
+    font-family: var(--font-sans);
+    font-size: clamp(1.45rem, 1rem + 1.25vw, 2.1rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.025em;
     line-height: 1;
+  }
+
+  .system-map__labels {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .system-map__node {
@@ -134,16 +247,25 @@
     padding: 0.62rem 0.86rem;
     align-items: center;
     gap: 0.5rem;
-    border: 1px solid var(--color-line);
-    background: color-mix(in srgb, white 91%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-forest) 12%, var(--color-line));
+    color: var(--color-ink-soft);
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
     border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+      0 0.6rem 1.4rem -1.15rem rgb(24 62 52 / 20%);
     font-size: 0.84rem;
-    font-weight: var(--weight-bold);
-    backdrop-filter: blur(8px);
+    font-weight: var(--weight-semibold);
+    pointer-events: auto;
+    transition:
+      color var(--duration-base) var(--ease-out),
+      background-color var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
   }
 
   .system-map__node span {
+    display: inline-block;
     color: var(--color-forest-bright);
     font-size: 0.64rem;
     letter-spacing: var(--tracking-caps);
@@ -177,25 +299,79 @@
     text-align: center;
   }
 
+  @media (min-width: 28.01rem) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .system-map__core:hover {
+      box-shadow:
+        inset 0.42rem 0.36rem 0.9rem rgb(255 254 250 / 22%),
+        inset -0.68rem -0.72rem 1.45rem rgb(123 85 23 / 9%),
+        0 1.25rem 2.5rem -1.15rem rgb(24 62 52 / 22%);
+      transform: translate3d(-50%, -50%, 1.35rem) scale(1.008);
+    }
+
+    .system-map__node:hover {
+      border-color: color-mix(in srgb, var(--color-sun) 28%, var(--color-line));
+      color: var(--color-forest);
+      background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+      box-shadow:
+        0 0.7rem 1.5rem -1.1rem rgb(24 62 52 / 24%);
+      transform: translateY(-1px);
+    }
+
+    .system-map__node:hover span {
+      color: var(--color-sun-deep);
+      animation: none;
+    }
+  }
+
   @media (max-width: 28rem) {
+    .system-map__canvas {
+      min-height: 24rem;
+    }
+
+    .system-map__core {
+      width: 9.25rem;
+      transform: translate3d(-50%, -50%, 0.8rem);
+    }
+
     .system-map__node {
+      min-height: 40px;
       padding-inline: 0.65rem;
       font-size: 0.75rem;
     }
 
     .system-map__node--one {
-      left: 27%;
+      top: 3%;
+      left: 1%;
+    }
+
+    .system-map__node--two {
+      top: 3%;
+      right: 1%;
     }
 
     .system-map__node--three {
-      right: 8%;
+      right: 1%;
+      bottom: 3%;
+    }
+
+    .system-map__node--four {
+      bottom: 3%;
+      left: 1%;
     }
   }
 
   @media (prefers-reduced-transparency: reduce) {
     .system-map__node {
-      background: white;
-      backdrop-filter: none;
+      background: var(--color-surface);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .system-map__scene,
+    .system-map__core,
+    .system-map__node {
+      transition: none;
+    }
+  }
+
 </style>

@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  document.documentElement.classList.add('has-js');
+
   const emit = (name, context = {}) => {
     window.dispatchEvent(
       new CustomEvent('impact-sol:event', {
@@ -14,23 +16,26 @@
 
   const mobileMenu = document.querySelector('.mobile-nav');
   if (mobileMenu instanceof HTMLDetailsElement) {
-    mobileMenu.addEventListener('toggle', () => {
-      const summary = mobileMenu.querySelector('summary');
-      summary?.setAttribute(
-        'aria-label',
-        mobileMenu.open ? 'Close navigation' : 'Open navigation',
-      );
-    });
-
     mobileMenu.addEventListener('click', (event) => {
-      if (event.target instanceof HTMLAnchorElement) mobileMenu.open = false;
+      if (event.target instanceof Element && event.target.closest('a')) mobileMenu.open = false;
     });
 
     mobileMenu.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && mobileMenu.open) {
         mobileMenu.open = false;
         mobileMenu.querySelector('summary')?.focus();
       }
+    });
+
+    mobileMenu.addEventListener('focusout', (event) => {
+      if (mobileMenu.contains(event.relatedTarget)) return;
+      mobileMenu.open = false;
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!mobileMenu.open) return;
+      if (event.target instanceof Node && mobileMenu.contains(event.target)) return;
+      mobileMenu.open = false;
     });
   }
 
@@ -103,7 +108,7 @@
     // that opened it.
     group.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
-      if (group.dataset.open !== 'true' && !group.contains(document.activeElement)) return;
+      if (group.dataset.open !== 'true') return;
       setNavGroup(group, false);
       toggle.focus();
     });
@@ -175,6 +180,61 @@
     });
   }
 
+  /* The home-page system map responds to a precise pointer with restrained
+     parallax. Its fixed canvas keeps layout stable while the inner scene and
+     light source move; touch and reduced-motion experiences remain static. */
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const roomyViewport = window.matchMedia('(min-width: 28.01rem)');
+
+  for (const map of document.querySelectorAll('[data-system-map]')) {
+    const canvas = map.querySelector('.system-map__canvas');
+    const scene = map.querySelector('.system-map__scene');
+    if (!(canvas instanceof HTMLElement) || !(scene instanceof HTMLElement)) continue;
+
+    let animationFrame = 0;
+    let pointerX = 0.5;
+    let pointerY = 0.5;
+
+    const resetTilt = () => {
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      scene.classList.remove('is-interacting');
+      scene.style.removeProperty('--tilt-x');
+      scene.style.removeProperty('--tilt-y');
+      scene.style.removeProperty('--light-x');
+      scene.style.removeProperty('--light-y');
+    };
+
+    const updateTilt = (event) => {
+      if (reducedMotion.matches || !precisePointer.matches || !roomyViewport.matches) {
+        resetTilt();
+        return;
+      }
+
+      const bounds = canvas.getBoundingClientRect();
+      pointerX = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+      pointerY = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+      if (animationFrame) return;
+
+      animationFrame = window.requestAnimationFrame(() => {
+        scene.classList.add('is-interacting');
+        scene.style.setProperty('--tilt-x', `${(0.5 - pointerY) * 4}deg`);
+        scene.style.setProperty('--tilt-y', `${(pointerX - 0.5) * 6}deg`);
+        scene.style.setProperty('--light-x', `${31 + pointerX * 6}%`);
+        scene.style.setProperty('--light-y', `${23 + pointerY * 6}%`);
+        animationFrame = 0;
+      });
+    };
+
+    canvas.addEventListener('pointermove', updateTilt, { passive: true });
+    canvas.addEventListener('pointerleave', resetTilt);
+    canvas.addEventListener('pointercancel', resetTilt);
+    reducedMotion.addEventListener('change', resetTilt);
+    precisePointer.addEventListener('change', resetTilt);
+    roomyViewport.addEventListener('change', resetTilt);
+  }
+
   if (document.body.dataset.pageState) {
     emit('error_view', { errorType: document.body.dataset.pageState });
   }
@@ -191,12 +251,18 @@
     subject: { max: 140, label: 'Inquiry category' },
     partnershipInterest: { max: 300, label: 'Proposed collaboration' },
     initiativeName: { max: 160, label: 'Business or initiative name' },
+    initiativeStage: { label: 'Current stage' },
     supportNeeded: { max: 500, label: 'Support needed' },
   };
 
   const findOrCreateError = (form, field) => {
     const errorId = `${field.id || field.name}-error`;
-    let error = form.querySelector(`#${CSS.escape(errorId)}`);
+    let error = field.name
+      ? form.querySelector(`[data-error-for="${CSS.escape(field.name)}"]`)
+      : null;
+    if (!(error instanceof HTMLElement)) {
+      error = form.querySelector(`#${CSS.escape(errorId)}`);
+    }
 
     if (!(error instanceof HTMLElement)) {
       error = document.createElement('span');
@@ -206,10 +272,12 @@
       field.insertAdjacentElement('afterend', error);
     }
 
+    if (!error.id) error.id = errorId;
+
     const describedBy = new Set(
       (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean),
     );
-    describedBy.add(errorId);
+    describedBy.add(error.id);
     field.setAttribute('aria-describedby', [...describedBy].join(' '));
     return error;
   };
@@ -223,6 +291,9 @@
 
   const validateField = (form, field) => {
     if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement)) {
+      return true;
+    }
+    if (field instanceof HTMLInputElement && (field.type === 'hidden' || field.closest('.honeypot'))) {
       return true;
     }
 
