@@ -1,6 +1,6 @@
 # Impact Sol website
 
-An accessible, static-first website for the proposed Impact Sol initiative. The implementation is intentionally honest about its pre-launch state: Impact Sol is described as **being established**, Chokro as a **working prototype**, and no registration, ownership, availability, partner, testimonial, certification, or impact-metric claim is invented.
+An accessible, static-first website for Impact Sol. The implementation is intentionally honest about its early stage: Impact Sol. is described as a Bangladesh-based business operating under a DNCC trade licence, Chokro as its first owned product with a planned store-launch date, and no partner, testimonial, certification, affiliation, availability, or impact-metric claim is invented.
 
 The public site launches in English. Its structured content can support a reviewed Bangla edition later, but no language switcher is shown until a complete translation and maintenance workflow exists.
 

@@ -1,9 +1,9 @@
 {
   "slug": "privacy",
   "title": "Privacy notice",
-  "description": "A working privacy draft for the pre-launch Impact Sol website and its enquiry forms.",
+  "description": "How Impact Sol. collects, uses, stores and protects information submitted through this website and its enquiry forms.",
   "status": "working-draft",
-  "lastReviewed": "2026-09-09",
-  "body": "This is a working draft and requires owner and legal review before public launch. The website may collect the name, contact details, organisation details and message that a person chooses to submit through an enquiry form, together with limited technical information needed to protect the form from abuse. Netlify hosts the website and processes and stores these submissions through Netlify Forms. The intended purposes are to receive and route the enquiry, respond where appropriate and maintain service security. Access should be restricted to authorised people, and records should be retained only for an approved period before secure deletion. No non-essential analytics or advertising technology is intended at launch. Requests about access, correction or deletion may be sent through the published contact route. Before publication, the owner must confirm the responsible legal entity, lawful bases, international transfers, retention periods, jurisdiction-specific rights and the monitored privacy contact.",
+  "lastReviewed": "2026-09-14",
+  "body": "This working draft notice identifies Impact Sol. as responsible for the personal information collected through this website. We collect only the information a visitor chooses to submit through an enquiry form, together with limited technical information needed to deliver and protect the service. We use that information to receive, assess, route and respond to the enquiry, maintain correspondence, prevent abuse and meet applicable legal duties. Netlify hosts the website and stores form submissions, and Google provides the notification email service; processing may occur outside Bangladesh. Enquiry records are normally kept for up to 12 months after the last substantive contact, unless an active relationship, legal requirement, dispute or security matter requires longer retention. Visitors may ask to access, correct or delete their information, object to processing or withdraw consent through the published contact route. This notice is based on the Personal Data Protection Act, 2026 and still requires qualified legal review before it is marked approved.",
   "approvalReference": null
 }

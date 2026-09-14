@@ -215,8 +215,11 @@ collections:
           - { label: Status disclosure, name: statusDisclosure, widget: text }
           - { label: Launch locale, name: launchLocale, widget: hidden, default: en }
           - { label: Bangla-ready structure, name: banglaReady, widget: boolean, default: true }
-          - { label: Provisional contact email, name: contactEmailFallback, widget: string }
+          - { label: Public contact email, name: contactEmailFallback, widget: string }
           - { label: Contact email note, name: contactEmailNote, widget: text }
+          - { label: Public phone number, name: contactPhoneDisplay, widget: string }
+          - { label: Phone link in international format, name: contactPhoneHref, widget: string, pattern: ['^\+[1-9][0-9]{7,14}$', 'Use an international number beginning with + and country code.'] }
+          - { label: Response target, name: responseTarget, widget: text }
           - { label: Approved public domain, name: approvedDomain, widget: string, required: false, pattern: ['^$|^https://[^/?#]+/?$', 'Leave empty, or use a public HTTPS origin without a path, query or fragment.'] }
           - { label: Evidence or approval reference, name: evidenceReference, widget: string, required: false, hint: 'Required for operating status or an approved domain.' }
           - label: Approved social links

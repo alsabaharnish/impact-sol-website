@@ -8,6 +8,7 @@ import { siteConfig } from '../data/site';
 
 const breadcrumbs = [{ name: 'Contact', path: '/contact/' }];
 const mailto = `mailto:${siteConfig.contactEmail}`;
+const telephone = `tel:${siteConfig.contactPhoneHref}`;
 const faqs = [
   {
     question: 'Can I send confidential information?',
@@ -57,17 +58,18 @@ const faqs = [
     <div class="shell contact-options">
       <div>
         <p class="eyebrow">Direct route</p>
-        <h2>Email</h2>
+        <h2>Email and phone</h2>
         <p><a class="contact-email" href={mailto}>{siteConfig.contactEmail}</a></p>
-        <p class="contact-note">This is the provisional published contact route while Impact Sol.’s official identity and mailboxes are being established.</p>
+        <p><a class="contact-phone" href={telephone}>{siteConfig.contactPhoneDisplay}</a></p>
+        <p class="contact-note">These are Impact Sol.’s monitored public contact routes.</p>
       </div>
       <dl>
         <div><dt>Business identity</dt><dd>Impact Sol. is a Bangladesh-based business operating under a DNCC trade licence. The licence number, business type, address and dates are not published on this website.</dd></div>
         <div><dt>Partnership idea</dt><dd><a href="/get-involved/partnership/">Use the partnership form</a> so the right context is captured.</dd></div>
         <div><dt>Chokro interest</dt><dd><a href="/get-involved/maker/">Use the maker and initiative form</a> to register your perspective.</dd></div>
-        <div><dt>Privacy, media or accessibility</dt><dd>Use the visible email or choose the matching category in the general form. No separate approved mailbox has been supplied.</dd></div>
-        <div><dt>Response expectation</dt><dd>Messages are reviewed as capacity allows. No response time or service hours are promised while the initiative is being established.</dd></div>
-        <div><dt>Phone, visits and social accounts</dt><dd>No monitored phone or WhatsApp number, public-visit address, or verified social profile is published in this build.</dd></div>
+        <div><dt>Privacy, media or accessibility</dt><dd>Use the published email or choose the matching category in the general form.</dd></div>
+        <div><dt>Response expectation</dt><dd>{siteConfig.responseTarget}</dd></div>
+        <div><dt>Visits and social accounts</dt><dd>No public-visit address or verified social profile is published in this build.</dd></div>
         <div><dt>Urgent or emergency matters</dt><dd>This website does not provide an emergency, safeguarding or crisis-response service.</dd></div>
       </dl>
     </div>
@@ -99,6 +101,13 @@ const faqs = [
     font-size: clamp(1.15rem, 3vw, 1.8rem);
     font-weight: var(--weight-bold);
     overflow-wrap: anywhere;
+    text-underline-offset: 0.2em;
+  }
+
+  .contact-phone {
+    color: var(--color-forest);
+    font-size: 1.1rem;
+    font-weight: var(--weight-semibold);
     text-underline-offset: 0.2em;
   }
 

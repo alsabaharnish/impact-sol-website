@@ -12,22 +12,22 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
 ---
 
 <BaseLayout
-  title={`${legalDocument.title} — draft`}
+  title={`${legalDocument.title} — working version`}
   description={legalDocument.description}
   noindex={legalDocument.status !== 'approved'}
   breadcrumbs={breadcrumbs}
 >
   <Breadcrumbs items={[{ label: 'Privacy notice' }]} />
   <PageHero
-    eyebrow="Draft for legal review"
+    eyebrow="Privacy"
     title={legalDocument.title}
-    intro="This notice explains how the current website build is designed to handle information. It is not yet an approved legal notice and must be reviewed against the final entity, jurisdiction and services before launch."
+    intro="This notice explains how Impact Sol. handles information submitted through this website. It is a working version prepared for Bangladesh and remains subject to qualified legal review."
     compact
   />
 
   <div class="shell legal-status" role="note" aria-label="Document status">
     <strong>Status: {legalDocument.status.replace('-', ' ')}</strong>
-    <span>Last reviewed {legalDocument.lastReviewed}. Operator identity, registered address, applicable law, hosting location and named processors remain to be confirmed.</span>
+    <span>Last reviewed {legalDocument.lastReviewed}. Prepared with reference to Bangladesh’s Personal Data Protection Act, 2026; qualified legal approval and a publishable business address remain outstanding.</span>
   </div>
 
   <div class="shell legal-layout">
@@ -49,8 +49,8 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
       <section id="scope" tabindex="-1">
         <h2>1. Scope and responsibility</h2>
         <p class="cms-summary">{legalDocument.body}</p>
-        <p>This draft applies to the public pages and enquiry forms on this Impact Sol. website. Impact Sol. is currently described as an initiative being established. The organisation legally responsible for personal information—and its address and registration details—must be inserted after it is confirmed.</p>
-        <p>The contact route for privacy questions during this pre-launch stage is <a href={mailto}>{siteConfig.contactEmail}</a>.</p>
+        <p>This notice applies to the public pages and the general, partnership, and maker or initiative enquiry forms. Impact Sol., a Bangladesh-based business operating under a DNCC trade licence, decides why and how enquiry information is processed.</p>
+        <p>For privacy questions, email <a href={mailto}>{siteConfig.contactEmail}</a> or call <a href={`tel:${siteConfig.contactPhoneHref}`}>{siteConfig.contactPhoneDisplay}</a>. The licence number, business type and private address are not published on this website.</p>
       </section>
 
       <section id="collection" tabindex="-1">
@@ -59,12 +59,12 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
         <p>The general, partnership and maker or initiative forms collect your name, email address and message. Depending on the form, you may also choose to provide an organisation, phone number, country or region, and website or public-profile link.</p>
         <p>Do not submit passwords, payment information, health details, identity documents, confidential business material or other sensitive information through these enquiry forms.</p>
         <h3>Technical and anti-abuse information</h3>
-        <p>Netlify may process limited request information needed to deliver the site, filter spam, diagnose failures and protect the forms. This can include timestamps, request headers and network information. The final hosting setup and log retention must be documented before launch.</p>
+        <p>Netlify may process limited request information needed to deliver the site, filter spam, diagnose failures and protect the forms. This can include timestamps, request headers, browser or device information and network information. Impact Sol. does not intentionally collect sensitive personal information through these forms.</p>
       </section>
 
       <section id="use" tabindex="-1">
-        <h2>3. How information is intended to be used</h2>
-        <p>Enquiry information is intended to be used only to:</p>
+        <h2>3. How information is used and the legal basis</h2>
+        <p>Enquiry information is used only to:</p>
         <ul>
           <li>receive, review and respond to the message you send;</li>
           <li>route a partnership or maker enquiry to an appropriate person;</li>
@@ -72,39 +72,39 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
           <li>keep a limited record of correspondence where reasonably needed; and</li>
           <li>meet legal obligations that apply to the confirmed operator.</li>
         </ul>
-        <p>The form acknowledgement does not permit unrelated advertising, sale of contact details or adding you to a mailing list. If a newsletter or research programme is introduced, it will need a separate, specific explanation and choice.</p>
-        <p>The lawful basis for each use must be identified in the approved notice after the operating entity and applicable jurisdiction are confirmed.</p>
+        <p>The primary basis is the clear, withdrawable consent requested before a form is sent. Where applicable, processing may also be necessary to take steps at your request before an agreement, maintain security, establish or defend a legal right, or comply with law. Withdrawing consent does not invalidate processing that occurred before withdrawal.</p>
+        <p>Submitting an enquiry does not permit unrelated advertising, sale of contact details or addition to a mailing list. Any future newsletter or research programme will require a separate explanation and choice.</p>
       </section>
 
       <section id="sharing" tabindex="-1">
         <h2>4. Sharing and service providers</h2>
-        <p>Enquiry data is processed and stored by Netlify as the website host and form provider. It may also be included in an email notification if that feature is enabled. Authorised people supporting Impact Sol. may access a message when needed to respond or maintain the system.</p>
-        <p>No provider should use enquiry information for its own advertising. The final notice must name or clearly categorise production providers, their processing locations, contractual safeguards and any legally required disclosures.</p>
-        <p>Information may also need to be disclosed where a confirmed operator is required to do so by law, or to protect people and systems from fraud, abuse or a serious security threat. The exact wording requires legal review.</p>
+        <p>Netlify processes and stores submissions as the website host and form provider. Google processes email notifications delivered to the monitored Gmail account. Only authorised people supporting Impact Sol. may access a message when needed to respond or maintain the service.</p>
+        <p>These providers may process information outside Bangladesh, including in the United States or other locations described in their terms and privacy materials. The form explains this transfer before consent is given. Impact Sol. must maintain appropriate provider terms, access controls and transfer safeguards.</p>
+        <p>Information may also be disclosed where required by a valid legal process or reasonably necessary to protect people and systems from fraud, abuse or a serious security threat. Impact Sol. does not sell enquiry information.</p>
       </section>
 
       <section id="retention" tabindex="-1">
         <h2>5. Retention and security</h2>
-        <p>Production owners must approve a retention period and regularly export or delete Netlify form submissions to apply it. A message may need to be retained longer if it becomes part of continuing correspondence or a legal record, subject to an approved retention policy.</p>
-        <p>The site is designed to use encrypted transport in production, browser validation, Netlify spam filtering, a hidden spam trap and restricted dashboard access. No internet service can promise absolute security. If a material incident affects personal information, the confirmed operator should follow the notification duties that apply to it.</p>
+        <p>Enquiry records are normally deleted within 12 months after the last substantive contact. A record may be kept longer where an active relationship, legal duty, dispute, fraud concern or security investigation reasonably requires it. Provider-controlled security logs and legally required processing records may follow different periods.</p>
+        <p>Impact Sol. uses encrypted transport, form validation, spam filtering, a hidden spam trap and restricted dashboard access. Access should use multi-factor authentication and least privilege. No internet service can promise absolute security. A material personal-data breach will be assessed and reported as required by applicable law.</p>
       </section>
 
       <section id="choices" tabindex="-1">
         <h2>6. Your choices and rights</h2>
-        <p>You can choose not to submit a form and use the published email route instead. You can also ask to access, correct or delete information connected to your enquiry. Other rights—such as restriction, objection, portability or complaint to a regulator—depend on the law that applies to the confirmed operator and to you.</p>
-        <p>Send a request to <a href={mailto}>{siteConfig.contactEmail}</a>. Enough information may be requested to locate the record and confirm that a request is legitimate; do not email unnecessary identity documents. The approved notice must state response periods, exceptions and the relevant supervisory authority.</p>
+        <p>You can choose not to submit a form. Subject to applicable law, you may ask for information about processing, access a copy, correct or complete inaccurate information, withdraw consent, object, request deletion, or complain to Bangladesh’s National Data Management Authority or another competent authority.</p>
+        <p>Send a request to <a href={mailto}>{siteConfig.contactEmail}</a>. We will acknowledge it within six hours and respond within the period required by law. We may request proportionate information to locate the record and verify the requester; do not send unnecessary identity documents. Some requests may be limited where retention or disclosure is legally required or another person’s rights would be affected.</p>
       </section>
 
       <section id="cookies" tabindex="-1">
         <h2>7. Cookies, analytics and external links</h2>
-        <p>This launch build does not enable non-essential analytics, advertising tags or marketing cookies. Basic server logs and browser storage strictly necessary for security or service operation may still be used by the final hosting setup and must be documented.</p>
+        <p>This website does not enable non-essential analytics, advertising tags or marketing cookies. Netlify may use essential storage, network data and logs needed to deliver and protect the service.</p>
         <p>If optional analytics or embedded third-party media are introduced, they should remain off until the notice, consent mechanism and vendor review are updated where required.</p>
         <p>Links to third-party websites are governed by those services’ own privacy practices. A link does not mean Impact Sol. controls or endorses that service.</p>
       </section>
 
       <section>
         <h2>8. Children</h2>
-        <p>These public enquiry forms are not designed to collect information from children. The final operator must define any age threshold and procedure required by its jurisdiction and product scope. If you believe a child has submitted personal information, use the privacy contact route so the situation can be reviewed.</p>
+        <p>These enquiry forms are intended for people aged 18 or older. A person under 18 should not submit personal information without a parent’s or legal guardian’s involvement and valid consent. If you believe a child has submitted information, contact us so it can be reviewed and, where appropriate, deleted.</p>
       </section>
 
       <section>
@@ -114,7 +114,8 @@ if (!legalDocument) throw new Error('Privacy content is missing.');
 
       <section id="contact" tabindex="-1">
         <h2>10. Privacy contact</h2>
-        <p>Email <a href={mailto}>{siteConfig.contactEmail}</a> with “Privacy request” in the subject line. This is a provisional contact route until the responsible legal entity and formal privacy address are published.</p>
+        <p>Email <a href={mailto}>{siteConfig.contactEmail}</a> with “Privacy request” in the subject line or call <a href={`tel:${siteConfig.contactPhoneHref}`}>{siteConfig.contactPhoneDisplay}</a>. Impact Sol. aims to acknowledge requests within six hours, although completing a request may take longer.</p>
+        <p>Reference: <a href="https://bdlaws.minlaw.gov.bd/act-print-1692.html" rel="external">Bangladesh Personal Data Protection Act, 2026</a>. Netlify’s processing is further described in its <a href="https://www.netlify.com/privacy/" rel="external">privacy statement</a>.</p>
       </section>
     </article>
   </div>

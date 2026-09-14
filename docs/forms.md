@@ -12,9 +12,9 @@ Netlify identifies the forms by these unique names:
 | `/get-involved/partnership/` | `impact-sol-partnership` |
 | `/get-involved/maker/` | `impact-sol-maker` |
 
-All forms include `form-name`, `inquiryType`, `sourcePath`, and `privacyNoticeVersion`. Depending on the route, a submission may also include name, email, message, organisation or initiative, phone, country, website, role, category, collaboration interest, initiative stage, and support sought.
+All forms include `form-name`, `inquiryType`, `sourcePath`, `privacyNoticeVersion`, and the required `privacyConsent` acknowledgement covering age or guardian involvement, purpose, overseas processing, retention, and withdrawal. Depending on the route, a submission may also include name, email, message, organisation or initiative, phone, country, website, role, category, collaboration interest, initiative stage, and support sought.
 
-The forms use HTML constraints and accessible client-side error messages. Netlify receives URL-encoded form data. JavaScript submissions show an inline confirmation; no-JavaScript submissions open `/thank-you/`. Neither confirmation promises a reply or claims that a notification email was delivered.
+The forms use HTML constraints and accessible client-side error messages. Netlify receives URL-encoded form data. JavaScript submissions show an inline confirmation; no-JavaScript submissions open `/thank-you/`. The public response target is acknowledgement within six hours, not guaranteed resolution, and neither confirmation claims that a notification email was delivered.
 
 ## Detection and spam protection
 
@@ -51,12 +51,12 @@ Netlify notification emails are operational alerts to the site team, not automat
 The forms collect personal information. Before public launch:
 
 - approve the privacy notice and identify Netlify as the hosting and form processor;
-- approve a retention period and a recurring deletion process;
+- apply the approved 12-month period measured from the last substantive contact and run a recurring deletion process;
 - define who may access, export, or delete submissions;
 - sign any required data-processing agreement and review processing locations/transfers; and
 - document how access, correction, deletion, legal hold, complaint, and incident requests are handled.
 
-Netlify does not apply this project’s former database retention timer. An authorised owner must regularly delete submissions according to the approved retention schedule. Export only the minimum necessary data, store exports securely, and securely remove temporary copies.
+Netlify does not apply this project’s 12-month retention period automatically. An authorised owner must regularly delete expired submissions and aligned email copies according to the approved schedule. Export only the minimum necessary data, store exports securely, and securely remove temporary copies.
 
 ## Verification
 

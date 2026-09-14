@@ -232,10 +232,15 @@ const formName = `impact-sol-${inquiryType}`;
       <p class="field-error" id={`${prefix}-message-error`} data-error-for="message"></p>
     </div>
 
-    <p class="privacy-note">
-      We use the information you submit to receive, route and respond to your enquiry. Read the <a href="/privacy/">draft privacy notice</a> for details. Please do not include sensitive personal information.
-    </p>
-    <input type="hidden" name="privacyNoticeVersion" value="2026-09-09-draft" />
+    <div class="privacy-note">
+      <p>Impact Sol. uses the information you submit to receive, route and respond to your enquiry. Netlify and the notification email provider may process it outside Bangladesh. Enquiry records are normally kept for up to 12 months after the last substantive contact.</p>
+      <label class="consent-option" for={`${prefix}-privacy-consent`}>
+        <input id={`${prefix}-privacy-consent`} name="privacyConsent" type="checkbox" value="accepted" required aria-describedby={`${prefix}-privacy-consent-error`} />
+        <span>I confirm that I am 18 or older, or that a parent or legal guardian is submitting with valid consent. I have read the <a href="/privacy/">privacy notice</a>, consent to this processing, and understand that consent can be withdrawn by contacting Impact Sol.</span>
+      </label>
+      <p class="field-error" id={`${prefix}-privacy-consent-error`} data-error-for="privacyConsent"></p>
+    </div>
+    <input type="hidden" name="privacyNoticeVersion" value="2026-09-14" />
 
     <div class="form-actions">
       <button class="button" type="submit" data-submit-label={submitLabel}>{submitLabel}</button>
@@ -420,6 +425,33 @@ const formName = `impact-sol-${inquiryType}`;
     border-radius: var(--radius-md);
     font-size: 0.88rem;
     line-height: var(--leading-snug);
+  }
+
+  .privacy-note > p {
+    margin: 0;
+  }
+
+  .consent-option {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: 0.7rem;
+    margin-top: var(--space-3);
+    align-items: start;
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    line-height: var(--leading-body);
+  }
+
+  .consent-option input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0.18rem 0 0;
+    accent-color: var(--color-forest);
+  }
+
+  .consent-option input:focus-visible {
+    outline: 3px solid var(--color-forest);
+    outline-offset: 3px;
   }
 
   .form-actions {

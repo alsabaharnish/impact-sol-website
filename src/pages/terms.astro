@@ -12,22 +12,22 @@ if (!legalDocument) throw new Error('Terms content is missing.');
 ---
 
 <BaseLayout
-  title={`${legalDocument.title} — draft`}
+  title={`${legalDocument.title} — working version`}
   description={legalDocument.description}
   noindex={legalDocument.status !== 'approved'}
   breadcrumbs={breadcrumbs}
 >
   <Breadcrumbs items={[{ label: 'Terms of use' }]} />
   <PageHero
-    eyebrow="Draft for legal review"
+    eyebrow="Website terms"
     title={legalDocument.title}
-    intro="These draft terms describe the intended rules for this informational website. They are not approved launch terms and must be completed for the final legal entity, jurisdiction and product scope."
+    intro="These working terms explain the rules for using the Impact Sol. information website and enquiry routes. They are prepared for Bangladesh and remain subject to qualified legal review."
     compact
   />
 
   <div class="shell legal-status" role="note" aria-label="Document status">
     <strong>Status: {legalDocument.status.replace('-', ' ')}</strong>
-    <span>Last reviewed {legalDocument.lastReviewed}. Operator identity, registered address, governing law, dispute process and liability language remain to be confirmed by qualified counsel.</span>
+    <span>Last reviewed {legalDocument.lastReviewed}. Bangladesh governing-law wording is included; qualified legal approval and a publishable business address remain outstanding.</span>
   </div>
 
   <div class="shell legal-layout">
@@ -41,6 +41,7 @@ if (!legalDocument) throw new Error('Terms content is missing.');
         <a href="#rights">Intellectual property</a>
         <a href="#links">Third-party links</a>
         <a href="#liability">Responsibility and liability</a>
+        <a href="#law">Governing law and disputes</a>
         <a href="#contact">Contact</a>
       </nav>
     </aside>
@@ -49,8 +50,8 @@ if (!legalDocument) throw new Error('Terms content is missing.');
       <section id="about" tabindex="-1">
         <h2>1. About these terms</h2>
         <p class="cms-summary">{legalDocument.body}</p>
-        <p>These terms are intended to govern use of the public Impact Sol. website. Impact Sol. is currently described as an initiative being established, so the legal name, address, registration details and effective date must be added before public launch.</p>
-        <p>By using a final launched version of the website, visitors would be expected to accept its approved terms. This draft is published for transparency and implementation review; it should not be relied on as a complete legal agreement.</p>
+        <p>Impact Sol. is a Bangladesh-based business operating under a DNCC trade licence. The licence number, business type and private address are not published on this website.</p>
+        <p>By using this website, you agree to these terms. If you do not agree, please stop using the website. This is a working version published for transparency and must receive qualified legal review before it is marked approved.</p>
       </section>
 
       <section id="site" tabindex="-1">
@@ -63,7 +64,7 @@ if (!legalDocument) throw new Error('Terms content is missing.');
           <li>scrape or automate requests in a way that harms the service or other users; or</li>
           <li>present website content in a way that falsely implies endorsement, partnership or verified impact.</li>
         </ul>
-        <p>Access may be limited where reasonably necessary to protect the service, people or legal obligations. The final enforcement language requires legal review.</p>
+        <p>Access may be limited where reasonably necessary to protect the service, people, rights or legal obligations. Nothing in these terms authorises activity prohibited by applicable law.</p>
       </section>
 
       <section id="enquiries" tabindex="-1">
@@ -74,38 +75,43 @@ if (!legalDocument) throw new Error('Terms content is missing.');
 
       <section id="content" tabindex="-1">
         <h2>4. Informational content and product status</h2>
-        <p>This site explains an intended direction while the initiative is being established. Plans, prototypes and proposed relationships can change. Chokro is presented as a working prototype and proposed Impact Sol. product, not as a publicly available service or a final statement of ownership.</p>
+        <p>This site explains Impact Sol.’s intended direction while its wider operating model is being established. Plans and proposed relationships can change. Chokro is owned by Impact Sol. and is currently a working prototype. Its Google Play and Apple App Store launch is planned for 28 September 2026, but store review and final release checks may change that date.</p>
         <p>No material on this website is professional, legal, financial, environmental-certification or investment advice. No metric, forecast or environmental outcome should be inferred where none is explicitly published with its method and limitations.</p>
-        <p>Reasonable care should be taken to keep approved content accurate, but the production terms must set appropriate correction, availability and reliance language for the final operator.</p>
+        <p>Impact Sol. aims to keep published information accurate but does not promise that every page will always be complete, current, uninterrupted or error-free. Confirm important information directly before relying on it.</p>
       </section>
 
       <section id="rights" tabindex="-1">
         <h2>5. Intellectual property and permitted reuse</h2>
-        <p>Ownership and licensing for the Impact Sol. name, website materials, Chokro assets and other content must be confirmed before launch. Until then, this draft does not grant a licence to reproduce brand marks, interface assets or substantial website content.</p>
-        <p>Ordinary linking to public pages is welcome provided it is accurate and does not imply affiliation. Statutory exceptions and user rights remain unaffected. A final copyright notice, content licence and permissions route should be added after the rights register is approved.</p>
+        <p>Impact Sol. owns Chokro and the Chokro materials it has approved for publication. Other names, marks and third-party materials remain the property of their respective owners. No ownership of UN, SDG or 3ZERO names, marks or materials is claimed.</p>
+        <p>You may link to public pages accurately without implying affiliation or endorsement. No licence is granted to reproduce Impact Sol. or Chokro marks, interface assets, software or substantial website content except with written permission or where applicable law permits it.</p>
       </section>
 
       <section id="links" tabindex="-1">
         <h2>6. Third-party links and services</h2>
         <p>A link to another website is provided for context and does not by itself mean that Impact Sol. controls, endorses or accepts responsibility for it. Third-party sites may have different terms, accessibility and privacy practices.</p>
-        <p>If external platforms, embedded content or public product links are added later, they should be reviewed and labelled so visitors can understand when they are leaving this website.</p>
+        <p>Google Play, the Apple App Store and other external services apply their own terms, privacy practices and availability decisions. A verified external link will be labelled so visitors can understand when they are leaving this website.</p>
       </section>
 
       <section id="liability" tabindex="-1">
         <h2>7. Availability, responsibility and liability</h2>
         <p>The website may be updated, paused or withdrawn. Security and accessibility issues can be reported, but uninterrupted or error-free availability cannot be promised.</p>
-        <p>Any exclusions, warranties, caps on liability, indemnities, consumer-law statements and exceptions for matters that cannot legally be excluded must be drafted for the confirmed operator and jurisdiction. No placeholder in this draft should be treated as limiting rights or liabilities before that review is complete.</p>
+        <p>To the extent permitted by Bangladesh law, Impact Sol. is not responsible for indirect or consequential loss caused solely by reliance on incomplete informational content, external services or temporary unavailability. Nothing in these terms excludes liability or a consumer, privacy or other statutory right that cannot lawfully be excluded.</p>
       </section>
 
       <section>
         <h2>8. Privacy, accessibility and changes</h2>
-        <p>Use of personal information is described in the <a href="/privacy/">draft privacy notice</a>. The site’s accessibility target and feedback route are described in the <a href="/accessibility/">accessibility statement</a>.</p>
-        <p>The approved terms should carry an effective date and explain material changes. The final notice, governing law, venue and dispute-resolution process must be provided before launch.</p>
+        <p>Use of personal information is described in the <a href="/privacy/">privacy notice</a>. The site’s accessibility target and feedback route are described in the <a href="/accessibility/">accessibility statement</a>.</p>
+        <p>Material changes will be identified by the reviewed date. Continued use after a published change means the updated terms apply from that date, subject to applicable law.</p>
+      </section>
+
+      <section id="law" tabindex="-1">
+        <h2>9. Governing law and disputes</h2>
+        <p>These terms are intended to be governed by the laws of Bangladesh. Please contact Impact Sol. first so a concern can be understood and addressed. If it cannot be resolved informally, it may be brought before a court or authority with lawful jurisdiction in Bangladesh. Mandatory consumer and privacy complaint rights remain unaffected.</p>
       </section>
 
       <section id="contact" tabindex="-1">
-        <h2>9. Contact</h2>
-        <p>Questions about this draft can be sent to <a href={mailto}>{siteConfig.contactEmail}</a>. This is a provisional contact route and does not replace the legal notice details required for launch.</p>
+        <h2>10. Contact</h2>
+        <p>Questions about these terms can be sent to <a href={mailto}>{siteConfig.contactEmail}</a> or raised by calling <a href={`tel:${siteConfig.contactPhoneHref}`}>{siteConfig.contactPhoneDisplay}</a>. We aim to acknowledge messages within six hours, although a complete response may take longer.</p>
       </section>
     </article>
   </div>

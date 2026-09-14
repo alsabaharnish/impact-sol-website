@@ -1,17 +1,17 @@
 {
   "currentLimitations": [
-    "Public availability and production app or QR routes are not verified",
-    "The endorsed Impact Sol relationship and asset rights are not documented",
+    "Google Play and Apple App Store release is planned for 28 September 2026 and remains subject to store review",
+    "Production app links and unrestricted QR routes are not yet available",
     "Physical operations, seller base, inventory and outcome claims are not evidenced",
     "Payment journeys are simulations and move no real money"
   ],
   "productUrl": null,
-  "ownershipNote": "The relationship, ownership and public-use rights must be confirmed and recorded before launch.",
-  "ownershipStatus": "unconfirmed",
+  "ownershipNote": "Impact Sol. owns Chokro and created it as its first owned product.",
+  "ownershipStatus": "documented",
   "supportStatus": "No approved public product-support route or service expectation is published; use the corporate register-interest route.",
   "publicAvailability": false,
-  "lastUpdated": "2026-09-09",
-  "summary": "Chokro is a working prototype, not a publicly available service. Its relationship to Impact Sol, public-use rights, and any future launch route must be documented before stronger claims are published.",
+  "lastUpdated": "2026-09-14",
+  "summary": "Chokro is Impact Sol.’s first owned product. Its Google Play and Apple App Store launch is planned for 28 September 2026, subject to store review and final release checks.",
   "name": "Chokro",
   "slug": "chokro",
   "screenshots": [],
@@ -24,10 +24,10 @@
     "Prototype seller, catalogue, cart and checkout journeys"
   ],
   "sortOrder": 1,
-  "evidenceReference": null,
+  "evidenceReference": "Owner confirmation dated 2026-09-14",
   "privacyStatus": "Product-specific privacy, processor, retention, location-data and photo-data information requires approval before public use.",
   "geography": "Designed for Bangladesh, with a focused Dhaka pilot planned rather than claimed as operating.",
-  "relationshipLabel": "proposed",
+  "relationshipLabel": "endorsed",
   "seo": {
     "title": "Chokro working prototype",
     "description": "How the Chokro prototype approaches responsible disposal, reviewed eco-actions, internal rewards and small-seller pathways with explicit evidence limits.",
@@ -41,8 +41,8 @@
   "representativeVisual": {
     "path": "/assets/brand/chokro-app-icon.svg",
     "alt": "Chokro prototype app icon",
-    "caption": "Provisional Chokro prototype icon used only in the product context; final rights confirmation remains a launch gate.",
-    "rightsStatus": "provisional"
+    "caption": "Chokro app icon approved by Impact Sol. for publication in the product context.",
+    "rightsStatus": "approved"
   },
   "stage": "working-prototype"
 }

@@ -16,6 +16,9 @@ export const siteConfig = {
   defaultDescription:
     'Impact Sol. is building practical products and partnerships for eco-conscious enterprise and a greener, more inclusive economy.',
   contactEmail: configuredContactEmail || globalSettings.contactEmailFallback,
+  contactPhoneDisplay: globalSettings.contactPhoneDisplay,
+  contactPhoneHref: globalSettings.contactPhoneHref,
+  responseTarget: globalSettings.responseTarget,
   status: globalSettings.status === 'being-established' ? 'Being established' : 'Operating',
   statusDisclosure: globalSettings.statusDisclosure,
   banglaReady: globalSettings.banglaReady,
@@ -23,7 +26,7 @@ export const siteConfig = {
     globalSettings.status === 'operating' &&
     Boolean(globalSettings.approvedDomain) &&
     Boolean(globalSettings.evidenceReference),
-  lastReviewed: '2026-09-09',
+  lastReviewed: '2026-09-14',
 } as const;
 
 export interface NavItem {

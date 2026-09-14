@@ -19,6 +19,9 @@ const rules = {
       'banglaReady',
       'contactEmailFallback',
       'contactEmailNote',
+      'contactPhoneDisplay',
+      'contactPhoneHref',
+      'responseTarget',
     ],
   },
   offerings: {
@@ -304,8 +307,8 @@ for (const { file, value: settings } of loaded.get('global') ?? []) {
   if ((settings.status === 'operating' || settings.approvedDomain) && !settings.evidenceReference) {
     errors.push(`${file}: operating status or an approved domain requires evidenceReference`);
   }
-  if (!String(settings.contactEmailNote ?? '').toLowerCase().includes('provisional')) {
-    errors.push(`${file}: contactEmailNote must identify the fallback address as provisional`);
+  if (!String(settings.contactEmailNote ?? '').toLowerCase().includes('monitored')) {
+    errors.push(`${file}: contactEmailNote must identify the public address as monitored`);
   }
 }
 

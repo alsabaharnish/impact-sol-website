@@ -54,7 +54,7 @@ Deletion must also cover controlled exports, mailbox copies, tickets, and any ot
 
 ## Retention
 
-Netlify Forms does not use an application retention timer from this repository. The privacy owner must approve the retention period and assign a recurring review. On schedule:
+Netlify Forms does not automatically apply the approved 12-month enquiry-retention period. The privacy owner must run a monthly review. Measure the period from the last substantive contact and, on schedule:
 
 1. Identify records beyond the approved period.
 2. Check legal holds or continuing correspondence requirements.

@@ -16,7 +16,7 @@ const faqs = [
   {
     question: 'Are Impact Sol. products available to use now?',
     answer:
-      'No public availability is claimed on this site. Chokro is described as a working prototype and the product relationship is proposed while ownership and licensing details are confirmed. Any public trial or launch will be labelled separately.',
+      'Not yet. Chokro is Impact Sol.’s first owned product, and its Google Play and Apple App Store launch is planned for 28 September 2026, subject to store review and final release checks.',
   },
   {
     question: 'How can I suggest a product need?',
@@ -34,7 +34,7 @@ const faqs = [
 
 <BaseLayout
   title="Products"
-  description="Explore Impact Sol.’s proposed product approach and Chokro, a working prototype whose public product basis is still being confirmed."
+  description="Explore Chokro, Impact Sol.’s first owned product, with its Google Play and Apple App Store launch planned for 28 September 2026."
   breadcrumbs={breadcrumbs}
 >
   <Breadcrumbs items={[{ label: 'Products' }]} />
@@ -46,7 +46,7 @@ const faqs = [
     <div slot="aside">
       <StatusPanel
         title="One working prototype"
-        text="Chokro is the only product concept presented here. It is not described as publicly launched, and no usage or outcome claims are being made."
+        text="Chokro is Impact Sol.’s first owned product. Its store launch is planned for 28 September 2026, subject to store review and final release checks."
       />
     </div>
   </PageHero>
@@ -62,8 +62,8 @@ const faqs = [
         <span class="node node--community">Local enterprise</span>
       </div>
       <div class="product-feature__copy">
-        <div class="status-row"><span>{chokro.stage.replace('-', ' ')}</span><span>{chokro.publicAvailability ? 'Publicly available' : 'Public launch not announced'}</span></div>
-        <p class="eyebrow">Proposed product</p>
+        <div class="status-row"><span>{chokro.stage.replace('-', ' ')}</span><span>{chokro.publicAvailability ? 'Publicly available' : 'Store launch planned for 28 September 2026'}</span></div>
+        <p class="eyebrow">Impact Sol.’s first product</p>
         <h2 id="chokro-title">{chokro.name}</h2>
         <p class="lead">{chokro.tagline}</p>
         <p>{chokro.summary}</p>

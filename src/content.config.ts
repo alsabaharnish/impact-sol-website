@@ -221,6 +221,9 @@ const global = defineCollection({
       banglaReady: z.boolean(),
       contactEmailFallback: z.email(),
       contactEmailNote: z.string().min(20).max(300),
+      contactPhoneDisplay: z.string().min(7).max(32),
+      contactPhoneHref: z.string().regex(/^\+[1-9]\d{7,14}$/),
+      responseTarget: z.string().min(30).max(240),
       approvedDomain: httpsOrigin.nullable().optional(),
       evidenceReference: evidence,
       socialLinks: z

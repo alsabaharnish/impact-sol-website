@@ -6,19 +6,19 @@ Use a durable ticket or approval record for every sign-off. Store sensitive evid
 
 ## Blocking identity and governance inputs
 
-- [ ] Confirm the exact public name and punctuation: “Impact Sol.” or an approved alternative.
+- [x] Confirm the exact public name and punctuation: “Impact Sol.”
 - [ ] Confirm the responsible legal entity, legal form, registration status/details, registered address, jurisdiction, and governing-law wording.
-- [ ] Confirm whether and how the “being established” disclosure should change.
+- [x] Keep “being established” for the wider operating model while accurately disclosing the DNCC trade licence.
 - [ ] Name the accountable website owner, content publisher, privacy contact, security contact, and incident decision-maker.
-- [ ] Approve the primary domain, canonical HTTPS origin, redirects, and domain ownership/renewal contacts.
-- [ ] Approve monitored organisation, enquiry, privacy, and accessibility mailboxes. Replace the provisional fallback address where required.
+- [ ] Purchase and approve the primary domain, canonical HTTPS origin, redirects, and renewal contacts. No custom domain is currently owned.
+- [x] Approve the monitored public email `impactsol.team@gmail.com`, phone route, and six-hour acknowledgement target.
 - [ ] Approve any public social profiles. None are assumed in the current content.
 
 ## Chokro and intellectual-property inputs
 
-- [ ] Document Chokro's ownership, licence, and relationship to Impact Sol.
-- [ ] Approve its public maturity description and whether a pilot or live service exists.
-- [ ] Approve the public CTA and destination. The current safe CTA is “Register interest”.
+- [x] Record the owner’s confirmation that Impact Sol. owns Chokro and created it as its first owned product.
+- [x] Keep Chokro at working-prototype stage and disclose the planned 28 September 2026 store launch as subject to store review and release checks.
+- [x] Keep “Register interest” as the public CTA until verified store links are available.
 - [ ] Supply an approved product URL only if it is ready and monitored.
 - [ ] Supply current screenshots or other media with source files, rights, consent, date, and approved alternative text.
 - [ ] Review the Chokro mark's allowed contexts, colours, clear space, and attribution.
@@ -37,8 +37,8 @@ Use a durable ticket or approval record for every sign-off. Store sensitive evid
 
 - [ ] Have a qualified reviewer approve privacy, terms, and accessibility wording for the launch jurisdictions.
 - [ ] Confirm the controller/responsible entity, processing purposes, lawful bases, processors, international transfers, user rights, contact route, complaint route, and governing law.
-- [ ] Approve enquiry retention and deletion timing. Configure the same value operationally and in policy copy.
-- [ ] Approve the exact form consent wording and acknowledgement wording.
+- [x] Approve a 12-month enquiry-retention period from the last substantive contact; apply it through monthly Netlify and mailbox reviews.
+- [x] Add explicit consent covering purpose, overseas provider processing, retention and withdrawal.
 - [ ] Sign required processor agreements, including hosting and email delivery.
 - [ ] Document access, correction, export, deletion, legal hold, complaint, and breach response procedures.
 - [ ] Decide whether analytics or any other non-essential technology is needed. If yes, complete data, consent, policy, and implementation review before enabling it.
@@ -48,7 +48,7 @@ Use a durable ticket or approval record for every sign-off. Store sensitive evid
 - [ ] Enable Netlify form detection and confirm all three named forms appear after deployment.
 - [ ] Approve the Netlify team members permitted to view, export, or delete submissions; require MFA and least privilege.
 - [ ] Approve the monitored notification mailbox and configure Netlify form notifications, if notifications are required.
-- [ ] Approve a submission-retention period and assign a recurring Netlify deletion review.
+- [ ] The 12-month submission-retention period is approved; name the privacy owner who will complete the monthly Netlify and notification-mailbox deletion review.
 - [ ] Confirm all three form routes: general, partnership, and maker/initiative.
 - [ ] Test validation, keyboard/error flow, inline and no-JavaScript confirmations, honeypot detection, spam classification, notification routing, CSV export, and deletion.
 - [ ] Ensure logs, alerts, and operational tickets do not contain message bodies, email addresses, or unnecessary network information.

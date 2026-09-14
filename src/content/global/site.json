@@ -2,12 +2,15 @@
   "shortName": "Impact Sol",
   "socialLinks": [],
   "launchLocale": "en",
-  "contactEmailNote": "This is a configurable provisional direct route. Replace it with an approved, monitored Impact Sol mailbox before public launch.",
+  "contactEmailNote": "This is Impact Sol.'s monitored public contact route.",
   "status": "being-established",
   "evidenceReference": null,
   "banglaReady": true,
   "approvedDomain": null,
   "workingName": "Impact Sol.",
-  "contactEmailFallback": "arnish.cse.sdcs@gmail.com",
+  "contactEmailFallback": "impactsol.team@gmail.com",
+  "contactPhoneDisplay": "01511 716978",
+  "contactPhoneHref": "+8801511716978",
+  "responseTarget": "We aim to acknowledge messages within six hours. Complex enquiries may take longer to answer.",
   "statusDisclosure": "Impact Sol. is a Bangladesh-based business operating under a DNCC trade licence. Its wider operating model is still being established, and this website describes its intended direction and invites early conversations."
 }

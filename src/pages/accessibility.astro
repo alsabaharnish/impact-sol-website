@@ -72,14 +72,14 @@ const mailto = `mailto:${siteConfig.contactEmail}?subject=Accessibility%20feedba
 
       <section id="limits" tabindex="-1">
         <h2>Known limits and testing still required</h2>
-        <p>At this pre-launch stage, the implementation has not completed the full WCAG Evaluation Methodology process, representative-user validation, NVDA testing on Windows, or a formal audit by an independent accessibility specialist. Production CMS authentication is also not active, so its accessibility has not been accepted.</p>
+        <p>At this pre-launch stage, the implementation has not completed the full WCAG Evaluation Methodology process, representative-user validation, NVDA testing on Windows, or a formal audit by an independent accessibility specialist. The content editor is authenticated, but its accessibility has not received independent acceptance testing.</p>
         <p>Before public launch, every unique component and complete form process should receive automated checks plus manual keyboard, VoiceOver, NVDA, 200% zoom, 320-pixel reflow, high-contrast, reduced-motion, and slow-connection testing. Any confirmed barrier must be fixed or listed here with an accessible alternative and review date.</p>
       </section>
 
       <section id="feedback" tabindex="-1">
         <h2>Report an accessibility barrier</h2>
         <p>If something prevents you from reading content or completing a task, email <a href={mailto}>{siteConfig.contactEmail}</a> with “Accessibility feedback” in the subject. If possible, include the page, what you were trying to do, the browser or assistive technology used, and the format that would work better. Do not include sensitive personal information.</p>
-        <p>This mailbox is a provisional direct route. The owner must confirm that it is monitored and publish a realistic response target before launch. You can also use the <a href="/contact/">general contact route</a>.</p>
+        <p>This mailbox is monitored. We aim to acknowledge accessibility feedback within six hours, although investigation and resolution may take longer. You can also use the <a href="/contact/">general contact route</a> or call <a href={`tel:${siteConfig.contactPhoneHref}`}>{siteConfig.contactPhoneDisplay}</a>.</p>
       </section>
 
       <section id="preparation" tabindex="-1">
@@ -88,7 +88,7 @@ const mailto = `mailto:${siteConfig.contactEmail}?subject=Accessibility%20feedba
           <div><dt>Statement version</dt><dd>Pre-launch working draft</dd></div>
           <div><dt>Last reviewed</dt><dd>{statement.lastReviewed}</dd></div>
           <div><dt>Assessment method</dt><dd>Implementation review and automated build checks to date; formal WCAG-EM audit pending</dd></div>
-          <div><dt>Responsible organisation</dt><dd>To be confirmed with the final Impact Sol. legal identity</dd></div>
+          <div><dt>Responsible organisation</dt><dd>Impact Sol., a Bangladesh-based business operating under a DNCC trade licence</dd></div>
         </dl>
       </section>
     </article>
